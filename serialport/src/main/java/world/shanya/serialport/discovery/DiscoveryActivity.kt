@@ -1,5 +1,6 @@
 package world.shanya.serialport.discovery
 
+import android.app.Dialog
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Context
@@ -16,17 +17,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.permissionx.guolindev.PermissionX
 import kotlinx.android.synthetic.main.activity_discovery.*
+import kotlinx.android.synthetic.main.device_cell.view.*
 import world.shanya.serialport.R
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.broadcast.DiscoveryBroadcastReceiver
+import java.io.IOException
 
 class DiscoveryActivity : AppCompatActivity() {
 
     private val discoveryBroadcastReceiver = DiscoveryBroadcastReceiver()
 
+    private lateinit var dialog: Dialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discovery)
+
+        dialog = Dialog(this)
+        dialog.setContentView(R.layout.progress_dialog_layout)
+        dialog.setCancelable(false)
 
         SerialPort.discoveryLiveData.observe(this, Observer {
             if (it) {
@@ -36,6 +45,10 @@ class DiscoveryActivity : AppCompatActivity() {
                 title = "请选择一个设备连接"
             }
         })
+
+        SerialPort.set_ConnectStatusListener { status, device ->
+            finish()
+        }
 
         swipeRedreshLayout.setOnRefreshListener {
             doDiscovery()
@@ -148,7 +161,9 @@ class DiscoveryActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        SerialPort.bluetoothAdapter.cancelDiscovery()
         unregisterReceiver(discoveryBroadcastReceiver)
+        dialog.dismiss()
         SerialPort.logUtil.log("DiscoveryActivity","onDestroy")
     }
 
@@ -167,7 +182,12 @@ class DiscoveryActivity : AppCompatActivity() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DevicesViewHolder {
             val holder = DevicesViewHolder(inflater.inflate(R.layout.device_cell,parent,false))
             holder.itemView.setOnClickListener {
-
+                dialog.show()
+                SerialPort.bluetoothAdapter.cancelDiscovery()
+                SerialPort.connectDevice(Device(
+                    it.textViewDeviceName.text.toString(),
+                    it.textViewDeviceAddress.text.toString()
+                ))
             }
             return holder
         }
