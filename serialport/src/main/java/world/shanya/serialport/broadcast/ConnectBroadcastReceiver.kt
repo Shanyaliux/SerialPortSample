@@ -21,6 +21,7 @@ class ConnectBroadcastReceiver: BroadcastReceiver() {
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
+                SerialPort.connectCallback?.invoke()
                 SerialPort.connectStatus = false
                 Toast.makeText(context,"断开连接", Toast.LENGTH_SHORT).show()
             }

@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.device_cell.view.*
 import world.shanya.serialport.R
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.broadcast.DiscoveryBroadcastReceiver
-import java.io.IOException
 
 class DiscoveryActivity : AppCompatActivity() {
 
@@ -46,7 +45,7 @@ class DiscoveryActivity : AppCompatActivity() {
             }
         })
 
-        SerialPort.set_ConnectStatusListener { status, device ->
+        SerialPort.setConnectListener {
             finish()
         }
 

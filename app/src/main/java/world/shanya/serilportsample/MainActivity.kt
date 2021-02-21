@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPortBuilder
-import world.shanya.serialport.message.MessageManager
 import world.shanya.serialport.tools.SPUtil
 
 
@@ -15,21 +15,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val serialPort = SerialPortBuilder.isDebug(true).autoConnect(true).build(this)
-
+        val serialPort = SerialPortBuilder
+            .isDebug(true)
+            .autoConnect(true)
+            .setReadDataType(SerialPort.READ_HEX)
+            .build(this)
         val device = SPUtil.getSPDevice(this)
 
-        MessageManager.getInstance()
-            .registerMessageReceiver(
-                this, "user_info_change"
-            ) { msg ->
-                if (msg != null) {
-                    val nickname = msg.data.getString("nickname", "")
-                    Log.d("SerialPortDebug", "onCreate: ${nickname}")
-                }
-            }
 
 
+        SerialPort.setReceivedDataListener {
+            Log.d("SerialPortDebug", "received: ${it}")
+        }
 
         button.setOnClickListener {
             serialPort.openDiscoveryActivity()

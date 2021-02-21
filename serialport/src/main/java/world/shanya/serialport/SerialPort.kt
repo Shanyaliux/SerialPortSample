@@ -23,6 +23,9 @@ import kotlin.collections.ArrayList
 
 typealias FindUnpairedDeviceCallback = () -> Unit
 typealias ConnectStatusCallback = (status: Boolean, device: Device) -> Unit
+typealias ConnectCallback = () -> Unit
+typealias ReceivedDataCallback = (data: String) -> Unit
+
 
 class SerialPort private constructor() {
     companion object {
@@ -65,9 +68,14 @@ class SerialPort private constructor() {
             this.findUnpairedDeviceCallback = findUnpairedDeviceCallback
         }
 
-        internal var _connectStatusCallback: ConnectStatusCallback ?= null
-        internal fun set_ConnectStatusListener(connectStatusCallback: ConnectStatusCallback) {
-            _connectStatusCallback = connectStatusCallback
+        internal var receivedDataCallback: ReceivedDataCallback ?= null
+        fun setReceivedDataListener(receivedDataCallback: ReceivedDataCallback) {
+            this.receivedDataCallback = receivedDataCallback
+        }
+
+        internal var connectCallback: ConnectCallback ?= null
+        internal fun setConnectListener(connectCallback: ConnectCallback) {
+            this.connectCallback = connectCallback
         }
 
         internal fun connectDevice(device: Device) {
@@ -76,7 +84,7 @@ class SerialPort private constructor() {
                 val bluetoothDevice = bluetoothAdapter.getRemoteDevice(address)
                 bluetoothSocket?.isConnected?.let {
                     if (it) {
-                        _connectStatusCallback?.invoke(true,device)
+                        connectCallback?.invoke()
                         MainScope().launch {
                             Toast.makeText(newContext, "请先断开当前连接", Toast.LENGTH_SHORT).show()
                         }
@@ -87,7 +95,7 @@ class SerialPort private constructor() {
                             bluetoothSocket?.connect()
 
                             newContext?.let { SPUtil.putString(it,device) }
-                            _connectStatusCallback?.invoke(true,device)
+                            connectCallback?.invoke()
                             connectStatus = true
                             logUtil.log("SerialPort","连接成功")
                             MainScope().launch {
@@ -101,7 +109,7 @@ class SerialPort private constructor() {
                                 Toast.makeText(newContext,"连接失败", Toast.LENGTH_SHORT).show()
                             }
                             connectStatus = false
-                            _connectStatusCallback?.invoke(false,device)
+                            connectCallback?.invoke()
                             try {
                                 bluetoothSocket?.close()
                             }catch (e: IOException){
@@ -117,7 +125,7 @@ class SerialPort private constructor() {
 
                         newContext?.let { SPUtil.putString(it,device) }
                         connectStatus = true
-                        _connectStatusCallback?.invoke(true,device)
+                        connectCallback?.invoke()
                         logUtil.log("SerialPort","连接成功")
                         MainScope().launch {
                             Toast.makeText(newContext,"连接成功", Toast.LENGTH_SHORT).show()
@@ -131,7 +139,7 @@ class SerialPort private constructor() {
                             Toast.makeText(newContext,"连接失败", Toast.LENGTH_SHORT).show()
                         }
                         connectStatus = false
-                        _connectStatusCallback?.invoke(false,device)
+                        connectCallback?.invoke()
                         try {
                             bluetoothSocket?.close()
                         }catch (e: IOException){
@@ -175,5 +183,13 @@ class SerialPort private constructor() {
         }catch (e: IOException){
             e.printStackTrace()
         }
+    }
+
+    fun setReadDataType(type: Int) {
+        readDataType = type
+    }
+
+    fun setSendDataType(type: Int) {
+        sendDataType = type
     }
 }

@@ -57,11 +57,11 @@ class SerialPortService : IntentService("SerialPortService") {
                     sb.toString()
                 }
                 val bundle = Bundle()
-                bundle.putString("nickname", receivedData)
+                bundle.putString("SerialPortReceivedData", receivedData)
                 val message = Message.obtain()
                 message.data = bundle
                 MainScope().launch {
-                    MessageManager.getInstance().sendMessage("user_info_change", message)
+                    SerialPort.receivedDataCallback?.invoke(receivedData)
                 }
 
                 flag = false
