@@ -8,6 +8,12 @@ import android.content.Intent
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.discovery.Device
 
+/**
+ * DiscoveryBroadcastReceiver 蓝牙搜索状态广播接收器
+ * @Author Shanya
+ * @Date 2021-3-16
+ * @Version 3.0.0
+ */
 class DiscoveryBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         when (intent?.action) {
@@ -28,12 +34,12 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
 
             BluetoothAdapter.ACTION_DISCOVERY_STARTED -> {
                 SerialPort.logUtil.log("DiscoveryBroadcastReceiver","Start")
-                SerialPort.discoveryLiveData.value = true
+                SerialPort.discoveryStatusLiveData.value = true
             }
 
             BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
                 SerialPort.logUtil.log("DiscoveryBroadcastReceiver","Finished")
-                SerialPort.discoveryLiveData.value = false
+                SerialPort.discoveryStatusLiveData.value = false
             }
         }
     }

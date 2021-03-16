@@ -24,8 +24,16 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        SerialPort.setReceivedDataListener {
+        serialPort.setReceivedDataListener {
             Log.d("SerialPortDebug", "received: ${it}")
+        }
+
+        serialPort.setConnectStatusCallback { status, device ->
+            if (status) {
+                Log.d("SerialPortDebug", "连接: ${device.address}")
+            } else {
+                Log.d("SerialPortDebug", "断开")
+            }
         }
 
         button.setOnClickListener {
@@ -37,11 +45,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         button3.setOnClickListener {
-            startActivity(Intent(this, MainActivityA::class.java))
+//            startActivity(Intent(this, MainActivityA::class.java))
+            serialPort.connectDevice("98:D3:32:21:67:D0")
         }
 
         button4.setOnClickListener {
-            startActivity(Intent(this,MainActivityB::class.java))
+//            startActivity(Intent(this,MainActivityB::class.java))
+            serialPort.sendData("hello")
         }
     }
 }

@@ -21,12 +21,22 @@ import java.io.InputStream
 import java.util.UUID.*
 import kotlin.collections.ArrayList
 
+
+//找到设备接口
 typealias FindUnpairedDeviceCallback = () -> Unit
+//连接状态接口
 typealias ConnectStatusCallback = (status: Boolean, device: Device) -> Unit
+//连接接口
 typealias ConnectCallback = () -> Unit
+//接收消息接口
 typealias ReceivedDataCallback = (data: String) -> Unit
 
-
+/**
+ * SerialPort API
+ * @Author Shanya
+ * @Date 2021-3-16
+ * @Version 3.0.0
+ */
 class SerialPort private constructor() {
     companion object {
         private var instance: SerialPort? = null
@@ -42,60 +52,139 @@ class SerialPort private constructor() {
             return instance!!
         }
 
+        //已配对设备列表
         val pairedDevicesList = ArrayList<Device>()
+        //未配对设备列表
         val unPairedDevicesList = ArrayList<Device>()
-        internal val logUtil = LogUtil("SerialPortDebug")
 
-
+        /**
+         * 接收发送数据格式标签
+         */
+        //接收数据格式为字符串
         const val READ_STRING = 1
+        //发送数据格式为字符串
         const val SEND_STRING = 2
+        //接收数据格式为十六进制
         const val READ_HEX = 3
+        //发送数据格式为十六进制
         const val SEND_HEX = 4
-        internal var readDataType = READ_STRING
-        internal var sendDataType = SEND_STRING
-        internal val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        internal var bluetoothSocket: BluetoothSocket?= null
-        internal var inputStream: InputStream?= null
-        private var UUID = "00001101-0000-1000-8000-00805F9B34FB"
-        internal var discoveryLiveData = MutableLiveData<Boolean>()
-        private var newContext: Context ?= null
-        private var oldContext: Context ?= null
-        private val connectBroadcastReceiver = ConnectBroadcastReceiver()
-        internal var connectStatus = false
 
+
+        //打印日志工具
+        internal val logUtil = LogUtil("SerialPortDebug")
+        //接收数据格式默认为字符串
+        internal var readDataType = READ_STRING
+        //发送数据格式默认为字符串
+        internal var sendDataType = SEND_STRING
+        //蓝牙适配器
+        internal val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        //蓝牙通信Socket
+        internal var bluetoothSocket: BluetoothSocket?= null
+        //蓝牙通信inputStream
+        internal var inputStream: InputStream?= null
+        //Android蓝牙串口通信UUID
+        private var UUID = "00001101-0000-1000-8000-00805F9B34FB"
+        //搜索状态LiveData
+        internal var discoveryStatusLiveData = MutableLiveData<Boolean>()
+        //新的上下文
+        private var newContext: Context ?= null
+        //旧的上下文
+        private var oldContext: Context ?= null
+        //连接广播接收器
+        private val connectBroadcastReceiver = ConnectBroadcastReceiver()
+        //连接状态
+        internal var connectStatus = false
+        //自动连接标志（执行自动连接后即为 true）
+        internal var autoConnectFlag = false
+        //已经连接的设备
+        internal var connectedDevice: Device ?= null
+
+        //找到设备回调接口
         internal var findUnpairedDeviceCallback: FindUnpairedDeviceCallback ?= null
-        fun setFindDeviceListener(findUnpairedDeviceCallback: FindUnpairedDeviceCallback) {
+        /**
+         * 发现设备回调接口函数
+         * @param findUnpairedDeviceCallback 找到设备回调接口
+         * @Author Shanya
+         * @Date 2021-3-16
+         * @Version 3.0.0
+         */
+        internal fun setFindDeviceListener(findUnpairedDeviceCallback: FindUnpairedDeviceCallback) {
             this.findUnpairedDeviceCallback = findUnpairedDeviceCallback
         }
 
+        //收到消息回调接口
         internal var receivedDataCallback: ReceivedDataCallback ?= null
-        fun setReceivedDataListener(receivedDataCallback: ReceivedDataCallback) {
+        /**
+         * 内部静态接收消息回调接口函数
+         * @param receivedDataCallback 收到消息回调接口
+         * @Author Shanya
+         * @Date 2021-3-16
+         * @Version 3.0.0
+         */
+        internal fun _setReceivedDataListener(receivedDataCallback: ReceivedDataCallback) {
             this.receivedDataCallback = receivedDataCallback
         }
 
+        //内部连接回调，不包含连接信息（成功与否和连接设备）
         internal var connectCallback: ConnectCallback ?= null
+        /**
+         * 内部连接回调接口函数
+         * @param connectCallback 内部连接回调接口
+         * @Author Shanya
+         * @Date 2021-3-16
+         * @Version 3.0.0
+         */
         internal fun setConnectListener(connectCallback: ConnectCallback) {
             this.connectCallback = connectCallback
         }
 
-        internal fun connectDevice(device: Device) {
+        //连接状态回调，外部使用（包含成功与否和连接设备）
+        internal var connectStatusCallback: ConnectStatusCallback ?= null
+        /**
+         * 内连接状态回调接口函数
+         * @param connectStatusCallback 连接状态回调接口
+         * @Author Shanya
+         * @Date 2021-3-16
+         * @Version 3.0.0
+         */
+        internal fun _setConnectStatusCallback(connectStatusCallback: ConnectStatusCallback) {
+            this.connectStatusCallback = connectStatusCallback
+        }
+
+        /**
+         * 内连接函数
+         * @param device 连接设备
+         * @Author Shanya
+         * @Date 2021-3-16
+         * @Version 3.0.0
+         */
+        internal fun _connectDevice(device: Device) {
             Thread {
                 val address = device.address
                 val bluetoothDevice = bluetoothAdapter.getRemoteDevice(address)
                 bluetoothSocket?.isConnected?.let {
                     if (it) {
                         connectCallback?.invoke()
-                        MainScope().launch {
-                            Toast.makeText(newContext, "请先断开当前连接", Toast.LENGTH_SHORT).show()
+                        if (autoConnectFlag){
+                            MainScope().launch {
+                                Toast.makeText(newContext, "请先断开当前连接", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+
                         }
+
                     } else {
                         try {
                             bluetoothSocket =
                                     bluetoothDevice.createRfcommSocketToServiceRecord(fromString(UUID))
                             bluetoothSocket?.connect()
 
-                            newContext?.let { SPUtil.putString(it,device) }
+                            newContext?.let {context->
+                                SPUtil.putString(context,device)
+                            }
                             connectCallback?.invoke()
+                            connectStatusCallback?.invoke(true,device)
+                            connectedDevice = device
                             connectStatus = true
                             logUtil.log("SerialPort","连接成功")
                             MainScope().launch {
@@ -105,6 +194,7 @@ class SerialPort private constructor() {
                             inputStream = bluetoothSocket?.inputStream
                             newContext?.startService(Intent(newContext,SerialPortService::class.java))
                         } catch (e: IOException) {
+                            logUtil.log("SerialPort","连接失败")
                             MainScope().launch {
                                 Toast.makeText(newContext,"连接失败", Toast.LENGTH_SHORT).show()
                             }
@@ -126,6 +216,8 @@ class SerialPort private constructor() {
                         newContext?.let { SPUtil.putString(it,device) }
                         connectStatus = true
                         connectCallback?.invoke()
+                        connectStatusCallback?.invoke(true,device)
+                        connectedDevice = device
                         logUtil.log("SerialPort","连接成功")
                         MainScope().launch {
                             Toast.makeText(newContext,"连接成功", Toast.LENGTH_SHORT).show()
@@ -152,15 +244,35 @@ class SerialPort private constructor() {
         }
     }
 
+    /**
+     * 类初始化
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
     init {
-        discoveryLiveData.value = false
+        discoveryStatusLiveData.value = false
     }
 
+    /**
+     * 是否开启Debug模式（Debug模式会打印日志）
+     * @param status 开启状态
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
     internal fun isDebug(status: Boolean):SerialPort {
         logUtil.status = status
         return this
     }
 
+    /**
+     * 创建实例，获取上下文并注册相应广播
+     * @param context 上下文
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
     internal fun build(context: Context) {
         oldContext = newContext
         newContext = context
@@ -171,13 +283,103 @@ class SerialPort private constructor() {
         )
     }
 
+    /**
+     * 字符串转换成十六进制
+     * @param str 待转换的字符串
+     * @return 十六进制数组
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
+    private fun stringToHex(str: String): ArrayList<Byte>? {
+        val chars = "0123456789ABCDEF".toCharArray()
+        val stingTemp = str.replace(" ","")
+        val bs = stingTemp.toCharArray()
+        var bit = 0
+        var i = 0
+        val intArray = ArrayList<Byte>()
+        if (stingTemp.length and 0x01 != 0){
+            MainScope().launch {
+                Toast.makeText(newContext,"请输入的十六进制数据保持两位，不足前面补0",Toast.LENGTH_SHORT).show()
+            }
+            throw  RuntimeException("字符个数不是偶数")
+        }
+        while (i < bs.size) {
+            for (j in chars.indices) {
+                if (bs[i] == chars[j]) {
+                    bit += (j * 16)
+                }
+                if (bs[i + 1] == chars[j]) {
+                    bit += j
+                }
+            }
+            intArray.add(bit.toByte())
+            i += 2
+            bit = 0
+        }
+        return intArray
+    }
+
+    /**
+     * 内部发送数据函数（异步线程）
+     * @param data 待发送数据
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
+    private fun send(data : String){
+        try {
+            val outputStream = bluetoothSocket?.outputStream
+            var n = 0
+            val bos: ByteArray = if (sendDataType == SEND_STRING) {
+                data.toByteArray()
+            }else{
+                stringToHex(data)?.toList()!!.toByteArray()
+            }
+
+            for (bo in bos) {
+                if (bo.toInt() == 0x0a) {
+                    n++
+                }
+            }
+            val bosNew = ByteArray(bos.size + n)
+            n = 0
+            for (bo in bos) {
+                if (bo.toInt() == 0x0a) {
+                    bosNew[n++] = 0x0d
+                    bosNew[n] = 0x0a
+                } else {
+                    bosNew[n] = bo
+                }
+                n++
+            }
+            outputStream?.write(bosNew)
+            logUtil.log("SerialPort","发送数据: $data")
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
+
+    /**
+     * 打开搜索页面
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
     fun openDiscoveryActivity() {
         newContext?.startActivity(Intent(newContext,DiscoveryActivity::class.java))
     }
 
+    /**
+     * 断开连接
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
     fun disconnect() {
         try {
             connectStatus = false
+            bluetoothSocket?.close()
             newContext?.stopService(Intent(newContext,SerialPortService::class.java))
 
         }catch (e: IOException){
@@ -185,11 +387,84 @@ class SerialPort private constructor() {
         }
     }
 
+    /**
+     * 设置接收数据格式
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
     fun setReadDataType(type: Int) {
         readDataType = type
     }
 
+
+    /**
+     * 设置发送数据格式
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
     fun setSendDataType(type: Int) {
         sendDataType = type
+    }
+
+    /**
+     * 连接设备
+     * @param address 设备地址
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
+    fun connectDevice(address: String) {
+        _connectDevice(Device("",address))
+    }
+
+    /**
+     * 接收数据回调接口函数
+     * @param receivedDataCallback 接收数据回调接口
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
+    fun setReceivedDataListener(receivedDataCallback: ReceivedDataCallback) {
+        _setReceivedDataListener(receivedDataCallback)
+    }
+
+    /**
+     * 连接状态回调接口函数
+     * @param connectStatusCallback 连接状态回调接口
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
+    fun setConnectStatusCallback(connectStatusCallback: ConnectStatusCallback) {
+        _setConnectStatusCallback(connectStatusCallback)
+    }
+
+    /**
+     * 发送数据
+     * @param data 待发送数据
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
+    fun sendData(data:String){
+        if (!bluetoothAdapter.isEnabled){
+            bluetoothAdapter.enable()
+            return
+        }
+
+        bluetoothSocket?.isConnected?.let {
+            if (!it) {
+                MainScope().launch {
+                    Toast.makeText(newContext,"请先连接设备",Toast.LENGTH_SHORT).show()
+                }
+                return
+            }
+        }
+
+        Thread{
+            send(data)
+        }.start()
     }
 }

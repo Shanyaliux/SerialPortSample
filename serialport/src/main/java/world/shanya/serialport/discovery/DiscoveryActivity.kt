@@ -22,6 +22,12 @@ import world.shanya.serialport.R
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.broadcast.DiscoveryBroadcastReceiver
 
+/**
+ * DiscoveryActivity 搜索页面Activity
+ * @Author Shanya
+ * @Date 2021-3-16
+ * @Version 3.0.0
+ */
 class DiscoveryActivity : AppCompatActivity() {
 
     private val discoveryBroadcastReceiver = DiscoveryBroadcastReceiver()
@@ -36,7 +42,7 @@ class DiscoveryActivity : AppCompatActivity() {
         dialog.setContentView(R.layout.progress_dialog_layout)
         dialog.setCancelable(false)
 
-        SerialPort.discoveryLiveData.observe(this, Observer {
+        SerialPort.discoveryStatusLiveData.observe(this, Observer {
             if (it) {
                 swipeRedreshLayout.isRefreshing = true
             } else {
@@ -183,7 +189,7 @@ class DiscoveryActivity : AppCompatActivity() {
             holder.itemView.setOnClickListener {
                 dialog.show()
                 SerialPort.bluetoothAdapter.cancelDiscovery()
-                SerialPort.connectDevice(Device(
+                SerialPort._connectDevice(Device(
                     it.textViewDeviceName.text.toString(),
                     it.textViewDeviceAddress.text.toString()
                 ))

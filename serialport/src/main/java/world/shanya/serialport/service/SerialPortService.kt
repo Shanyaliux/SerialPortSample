@@ -16,11 +16,15 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
-import world.shanya.serialport.message.MessageManager
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 
-
+/**
+ * SerialPortService 接收数据服务
+ * @Author Shanya
+ * @Date 2021-3-16
+ * @Version 3.0.0
+ */
 class SerialPortService : IntentService("SerialPortService") {
 
     override fun onCreate() {

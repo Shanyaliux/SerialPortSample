@@ -1,7 +1,10 @@
 package world.shanya.serialport.discovery
 
 /**
- * 连接设备的数据类
+ * Device 设备
+ * @Author Shanya
+ * @Date 2021-3-16
+ * @Version 3.0.0
  */
 data class Device(
     val name:String,

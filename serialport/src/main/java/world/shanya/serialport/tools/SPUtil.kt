@@ -8,6 +8,12 @@ const val SPName = "SerialPortSP"
 const val DEVICE_NAME = "SP_DEVICE_NAME"
 const val DEVICE_ADDRESS = "SP_DEVICE_ADDRESS"
 
+/**
+ * SPUtil SharePreferences管理类
+ * @Author SPUtil
+ * @Date 2020-11-25
+ * @Version 3.0.0
+ */
 object SPUtil {
     fun putString(context: Context, device: Device) {
         val sp = context.getSharedPreferences(SPName, Context.MODE_PRIVATE)
