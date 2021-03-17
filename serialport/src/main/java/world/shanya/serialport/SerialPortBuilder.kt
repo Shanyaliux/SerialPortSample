@@ -62,6 +62,28 @@ object SerialPortBuilder {
         return this
     }
     /**
+     * 连接状态回调接口函数
+     * @param connectStatusCallback 连接状态回调接口
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
+    fun setConnectStatusCallback(connectStatusCallback: ConnectStatusCallback): SerialPortBuilder {
+        SerialPort._setConnectStatusCallback(connectStatusCallback)
+        return this
+    }
+    /**
+     * 接收数据回调接口函数
+     * @param receivedDataCallback 接收数据回调接口
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
+    fun setReceivedDataListener(receivedDataCallback: ReceivedDataCallback): SerialPortBuilder {
+        SerialPort._setReceivedDataListener(receivedDataCallback)
+        return this
+    }
+    /**
      * 创建实例
      * @param context 上下文
      * @Author Shanya

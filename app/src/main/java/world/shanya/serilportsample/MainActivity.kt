@@ -19,22 +19,17 @@ class MainActivity : AppCompatActivity() {
             .isDebug(true)
             .autoConnect(true)
             .setReadDataType(SerialPort.READ_HEX)
-            .build(this)
-        val device = SPUtil.getSPDevice(this)
-
-
-
-        serialPort.setReceivedDataListener {
-            Log.d("SerialPortDebug", "received: ${it}")
-        }
-
-        serialPort.setConnectStatusCallback { status, device ->
-            if (status) {
-                Log.d("SerialPortDebug", "连接: ${device.address}")
-            } else {
-                Log.d("SerialPortDebug", "断开")
+            .setReceivedDataListener {
+                Log.d("SerialPortDebug", "received: ${it}")
             }
-        }
+            .setConnectStatusCallback { status, device ->
+                if (status) {
+                    Log.d("SerialPortDebug", "连接: ${device.address}")
+                } else {
+                    Log.d("SerialPortDebug", "断开")
+                }
+            }
+            .build(this)
 
         button.setOnClickListener {
             serialPort.openDiscoveryActivity()
