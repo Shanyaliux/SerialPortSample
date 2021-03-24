@@ -58,7 +58,12 @@ class SerialPortService : IntentService("SerialPortService") {
                     for (i in buffer) {
                         sb.append("${String.format("%2X", i)} ")
                     }
-                    sb.toString()
+
+                    if (SerialPort.hexStringToStringFlag) {
+                        SerialPort._hexStringToString(sb.toString()).toString()
+                    } else {
+                        sb.toString()
+                    }
                 }
                 val bundle = Bundle()
                 bundle.putString("SerialPortReceivedData", receivedData)

@@ -37,6 +37,19 @@ object SerialPortBuilder {
         isAutoConnect = status
         return this
     }
+
+    /**
+     * 是否开启十六进制字符串自动转换成字符串
+     * @param status 开启状态
+     * @Author Shanya
+     * @Date 2021-3-24
+     * @Version 3.0.0
+     */
+    fun autoHexStringToString(status: Boolean): SerialPortBuilder {
+        SerialPort.hexStringToStringFlag = status
+        return this
+    }
+
     /**
      * 设置接收数据格式
      * @param type 接收数据格式（默认字符串格式）

@@ -14,6 +14,7 @@ import world.shanya.serialport.broadcast.ConnectBroadcastReceiver
 import world.shanya.serialport.discovery.Device
 import world.shanya.serialport.discovery.DiscoveryActivity
 import world.shanya.serialport.service.SerialPortService
+import world.shanya.serialport.tools.HexStringToString
 import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.SPUtil
 import java.io.IOException
@@ -98,6 +99,8 @@ class SerialPort private constructor() {
         internal var autoConnectFlag = false
         //已经连接的设备
         internal var connectedDevice: Device ?= null
+        //十六进制字符串转换成字符串标志
+        internal var hexStringToStringFlag = false
 
         //找到设备回调接口
         internal var findUnpairedDeviceCallback: FindUnpairedDeviceCallback ?= null
@@ -241,6 +244,18 @@ class SerialPort private constructor() {
                 }
             }.start()
 
+        }
+
+        /**
+         * 十六进制字符串转换成字符串
+         * @param hexString 待转换十六进制字符串
+         * @return 转换完成的字符串
+         * @Author Shanya
+         * @Date 2021-3-16
+         * @Version 3.0.0
+         */
+        internal fun _hexStringToString(hexString: String): String? {
+            return HexStringToString.conversion(hexString)
         }
     }
 
@@ -466,5 +481,17 @@ class SerialPort private constructor() {
         Thread{
             send(data)
         }.start()
+    }
+
+    /**
+     * 十六进制字符串转换成字符串
+     * @param hexString 待转换十六进制字符串
+     * @return 转换完成的字符串
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
+    fun hexStringToString(hexString: String): String? {
+        return HexStringToString.conversion(hexString)
     }
 }

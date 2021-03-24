@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         val serialPort = SerialPortBuilder
             .isDebug(true)
             .autoConnect(true)
+            .autoHexStringToString(true)
             .setReadDataType(SerialPort.READ_HEX)
             .setReceivedDataListener {
                 Log.d("SerialPortDebug", "received: ${it}")
