@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPortBuilder
+import world.shanya.serialport.discovery.DiscoveryActivity
 import world.shanya.serialport.tools.SPUtil
 
 
@@ -33,11 +34,11 @@ class MainActivity : AppCompatActivity() {
             .build(this)
 
         button.setOnClickListener {
-            serialPort.openDiscoveryActivity()
+            serialPort.openDiscoveryActivity(Intent(this,DiscoveryActivity::class.java))
         }
 
         button2.setOnClickListener {
-            serialPort.disconnect()
+            serialPort.doDiscovery(this)
         }
 
         button3.setOnClickListener {

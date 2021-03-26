@@ -1,5 +1,6 @@
 package world.shanya.serialport
 
+import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
@@ -11,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import world.shanya.serialport.broadcast.ConnectBroadcastReceiver
+import world.shanya.serialport.broadcast.DiscoveryBroadcastReceiver
 import world.shanya.serialport.discovery.Device
 import world.shanya.serialport.discovery.DiscoveryActivity
 import world.shanya.serialport.service.SerialPortService
@@ -21,6 +23,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.UUID.*
 import kotlin.collections.ArrayList
+import java.lang.Class as Class
 
 
 //找到设备接口
@@ -54,9 +57,9 @@ class SerialPort private constructor() {
         }
 
         //已配对设备列表
-        val pairedDevicesList = ArrayList<Device>()
+        internal val pairedDevicesList = ArrayList<Device>()
         //未配对设备列表
-        val unPairedDevicesList = ArrayList<Device>()
+        internal val unPairedDevicesList = ArrayList<Device>()
 
         /**
          * 接收发送数据格式标签
@@ -70,7 +73,8 @@ class SerialPort private constructor() {
         //发送数据格式为十六进制
         const val SEND_HEX = 4
 
-
+        //搜索结果广播接收器
+        private val discoveryBroadcastReceiver = DiscoveryBroadcastReceiver()
         //打印日志工具
         internal val logUtil = LogUtil("SerialPortDebug")
         //接收数据格式默认为字符串
@@ -386,6 +390,17 @@ class SerialPort private constructor() {
     }
 
     /**
+     * 打开搜索页面
+     * @param intent
+     * @Author Shanya
+     * @Date 2021-3-26
+     * @Version 3.0.0
+     */
+    fun openDiscoveryActivity(intent: Intent) {
+        newContext?.startActivity(intent)
+    }
+
+    /**
      * 断开连接
      * @Author Shanya
      * @Date 2021-3-16
@@ -493,5 +508,55 @@ class SerialPort private constructor() {
      */
     fun hexStringToString(hexString: String): String? {
         return HexStringToString.conversion(hexString)
+    }
+
+    /**
+     * 获取已配对设备列表
+     * @return 已配对设备列表
+     * @Author Shanya
+     * @Date 2021-3-26
+     * @Version 3.0.0
+     */
+    fun getPairedDevicesList() = pairedDevicesList
+
+    /**
+     * 获取未配对设备列表
+     * @return 未配对设备列表
+     * @Author Shanya
+     * @Date 2021-3-26
+     * @Version 3.0.0
+     */
+    fun getUnPairedDevicesList() = unPairedDevicesList
+
+    /**
+     * 搜索
+     * @param context 上下文
+     * @Author Shanya
+     * @Date 2021-3-26
+     * @Version 3.0.0
+     */
+    fun doDiscovery(context: Context) {
+
+        logUtil.log("Discovery","RegisterReceiver")
+
+        context.registerReceiver(discoveryBroadcastReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
+        context.registerReceiver(discoveryBroadcastReceiver, IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_STARTED))
+        context.registerReceiver(discoveryBroadcastReceiver, IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED))
+
+        logUtil.log("Discovery","Get paired devices")
+
+        val pairedDevices:Set<BluetoothDevice> = bluetoothAdapter.bondedDevices
+        if (pairedDevices.isNotEmpty()){
+            pairedDevicesList.clear()
+            for (device in pairedDevices){
+                pairedDevicesList.add(Device(device.name?:"unknown",device.address))
+            }
+        }
+
+        logUtil.log("Discovery","Start discovery")
+
+        unPairedDevicesList.clear()
+
+        bluetoothAdapter.startDiscovery()
     }
 }
