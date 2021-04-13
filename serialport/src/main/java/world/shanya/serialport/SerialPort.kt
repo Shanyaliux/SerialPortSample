@@ -473,6 +473,7 @@ class SerialPort private constructor() {
             if (!it) {
                 MainScope().launch {
                     Toast.makeText(newContext,"请先连接设备",Toast.LENGTH_SHORT).show()
+                    openDiscoveryActivity()
                 }
                 return
             }
