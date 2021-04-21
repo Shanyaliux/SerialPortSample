@@ -105,6 +105,8 @@ class SerialPort private constructor() {
         internal var connectedDevice: Device ?= null
         //十六进制字符串转换成字符串标志
         internal var hexStringToStringFlag = false
+        //自动打开搜索页面标志
+        internal var autoOpenDiscoveryActivity = false
 
         //找到设备回调接口
         internal var findUnpairedDeviceCallback: FindUnpairedDeviceCallback ?= null

@@ -39,6 +39,18 @@ object SerialPortBuilder {
     }
 
     /**
+     * 是否开启在未连接设备发送数据时自动打开默认搜索页面
+     * @param status 开启状态
+     * @Author Shanya
+     * @Date 2021-4-21
+     * @Version 3.0.0
+     */
+    fun autoOpenDiscoveryActivity(status: Boolean): SerialPortBuilder {
+        SerialPort.autoOpenDiscoveryActivity = true
+        return this
+    }
+
+    /**
      * 是否开启十六进制字符串自动转换成字符串
      * @param status 开启状态
      * @Author Shanya
@@ -98,13 +110,24 @@ object SerialPortBuilder {
     }
     /**
      * 发送数据函数
-     * @param fata 待发送数据
+     * @param data 待发送数据
      * @Author Shanya
      * @Date 2021-4-15
      * @Version 3.0.0
      */
     fun sendData(data: String) {
         serialPort.sendData(data)
+    }
+
+    /**
+     * 搜索设备函数
+     * @param context 上下文
+     * @Author Shanya
+     * @Date 2021-4-21
+     * @Version 3.0.0
+     */
+    fun doDiscovery(context: Context) {
+        serialPort.doDiscovery(context)
     }
     /**
      * 创建实例
