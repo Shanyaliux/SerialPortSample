@@ -484,10 +484,19 @@ class SerialPort private constructor() {
             return
         }
 
+        if (bluetoothSocket == null) {
+            MainScope().launch {
+                Toast.makeText(newContext,"请先连接设备",Toast.LENGTH_SHORT).show()
+                openDiscoveryActivity()
+            }
+            return
+        }
+
         bluetoothSocket?.isConnected?.let {
             if (!it) {
                 MainScope().launch {
                     Toast.makeText(newContext,"请先连接设备",Toast.LENGTH_SHORT).show()
+                    openDiscoveryActivity()
                 }
                 return
             }

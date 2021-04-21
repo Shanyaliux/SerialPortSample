@@ -97,6 +97,16 @@ object SerialPortBuilder {
         return this
     }
     /**
+     * 发送数据函数
+     * @param fata 待发送数据
+     * @Author Shanya
+     * @Date 2021-4-15
+     * @Version 3.0.0
+     */
+    fun sendData(data: String) {
+        serialPort.sendData(data)
+    }
+    /**
      * 创建实例
      * @param context 上下文
      * @Author Shanya
