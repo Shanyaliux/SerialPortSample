@@ -38,6 +38,10 @@ class DiscoveryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discovery)
 
+        if (!SerialPort.bluetoothAdapter.isEnabled) {
+            SerialPort.bluetoothAdapter.enable()
+        }
+
         dialog = Dialog(this)
         dialog.setContentView(R.layout.progress_dialog_layout)
         dialog.setCancelable(false)

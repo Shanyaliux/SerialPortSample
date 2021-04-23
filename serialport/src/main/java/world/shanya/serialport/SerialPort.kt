@@ -273,6 +273,9 @@ class SerialPort private constructor() {
      */
     init {
         discoveryStatusLiveData.value = false
+        if (!bluetoothAdapter.isEnabled) {
+            bluetoothAdapter.enable()
+        }
     }
 
     /**
