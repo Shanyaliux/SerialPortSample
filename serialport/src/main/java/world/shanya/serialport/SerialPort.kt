@@ -108,6 +108,17 @@ class SerialPort private constructor() {
         //自动打开搜索页面标志
         internal var autoOpenDiscoveryActivity = false
 
+        /**
+         * setUUID 设置UUID
+         * @Author Shanya
+         * @Date 2021-5-12
+         * @Version 3.1.0
+         */
+        fun setUUID(uuid: String) {
+            UUID = uuid
+        }
+
+
         //找到设备回调接口
         internal var findUnpairedDeviceCallback: FindUnpairedDeviceCallback ?= null
         /**

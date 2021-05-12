@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         val serialPort = SerialPortBuilder
             .isDebug(true)
             .autoConnect(true)
+            .setUUID("0000FFE0-0000-1000-8000-00805f9b34fb")
             .autoHexStringToString(true)
             .setReadDataType(SerialPort.READ_HEX)
             .setReceivedDataListener {

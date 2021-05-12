@@ -129,6 +129,18 @@ object SerialPortBuilder {
     fun doDiscovery(context: Context) {
         serialPort.doDiscovery(context)
     }
+
+    /**
+     * setUUID 设置UUID
+     * @Author Shanya
+     * @Date 2021-5-12
+     * @Version 3.1.0
+     */
+    fun setUUID(uuid: String):SerialPortBuilder {
+        SerialPort.setUUID(uuid)
+        return this
+    }
+
     /**
      * 创建实例
      * @param context 上下文
