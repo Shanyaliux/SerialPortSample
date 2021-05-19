@@ -119,7 +119,7 @@ class DiscoveryActivity : AppCompatActivity() {
         if (pairedDevices.isNotEmpty()){
             SerialPort.pairedDevicesList.clear()
             for (device in pairedDevices){
-                SerialPort.pairedDevicesList.add(Device(device.name?:"",device.address))
+                SerialPort.pairedDevicesList.add(Device(device.name?:"",device.address,false))
             }
         }
 
@@ -173,6 +173,7 @@ class DiscoveryActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         SerialPort.bluetoothAdapter.cancelDiscovery()
+        SerialPort.bluetoothAdapter.bluetoothLeScanner.stopScan(SerialPort.scanCallback)
         unregisterReceiver(discoveryBroadcastReceiver)
         dialog.dismiss()
         SerialPort.logUtil.log("DiscoveryActivity","onDestroy")
@@ -197,10 +198,37 @@ class DiscoveryActivity : AppCompatActivity() {
             holder.itemView.setOnClickListener {
                 dialog.show()
                 SerialPort.bluetoothAdapter.cancelDiscovery()
-                SerialPort.connectBle(Device(
-                    it.textViewDeviceName.text.toString(),
-                    it.textViewDeviceAddress.text.toString()
-                ))
+                if (SerialPort.pairedDevicesList.contains(
+                        Device(
+                            it.textViewDeviceName.text.toString(),
+                            it.textViewDeviceAddress.text.toString(), false
+                        )
+                    )
+                ) {
+                    SerialPort._connectDevice(
+                        Device(
+                            it.textViewDeviceName.text.toString(),
+                            it.textViewDeviceAddress.text.toString(), false
+                        )
+                    )
+                } else {
+                    SerialPort.connectBle(it.textViewDeviceAddress.text.toString())
+                }
+                if (SerialPort.unPairedDevicesList.contains(
+                        Device(
+                            it.textViewDeviceName.text.toString(),
+                            it.textViewDeviceAddress.text.toString(), false
+                        )
+                    )
+                ) {
+                    Device(
+                        it.textViewDeviceName.text.toString(),
+                        it.textViewDeviceAddress.text.toString(), false
+                    )
+                } else {
+                    SerialPort.connectBle(it.textViewDeviceAddress.text.toString())
+                }
+
             }
             return holder
         }
@@ -217,11 +245,21 @@ class DiscoveryActivity : AppCompatActivity() {
                 val current = SerialPort.pairedDevicesList[position]
                 holder.textViewDeviceName.text = current.name
                 holder.textViewDeviceAddress.text = current.address
+                if (current.idBle) {
+                    holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_ble)
+                } else {
+                    holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo)
+                }
             }
             else {
                 val current = SerialPort.unPairedDevicesList[position]
                 holder.textViewDeviceName.text = current.name
                 holder.textViewDeviceAddress.text = current.address
+                if (current.idBle) {
+                    holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_ble)
+                } else {
+                    holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo)
+                }
             }
         }
 

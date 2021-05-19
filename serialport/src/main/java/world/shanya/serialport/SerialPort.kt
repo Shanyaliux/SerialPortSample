@@ -14,6 +14,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import world.shanya.serialport.broadcast.ConnectBroadcastReceiver
 import world.shanya.serialport.broadcast.DiscoveryBroadcastReceiver
+import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.Device
 import world.shanya.serialport.discovery.DiscoveryActivity
 import world.shanya.serialport.discovery.SerialPortLeScanCallback
@@ -62,7 +63,7 @@ class SerialPort private constructor() {
                 super.onConnectionStateChange(gatt, status, newState)
                 logUtil.log("onConnectionStateChange",gatt?.device?.name.toString())
                 if (newState == BluetoothProfile.STATE_CONNECTED) {
-                    val device = Device(gatt?.device?.name?:"",gatt?.device?.address?:"")
+                    val device = Device(gatt?.device?.name?:"",gatt?.device?.address?:"",true)
                     connectStatus = true
                     connectCallback?.invoke()
                     connectStatusCallback?.invoke(true,device)
@@ -72,12 +73,10 @@ class SerialPort private constructor() {
             }
         }
 
-        fun connectBle(device: Device) {
-
-            val bluetoothDevice = bluetoothAdapter.getRemoteDevice(device.address)
-            val bluetoothGatt = bluetoothDevice.connectGatt(newContext, false, bluetoothGattCallback)
-
-
+        fun connectBle(address: String) {
+            newContext?.let {
+                SerialPortConnect.connectBle(it,address)
+            }
         }
 
 
@@ -113,7 +112,7 @@ class SerialPort private constructor() {
         //蓝牙通信inputStream
         internal var inputStream: InputStream?= null
         //Android蓝牙串口通信UUID
-        private var UUID = "00001101-0000-1000-8000-00805F9B34FB"
+        internal var UUID = "00001101-0000-1000-8000-00805F9B34FB"
         //搜索状态LiveData
         internal var discoveryStatusLiveData = MutableLiveData<Boolean>()
         //新的上下文
@@ -155,9 +154,13 @@ class SerialPort private constructor() {
 
                 result?.let {scanResult ->
                     scanResult.device?.let {
-                        val device = Device(it.name ?: "", it.address)
+                        val device = Device(it.name ?: "", it.address,true)
+                        val deviceL = Device(it.name ?: "", it.address,false)
                         if (!unPairedDevicesList.contains(device)) {
                             unPairedDevicesList.add(device)
+                        }
+                        if (unPairedDevicesList.contains(deviceL)) {
+                            unPairedDevicesList.remove(deviceL)
                         }
                     }
                 }
@@ -224,88 +227,9 @@ class SerialPort private constructor() {
          * @Version 3.0.0
          */
         internal fun _connectDevice(device: Device) {
-            Thread {
-                val address = device.address
-                val bluetoothDevice = bluetoothAdapter.getRemoteDevice(address)
-                bluetoothSocket?.isConnected?.let {
-                    if (it) {
-                        connectCallback?.invoke()
-                        if (autoConnectFlag){
-                            MainScope().launch {
-                                Toast.makeText(newContext, "请先断开当前连接", Toast.LENGTH_SHORT).show()
-                            }
-                        } else {
-
-                        }
-
-                    } else {
-                        try {
-                            bluetoothSocket =
-                                    bluetoothDevice.createRfcommSocketToServiceRecord(fromString(UUID))
-                            bluetoothSocket?.connect()
-
-                            newContext?.let {context->
-                                SPUtil.putString(context,device)
-                            }
-                            connectCallback?.invoke()
-                            connectStatusCallback?.invoke(true,device)
-                            connectedDevice = device
-                            connectStatus = true
-                            logUtil.log("SerialPort","连接成功")
-                            MainScope().launch {
-                                Toast.makeText(newContext,"连接成功", Toast.LENGTH_SHORT).show()
-                            }
-
-                            inputStream = bluetoothSocket?.inputStream
-                            newContext?.startService(Intent(newContext,SerialPortService::class.java))
-                        } catch (e: IOException) {
-                            logUtil.log("SerialPort","连接失败")
-                            MainScope().launch {
-                                Toast.makeText(newContext,"连接失败", Toast.LENGTH_SHORT).show()
-                            }
-                            connectStatus = false
-                            connectCallback?.invoke()
-                            try {
-                                bluetoothSocket?.close()
-                            }catch (e: IOException){
-                                e.printStackTrace()
-                            }
-                        }
-                    }
-                }?: let {
-                    try {
-                        bluetoothSocket =
-                                bluetoothDevice.createRfcommSocketToServiceRecord(fromString(UUID))
-                        bluetoothSocket?.connect()
-
-                        newContext?.let { SPUtil.putString(it,device) }
-                        connectStatus = true
-                        connectCallback?.invoke()
-                        connectStatusCallback?.invoke(true,device)
-                        connectedDevice = device
-                        logUtil.log("SerialPort","连接成功")
-                        MainScope().launch {
-                            Toast.makeText(newContext,"连接成功", Toast.LENGTH_SHORT).show()
-                        }
-
-                        inputStream = bluetoothSocket?.inputStream
-
-                        newContext?.startService(Intent(newContext,SerialPortService::class.java))
-                    } catch (e: IOException) {
-                        MainScope().launch {
-                            Toast.makeText(newContext,"连接失败", Toast.LENGTH_SHORT).show()
-                        }
-                        connectStatus = false
-                        connectCallback?.invoke()
-                        try {
-                            bluetoothSocket?.close()
-                        }catch (e: IOException){
-                            e.printStackTrace()
-                        }
-                    }
-                }
-            }.start()
-
+            newContext?.let {
+                SerialPortConnect.connectLegacy(it,device.address)
+            }
         }
 
         /**
@@ -507,7 +431,7 @@ class SerialPort private constructor() {
      * @Version 3.0.0
      */
     fun connectDevice(address: String) {
-        _connectDevice(Device("",address))
+        _connectDevice(Device("",address,false))
     }
 
     /**
@@ -634,7 +558,7 @@ class SerialPort private constructor() {
         if (pairedDevices.isNotEmpty()){
             pairedDevicesList.clear()
             for (device in pairedDevices){
-                pairedDevicesList.add(Device(device.name?:"",device.address))
+                pairedDevicesList.add(Device(device.name?:"",device.address,false))
             }
         }
 

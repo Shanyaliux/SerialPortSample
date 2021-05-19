@@ -52,6 +52,6 @@ object SPUtil {
     fun getSPDevice(context: Context): Device? {
         val name = getSPDeviceName(context)
         val address = getSPDeviceAddress(context)
-        return if (address == "") null else Device(name!!,address!!)
+        return if (address == "") null else Device(name!!,address!!,false)
     }
 }

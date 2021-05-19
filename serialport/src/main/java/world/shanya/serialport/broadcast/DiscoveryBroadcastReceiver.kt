@@ -21,7 +21,7 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
                 val device =
                     intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
                 if (device != null) {
-                    val tempDevice = Device(device.name ?: "", device.address)
+                    val tempDevice = Device(device.name ?: "", device.address,false)
                     if (!SerialPort.unPairedDevicesList.contains(tempDevice)) {
                         SerialPort.logUtil.log(
                             "DiscoveryBroadcastReceiver",

@@ -22,39 +22,15 @@ import world.shanya.serialport.tools.SPUtil
 
 class MainActivity : AppCompatActivity() {
 
-    private val bluetoothAdapter: BluetoothAdapter? by lazy(LazyThreadSafetyMode.NONE) {
-        val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-        bluetoothManager.adapter
-
-    }
-
-
-    val scanCallback = object : ScanCallback() {
-        override fun onScanFailed(errorCode: Int) {
-            super.onScanFailed(errorCode)
-        }
-
-        override fun onScanResult(callbackType: Int, result: ScanResult?) {
-            super.onScanResult(callbackType, result)
-//            Log.d("TAG", "onScanResult: ${result?.device?.name} ${result?.device?.uuids}")
-        }
-
-        override fun onBatchScanResults(results: MutableList<ScanResult>?) {
-            super.onBatchScanResults(results)
-
-        }
-
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val serialPort = SerialPortBuilder
-            .isDebug(true).build(this)
+            .isDebug(true)
+            .build(this)
 
         button.setOnClickListener {
-
             serialPort.openDiscoveryActivity()
         }
 
