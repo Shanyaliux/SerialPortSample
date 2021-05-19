@@ -46,16 +46,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewDeviceName" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewDeviceLogo"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="3dp"
+        android:contentDescription="TODO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_bluetooth_24"
-        tools:ignore="VectorDrawableCompat"
-        android:contentDescription="TODO" />
+        app:srcCompat="@mipmap/device_logo"
+        tools:ignore="VectorDrawableCompat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

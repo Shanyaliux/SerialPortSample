@@ -1,12 +1,13 @@
 package world.shanya.serialport
 
 import android.app.Activity
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothSocket
+import android.bluetooth.*
+import android.bluetooth.le.ScanCallback
+import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.MainScope
@@ -15,6 +16,7 @@ import world.shanya.serialport.broadcast.ConnectBroadcastReceiver
 import world.shanya.serialport.broadcast.DiscoveryBroadcastReceiver
 import world.shanya.serialport.discovery.Device
 import world.shanya.serialport.discovery.DiscoveryActivity
+import world.shanya.serialport.discovery.SerialPortLeScanCallback
 import world.shanya.serialport.service.SerialPortService
 import world.shanya.serialport.tools.HexStringToString
 import world.shanya.serialport.tools.LogUtil
@@ -23,7 +25,6 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.UUID.*
 import kotlin.collections.ArrayList
-import java.lang.Class as Class
 
 
 //找到设备接口
@@ -55,6 +56,30 @@ class SerialPort private constructor() {
         fun get(): SerialPort {
             return instance!!
         }
+
+        val bluetoothGattCallback = object : BluetoothGattCallback() {
+            override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
+                super.onConnectionStateChange(gatt, status, newState)
+                logUtil.log("onConnectionStateChange",gatt?.device?.name.toString())
+                if (newState == BluetoothProfile.STATE_CONNECTED) {
+                    val device = Device(gatt?.device?.name?:"",gatt?.device?.address?:"")
+                    connectStatus = true
+                    connectCallback?.invoke()
+                    connectStatusCallback?.invoke(true,device)
+                    connectedDevice = device
+                }
+
+            }
+        }
+
+        fun connectBle(device: Device) {
+
+            val bluetoothDevice = bluetoothAdapter.getRemoteDevice(device.address)
+            val bluetoothGatt = bluetoothDevice.connectGatt(newContext, false, bluetoothGattCallback)
+
+
+        }
+
 
         //已配对设备列表
         internal val pairedDevicesList = ArrayList<Device>()
@@ -118,6 +143,26 @@ class SerialPort private constructor() {
             UUID = uuid
         }
 
+        /**
+         * 搜索 BLE 回调
+         * @Author Shanya
+         * @Date 2021-5-18
+         * @Version 3.1.0
+         */
+        internal val scanCallback = object : SerialPortLeScanCallback() {
+            override fun onScanResult(callbackType: Int, result: ScanResult?) {
+                super.onScanResult(callbackType, result)
+
+                result?.let {scanResult ->
+                    scanResult.device?.let {
+                        val device = Device(it.name ?: "", it.address)
+                        if (!unPairedDevicesList.contains(device)) {
+                            unPairedDevicesList.add(device)
+                        }
+                    }
+                }
+            }
+        }
 
         //找到设备回调接口
         internal var findUnpairedDeviceCallback: FindUnpairedDeviceCallback ?= null
@@ -560,11 +605,23 @@ class SerialPort private constructor() {
      * 搜索
      * @param context 上下文
      * @Author Shanya
-     * @Date 2021-3-26
-     * @Version 3.0.0
+     * @Date 2021-5-18
+     * @Version 3.1.0
      */
     fun doDiscovery(context: Context) {
 
+        doDiscoveryLegacy(context)
+        doDiscoveryBle()
+    }
+
+    /**
+     * 搜索传统蓝牙设备
+     * @param context 上下文
+     * @Author Shanya
+     * @Date 2021-5-18
+     * @Version 3.1.0
+     */
+    fun doDiscoveryLegacy(context: Context) {
         logUtil.log("Discovery","RegisterReceiver")
 
         context.registerReceiver(discoveryBroadcastReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
@@ -577,7 +634,7 @@ class SerialPort private constructor() {
         if (pairedDevices.isNotEmpty()){
             pairedDevicesList.clear()
             for (device in pairedDevices){
-                pairedDevicesList.add(Device(device.name?:"unknown",device.address))
+                pairedDevicesList.add(Device(device.name?:"",device.address))
             }
         }
 
@@ -587,4 +644,19 @@ class SerialPort private constructor() {
 
         bluetoothAdapter.startDiscovery()
     }
+
+
+    /**
+     * 搜索 BLE
+     * @Author Shanya
+     * @Date 2021-5-18
+     * @Version 3.1.0
+     */
+    fun doDiscoveryBle() {
+        bluetoothAdapter.bluetoothLeScanner.startScan(scanCallback)
+    }
+
+
+
+
 }

@@ -21,10 +21,11 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
                 val device =
                     intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
                 if (device != null) {
-                    val tempDevice = Device(device.name ?: "unknown", device.address)
+                    val tempDevice = Device(device.name ?: "", device.address)
                     if (!SerialPort.unPairedDevicesList.contains(tempDevice)) {
-                        SerialPort.logUtil.log("DiscoveryBroadcastReceiver",
-                            "Find Device  :  ${device.name?:"unknown"}")
+                        SerialPort.logUtil.log(
+                            "DiscoveryBroadcastReceiver",
+                            "Find Device  :  ${device.name ?: ""}" )
 
                         SerialPort.unPairedDevicesList.add(tempDevice)
                         SerialPort.findUnpairedDeviceCallback?.invoke()
@@ -39,6 +40,7 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
 
             BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
                 SerialPort.logUtil.log("DiscoveryBroadcastReceiver","Finished")
+                SerialPort.bluetoothAdapter.bluetoothLeScanner.stopScan(SerialPort.scanCallback)
                 SerialPort.discoveryStatusLiveData.value = false
             }
         }

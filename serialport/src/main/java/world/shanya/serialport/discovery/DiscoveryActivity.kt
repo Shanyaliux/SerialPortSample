@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -118,7 +119,7 @@ class DiscoveryActivity : AppCompatActivity() {
         if (pairedDevices.isNotEmpty()){
             SerialPort.pairedDevicesList.clear()
             for (device in pairedDevices){
-                SerialPort.pairedDevicesList.add(Device(device.name?:"unknown",device.address))
+                SerialPort.pairedDevicesList.add(Device(device.name?:"",device.address))
             }
         }
 
@@ -127,6 +128,7 @@ class DiscoveryActivity : AppCompatActivity() {
         SerialPort.unPairedDevicesList.clear()
 
         SerialPort.bluetoothAdapter.startDiscovery()
+        SerialPort.bluetoothAdapter.bluetoothLeScanner.startScan(SerialPort.scanCallback)
     }
 
     private fun recyclerViewInit() {
@@ -186,6 +188,8 @@ class DiscoveryActivity : AppCompatActivity() {
         inner class DevicesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val textViewDeviceName: TextView = itemView.findViewById(R.id.textViewDeviceName)
             val textViewDeviceAddress: TextView = itemView.findViewById(R.id.textViewDeviceAddress)
+            val imageViewDeviceLogo: ImageView = itemView.findViewById(R.id.imageViewDeviceLogo)
+
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DevicesViewHolder {
@@ -193,7 +197,7 @@ class DiscoveryActivity : AppCompatActivity() {
             holder.itemView.setOnClickListener {
                 dialog.show()
                 SerialPort.bluetoothAdapter.cancelDiscovery()
-                SerialPort._connectDevice(Device(
+                SerialPort.connectBle(Device(
                     it.textViewDeviceName.text.toString(),
                     it.textViewDeviceAddress.text.toString()
                 ))
