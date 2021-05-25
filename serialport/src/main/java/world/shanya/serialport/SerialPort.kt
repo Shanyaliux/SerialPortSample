@@ -361,23 +361,24 @@ class SerialPort private constructor() {
                 stringToHex(data)?.toList()!!.toByteArray()
             }
 
-            for (bo in bos) {
-                if (bo.toInt() == 0x0a) {
-                    n++
-                }
-            }
-            val bosNew = ByteArray(bos.size + n)
-            n = 0
-            for (bo in bos) {
-                if (bo.toInt() == 0x0a) {
-                    bosNew[n++] = 0x0d
-                    bosNew[n] = 0x0a
-                } else {
-                    bosNew[n] = bo
-                }
-                n++
-            }
-            outputStream?.write(bosNew)
+//            for (bo in bos) {
+//                if (bo.toInt() == 0x0a) {
+//                    n++
+//                }
+//            }
+//            val bosNew = ByteArray(bos.size + n)
+//            n = 0
+//            for (bo in bos) {
+//                if (bo.toInt() == 0x0a) {
+//                    bosNew[n++] = 0x0d
+//                    bosNew[n] = 0x0a
+//                } else {
+//                    bosNew[n] = bo
+//                }
+//                n++
+//            }
+
+            outputStream?.write(bos)
             logUtil.log("SerialPort","发送数据: $data")
         }catch (e:Exception){
             e.printStackTrace()
