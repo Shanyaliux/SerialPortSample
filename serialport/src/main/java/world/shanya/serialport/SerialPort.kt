@@ -481,8 +481,8 @@ class SerialPort private constructor() {
      * 发送数据
      * @param data 待发送数据
      * @Author Shanya
-     * @Date 2021-3-16
-     * @Version 3.0.0
+     * @Date 2021-5-27
+     * @Version 3.0.2
      */
     fun sendData(data:String){
         if (!bluetoothAdapter.isEnabled){
@@ -505,7 +505,9 @@ class SerialPort private constructor() {
             if (!it) {
                 MainScope().launch {
                     Toast.makeText(newContext,"请先连接设备",Toast.LENGTH_SHORT).show()
-                    openDiscoveryActivity()
+                    if (autoOpenDiscoveryActivity) {
+                        openDiscoveryActivity()
+                    }
                 }
                 return
             }
