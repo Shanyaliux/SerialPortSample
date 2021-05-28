@@ -46,7 +46,7 @@ object SerialPortBuilder {
      * @Version 3.0.0
      */
     fun autoOpenDiscoveryActivity(status: Boolean): SerialPortBuilder {
-        SerialPort.autoOpenDiscoveryActivity = true
+        SerialPort.autoOpenDiscoveryActivityFlag = true
         return this
     }
 
@@ -138,6 +138,18 @@ object SerialPortBuilder {
      */
     fun setUUID(uuid: String):SerialPortBuilder {
         SerialPort.setUUID(uuid)
+        return this
+    }
+
+    /**
+     * 是否忽略没有名字的蓝牙设备
+     * @param status
+     * @Author Shanya
+     * @Date 2021/5/28
+     * @Version 3.1.0
+     */
+    fun isIgnoreNoNameDevice(status: Boolean): SerialPortBuilder {
+        SerialPort.isIgnoreNoNameDevice(status)
         return this
     }
 

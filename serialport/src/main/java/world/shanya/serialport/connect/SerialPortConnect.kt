@@ -1,5 +1,8 @@
 package world.shanya.serialport.connect
 
+import android.bluetooth.BluetoothGatt
+import android.bluetooth.BluetoothGattCallback
+import android.bluetooth.BluetoothProfile
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
@@ -12,13 +15,28 @@ import world.shanya.serialport.tools.SPUtil
 import java.io.IOException
 import java.util.*
 
-object SerialPortConnect {
+internal object SerialPortConnect {
+
+    internal val bluetoothGattCallback = object : BluetoothGattCallback() {
+        override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
+            super.onConnectionStateChange(gatt, status, newState)
+            SerialPort.logUtil.log("onConnectionStateChange",gatt?.device?.name.toString())
+            if (newState == BluetoothProfile.STATE_CONNECTED) {
+                val device = Device(gatt?.device?.name?:"",gatt?.device?.address?:"",true)
+                SerialPort.connectStatus = true
+                SerialPort.connectCallback?.invoke()
+                SerialPort.connectStatusCallback?.invoke(true,device)
+                SerialPort.connectedDevice = device
+            }
+
+        }
+    }
 
     internal fun connectBle(context: Context, address: String) {
         val bluetoothDevice =
             SerialPort.bluetoothAdapter.getRemoteDevice(address)
         val bluetoothGatt =
-            bluetoothDevice.connectGatt(context, false, SerialPort.bluetoothGattCallback)
+            bluetoothDevice.connectGatt(context, false, bluetoothGattCallback)
     }
 
     internal fun connectLegacy(context: Context, address: String) {

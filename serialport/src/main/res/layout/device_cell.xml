@@ -50,7 +50,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="3dp"
-        android:contentDescription="TODO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
         app:layout_constraintStart_toStartOf="@+id/guideline7"

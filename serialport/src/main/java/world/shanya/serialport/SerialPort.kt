@@ -1,30 +1,24 @@
 package world.shanya.serialport
 
-import android.app.Activity
 import android.bluetooth.*
-import android.bluetooth.le.ScanCallback
-import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import world.shanya.serialport.broadcast.ConnectBroadcastReceiver
-import world.shanya.serialport.broadcast.DiscoveryBroadcastReceiver
+import world.shanya.serialport.connect.ConnectBroadcastReceiver
+import world.shanya.serialport.discovery.DiscoveryBroadcastReceiver
 import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.Device
 import world.shanya.serialport.discovery.DiscoveryActivity
-import world.shanya.serialport.discovery.SerialPortLeScanCallback
+import world.shanya.serialport.discovery.SerialPortDiscovery
 import world.shanya.serialport.service.SerialPortService
 import world.shanya.serialport.tools.HexStringToString
 import world.shanya.serialport.tools.LogUtil
-import world.shanya.serialport.tools.SPUtil
 import java.io.IOException
 import java.io.InputStream
-import java.util.UUID.*
 import kotlin.collections.ArrayList
 
 
@@ -45,6 +39,8 @@ typealias ReceivedDataCallback = (data: String) -> Unit
  */
 class SerialPort private constructor() {
     companion object {
+
+        /***** Singleton  *****/
         private var instance: SerialPort? = null
             get() {
                 if (field == null) {
@@ -57,21 +53,9 @@ class SerialPort private constructor() {
         fun get(): SerialPort {
             return instance!!
         }
+        /**********************/
 
-        val bluetoothGattCallback = object : BluetoothGattCallback() {
-            override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
-                super.onConnectionStateChange(gatt, status, newState)
-                logUtil.log("onConnectionStateChange",gatt?.device?.name.toString())
-                if (newState == BluetoothProfile.STATE_CONNECTED) {
-                    val device = Device(gatt?.device?.name?:"",gatt?.device?.address?:"",true)
-                    connectStatus = true
-                    connectCallback?.invoke()
-                    connectStatusCallback?.invoke(true,device)
-                    connectedDevice = device
-                }
 
-            }
-        }
 
         fun connectBle(address: String) {
             newContext?.let {
@@ -98,7 +82,7 @@ class SerialPort private constructor() {
         const val SEND_HEX = 4
 
         //搜索结果广播接收器
-        private val discoveryBroadcastReceiver = DiscoveryBroadcastReceiver()
+        internal val discoveryBroadcastReceiver = DiscoveryBroadcastReceiver()
         //打印日志工具
         internal val logUtil = LogUtil("SerialPortDebug")
         //接收数据格式默认为字符串
@@ -130,7 +114,9 @@ class SerialPort private constructor() {
         //十六进制字符串转换成字符串标志
         internal var hexStringToStringFlag = false
         //自动打开搜索页面标志
-        internal var autoOpenDiscoveryActivity = false
+        internal var autoOpenDiscoveryActivityFlag = false
+        //没有名字的蓝牙模块忽略
+        internal var ignoreNoNameDeviceFlag = false
 
         /**
          * setUUID 设置UUID
@@ -143,28 +129,14 @@ class SerialPort private constructor() {
         }
 
         /**
-         * 搜索 BLE 回调
-         * @Author Shanya
-         * @Date 2021-5-18
-         * @Version 3.1.0
-         */
-        internal val scanCallback = object : SerialPortLeScanCallback() {
-            override fun onScanResult(callbackType: Int, result: ScanResult?) {
-                super.onScanResult(callbackType, result)
-
-                result?.let {scanResult ->
-                    scanResult.device?.let {
-                        val device = Device(it.name ?: "", it.address,true)
-                        val deviceL = Device(it.name ?: "", it.address,false)
-                        if (!unPairedDevicesList.contains(device)) {
-                            unPairedDevicesList.add(device)
-                        }
-                        if (unPairedDevicesList.contains(deviceL)) {
-                            unPairedDevicesList.remove(deviceL)
-                        }
-                    }
-                }
-            }
+        * 是否忽略没有名字的蓝牙设备
+        * @param status
+        * @Author Shanya
+        * @Date 2021/5/28
+        * @Version 3.1.0
+        */
+        fun isIgnoreNoNameDevice(status: Boolean) {
+            ignoreNoNameDeviceFlag = status
         }
 
         //找到设备回调接口
@@ -256,6 +228,7 @@ class SerialPort private constructor() {
         if (!bluetoothAdapter.isEnabled) {
             bluetoothAdapter.enable()
         }
+
     }
 
     /**
@@ -472,7 +445,7 @@ class SerialPort private constructor() {
         if (bluetoothSocket == null) {
             MainScope().launch {
                 Toast.makeText(newContext,"请先连接设备",Toast.LENGTH_SHORT).show()
-                if (autoOpenDiscoveryActivity) {
+                if (autoOpenDiscoveryActivityFlag) {
                     openDiscoveryActivity()
                 }
 
@@ -526,61 +499,26 @@ class SerialPort private constructor() {
     fun getUnPairedDevicesList() = unPairedDevicesList
 
     /**
-     * 搜索
+     * 开始搜索
      * @param context 上下文
      * @Author Shanya
-     * @Date 2021-5-18
+     * @Date 2021-5-28
      * @Version 3.1.0
      */
     fun doDiscovery(context: Context) {
-
-        doDiscoveryLegacy(context)
-        doDiscoveryBle()
+        SerialPortDiscovery.startLegacyScan(context)
+        SerialPortDiscovery.startBleScan()
     }
 
     /**
-     * 搜索传统蓝牙设备
+     * 停止搜索
      * @param context 上下文
      * @Author Shanya
-     * @Date 2021-5-18
+     * @Date 2021-5-28
      * @Version 3.1.0
      */
-    fun doDiscoveryLegacy(context: Context) {
-        logUtil.log("Discovery","RegisterReceiver")
-
-        context.registerReceiver(discoveryBroadcastReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
-        context.registerReceiver(discoveryBroadcastReceiver, IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_STARTED))
-        context.registerReceiver(discoveryBroadcastReceiver, IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED))
-
-        logUtil.log("Discovery","Get paired devices")
-
-        val pairedDevices:Set<BluetoothDevice> = bluetoothAdapter.bondedDevices
-        if (pairedDevices.isNotEmpty()){
-            pairedDevicesList.clear()
-            for (device in pairedDevices){
-                pairedDevicesList.add(Device(device.name?:"",device.address,false))
-            }
-        }
-
-        logUtil.log("Discovery","Start discovery")
-
-        unPairedDevicesList.clear()
-
-        bluetoothAdapter.startDiscovery()
+    fun cancelDiscovery(context: Context) {
+        SerialPortDiscovery.stopLegacyScan(context)
+        SerialPortDiscovery.stopBleScan()
     }
-
-
-    /**
-     * 搜索 BLE
-     * @Author Shanya
-     * @Date 2021-5-18
-     * @Version 3.1.0
-     */
-    fun doDiscoveryBle() {
-        bluetoothAdapter.bluetoothLeScanner.startScan(scanCallback)
-    }
-
-
-
-
 }

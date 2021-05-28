@@ -18,7 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.04" />
+            app:layout_constraintGuide_percent="0.04">
+        </androidx.constraintlayout.widget.Guideline>
 
         <TextView
             android:id="@+id/textView"
@@ -29,14 +30,16 @@
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline2" />
+            app:layout_constraintTop_toTopOf="@+id/guideline2">
+        </TextView>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.48" />
+            app:layout_constraintGuide_percent="0.48">
+        </androidx.constraintlayout.widget.Guideline>
 
         <TextView
             android:id="@+id/textView2"
@@ -47,7 +50,8 @@
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
+            app:layout_constraintTop_toTopOf="@+id/guideline3">
+        </TextView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewPaired"
@@ -58,7 +62,8 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline2" />
+            app:layout_constraintTop_toTopOf="@+id/guideline2">
+        </androidx.recyclerview.widget.RecyclerView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewUnpaired"
@@ -69,6 +74,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
+            app:layout_constraintTop_toTopOf="@+id/guideline3">
+        </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

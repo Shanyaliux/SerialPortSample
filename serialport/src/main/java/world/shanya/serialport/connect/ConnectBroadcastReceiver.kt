@@ -1,12 +1,10 @@
-package world.shanya.serialport.broadcast
+package world.shanya.serialport.connect
 
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
 import java.io.IOException
 
