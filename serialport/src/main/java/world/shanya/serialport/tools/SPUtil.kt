@@ -14,7 +14,7 @@ const val DEVICE_ADDRESS = "SP_DEVICE_ADDRESS"
  * @Date 2020-11-25
  * @Version 3.0.0
  */
-object SPUtil {
+internal object SPUtil {
     fun putString(context: Context, device: Device) {
         val sp = context.getSharedPreferences(SPName, Context.MODE_PRIVATE)
         val editor = sp.edit()

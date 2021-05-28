@@ -52,10 +52,7 @@ internal object SerialPortConnect {
                 } else {
                     _connectLegacy(context,address)
                 }
-
-            } ?: let {
-                _connectLegacy(context,address)
-            }
+            } ?: _connectLegacy(context,address)
         }.start()
     }
 
@@ -69,7 +66,6 @@ internal object SerialPortConnect {
             SerialPort.bluetoothSocket?.connect()
 
             //存储连接成功设备地址
-
             SerialPort.connectCallback?.invoke()
             SerialPort.connectStatusCallback?.invoke(true,device)
             SerialPort.connectedDevice = device
@@ -82,6 +78,7 @@ internal object SerialPortConnect {
             SerialPort.inputStream = SerialPort.bluetoothSocket?.inputStream
             context.startService(Intent(context,SerialPortService::class.java))
         } catch (e: IOException) {
+            e.printStackTrace()
             SerialPort.logUtil.log("SerialPort","连接失败")
             MainScope().launch {
                 Toast.makeText(context,"连接失败", Toast.LENGTH_SHORT).show()

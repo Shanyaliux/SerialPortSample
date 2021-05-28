@@ -1,10 +1,7 @@
 package world.shanya.serialport.discovery
 
 import android.app.Dialog
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
 import android.content.Context
-import android.content.IntentFilter
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -226,38 +223,19 @@ class DiscoveryActivity : AppCompatActivity() {
             val holder = DevicesViewHolder(inflater.inflate(R.layout.device_cell,parent,false))
             holder.itemView.setOnClickListener {
                 dialog.show()
-                SerialPort.bluetoothAdapter.cancelDiscovery()
-                if (pairedDevicesList.contains(
-                        Device(
-                            it.textViewDeviceName.text.toString(),
-                            it.textViewDeviceAddress.text.toString(), false
-                        )
-                    )
-                ) {
-                    SerialPort._connectDevice(
-                        Device(
-                            it.textViewDeviceName.text.toString(),
-                            it.textViewDeviceAddress.text.toString(), false
-                        )
-                    )
+                SerialPortDiscovery.stopLegacyScan(this@DiscoveryActivity)
+                SerialPortDiscovery.stopBleScan()
+                val device = Device(it.textViewDeviceName.text.toString(), it.textViewDeviceAddress.text.toString(), false)
+                if (pairedDevicesList.contains(device)) {
+                    SerialPort.connectDevice(false, device)
                 } else {
-                    SerialPort.connectBle(it.textViewDeviceAddress.text.toString())
+                    SerialPort.connectDevice(true, device)
                 }
-                if (unPairedDevicesList.contains(
-                        Device(
-                            it.textViewDeviceName.text.toString(),
-                            it.textViewDeviceAddress.text.toString(), false
-                        )
-                    )
-                ) {
-                    Device(
-                        it.textViewDeviceName.text.toString(),
-                        it.textViewDeviceAddress.text.toString(), false
-                    )
+                if (unPairedDevicesList.contains(device)) {
+                    SerialPort.connectDevice(false, device)
                 } else {
-                    SerialPort.connectBle(it.textViewDeviceAddress.text.toString())
+                    SerialPort.connectDevice(true, device)
                 }
-
             }
             return holder
         }

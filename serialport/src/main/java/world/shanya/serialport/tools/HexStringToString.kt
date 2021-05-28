@@ -8,7 +8,7 @@ import java.util.*
  * @Date 2021-3-24
  * @Version 3.0.0
  */
-object HexStringToString {
+internal object HexStringToString {
 
     /**
      * charToByte char转换成Byte
@@ -40,7 +40,7 @@ object HexStringToString {
         val length = tempHexString.length / 2
         val hexChars = tempHexString.toCharArray()
         val d = ByteArray(length)
-        for (i in 0..length - 1) {
+        for (i in 0 until length) {
             val pos = i * 2
             d[i] = (charToByte(hexChars[pos]).toInt() shl 4 or charToByte(hexChars[pos + 1]).toInt()).toByte()
         }

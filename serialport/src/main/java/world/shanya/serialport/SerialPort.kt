@@ -55,15 +55,6 @@ class SerialPort private constructor() {
         }
         /**********************/
 
-
-
-        fun connectBle(address: String) {
-            newContext?.let {
-                SerialPortConnect.connectBle(it,address)
-            }
-        }
-
-
         //已配对设备列表
         internal val pairedDevicesList = ArrayList<Device>()
         //未配对设备列表
@@ -191,6 +182,20 @@ class SerialPort private constructor() {
             this.connectStatusCallback = connectStatusCallback
         }
 
+
+
+        /**
+         * 十六进制字符串转换成字符串
+         * @param hexString 待转换十六进制字符串
+         * @return 转换完成的字符串
+         * @Author Shanya
+         * @Date 2021-3-16
+         * @Version 3.0.0
+         */
+        internal fun _hexStringToString(hexString: String): String? {
+            return HexStringToString.conversion(hexString)
+        }
+
         /**
          * 内连接函数
          * @param device 连接设备
@@ -204,16 +209,14 @@ class SerialPort private constructor() {
             }
         }
 
-        /**
-         * 十六进制字符串转换成字符串
-         * @param hexString 待转换十六进制字符串
-         * @return 转换完成的字符串
-         * @Author Shanya
-         * @Date 2021-3-16
-         * @Version 3.0.0
-         */
-        internal fun _hexStringToString(hexString: String): String? {
-            return HexStringToString.conversion(hexString)
+        fun connectDevice(isBle: Boolean, device: Device) {
+            newContext?.let {
+                if (isBle) {
+                    SerialPortConnect.connectBle(it, device.address)
+                } else {
+                    SerialPortConnect.connectLegacy(it, device.address)
+                }
+            }
         }
     }
 
@@ -405,6 +408,12 @@ class SerialPort private constructor() {
      */
     fun connectDevice(address: String) {
         _connectDevice(Device("",address,false))
+    }
+
+    fun connectBle(address: String) {
+        newContext?.let {
+            SerialPortConnect.connectBle(it,address)
+        }
     }
 
     /**

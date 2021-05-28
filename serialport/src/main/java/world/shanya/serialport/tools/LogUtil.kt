@@ -8,7 +8,7 @@ import android.util.Log
  * @Date 2021-3-16
  * @Version 3.0.0
  */
-class LogUtil constructor(
+internal class LogUtil constructor(
     private val tag: String
 ) {
     var status = false

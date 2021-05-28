@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.IntentFilter
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.tools.LogUtil
+import java.lang.Exception
 
 internal object SerialPortDiscovery {
 
@@ -116,7 +117,12 @@ internal object SerialPortDiscovery {
      */
     fun stopLegacyScan(context: Context) {
         SerialPort.logUtil.log("扫描传统蓝牙设备","停止搜索")
-        context.unregisterReceiver(SerialPort.discoveryBroadcastReceiver)
+        try {
+            context.unregisterReceiver(SerialPort.discoveryBroadcastReceiver)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         SerialPort.bluetoothAdapter.cancelDiscovery()
     }
 }
