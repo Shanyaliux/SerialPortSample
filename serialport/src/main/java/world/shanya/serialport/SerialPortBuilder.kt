@@ -142,6 +142,9 @@ object SerialPortBuilder {
             SPUtil.getSPDevice(context)?.let { SerialPort._connectDevice(it) }
             SerialPort.autoConnectFlag = true
         }
+        if (!SerialPort.bluetoothAdapter.isEnabled) {
+            SerialPort.bluetoothAdapter.enable()
+        }
         return serialPort
     }
 }

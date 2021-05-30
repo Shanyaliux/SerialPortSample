@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         button2.setOnClickListener {
-            serialPort.doDiscovery(this)
+            serialPort.disconnect()
         }
 
         button3.setOnClickListener {

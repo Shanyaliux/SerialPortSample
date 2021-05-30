@@ -27,13 +27,13 @@ class ConnectBroadcastReceiver: BroadcastReceiver() {
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
-                SerialPort.connectCallback?.invoke()
-                SerialPort.connectedDevice?.let {
-                    SerialPort.connectStatusCallback?.invoke(false, it)
-                }
-                SerialPort.connectedDevice = null
-                SerialPort.connectStatus = false
-                Toast.makeText(context,"断开连接", Toast.LENGTH_SHORT).show()
+//                SerialPort.connectCallback?.invoke()
+//                SerialPort.connectedDevice?.let {
+//                    SerialPort.connectStatusCallback?.invoke(false, it)
+//                }
+//                SerialPort.connectedDevice = null
+//                SerialPort.connectStatus = false
+//                Toast.makeText(context,"断开连接", Toast.LENGTH_SHORT).show()
             }
         }
     }
