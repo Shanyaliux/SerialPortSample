@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import world.shanya.serialport.connect.ConnectBroadcastReceiver
 import world.shanya.serialport.discovery.DiscoveryBroadcastReceiver
 import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.Device
@@ -94,8 +93,6 @@ class SerialPort private constructor() {
         private var newContext: Context ?= null
         //旧的上下文
         private var oldContext: Context ?= null
-        //连接广播接收器
-        private val connectBroadcastReceiver = ConnectBroadcastReceiver()
         //连接状态
         internal var connectStatus = false
         //自动连接标志（执行自动连接后即为 true）
@@ -256,11 +253,6 @@ class SerialPort private constructor() {
     internal fun build(context: Context) {
         oldContext = newContext
         newContext = context
-        oldContext?.unregisterReceiver(connectBroadcastReceiver)
-        newContext?.registerReceiver(
-            connectBroadcastReceiver,
-            IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED)
-        )
     }
 
     /**

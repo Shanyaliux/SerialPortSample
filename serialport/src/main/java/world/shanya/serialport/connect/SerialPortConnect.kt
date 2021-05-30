@@ -11,7 +11,9 @@ import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.discovery.Device
 import world.shanya.serialport.service.SerialPortService
+import world.shanya.serialport.strings.SerialPortStrings
 import world.shanya.serialport.tools.SPUtil
+import world.shanya.serialport.tools.ToastUtil
 import java.io.IOException
 import java.util.*
 
@@ -72,7 +74,8 @@ internal object SerialPortConnect {
             SerialPort.connectStatus = true
             SerialPort.logUtil.log("SerialPort","连接成功")
             MainScope().launch {
-                Toast.makeText(context,"连接成功", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context,"连接成功", Toast.LENGTH_SHORT).show()
+                ToastUtil.toast(context,SerialPortStrings.connectSucceeded)
             }
 
             SerialPort.inputStream = SerialPort.bluetoothSocket?.inputStream

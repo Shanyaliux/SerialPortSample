@@ -25,6 +25,12 @@ class MainActivity : AppCompatActivity() {
             serialPort.disconnect()
         }
 
+        serialPort.setConnectStatusCallback { status, device ->
+            if (!status) {
+                println(device.name)
+            }
+        }
+
         buttonScan.setOnClickListener {
 //            serialPort.doDiscoveryBle()
         }

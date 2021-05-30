@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.os.Message
+import android.widget.Toast
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -98,5 +99,12 @@ class SerialPortService : IntentService("SerialPortService") {
                 }
         )?.disconnect()
         SerialPort.bluetoothSocket?.close()
+        SerialPort.connectCallback?.invoke()
+        SerialPort.connectedDevice?.let {
+            SerialPort.connectStatusCallback?.invoke(false, it)
+        }
+        SerialPort.connectedDevice = null
+        SerialPort.connectStatus = false
+        Toast.makeText(this,"断开连接", Toast.LENGTH_SHORT).show()
     }
 }
