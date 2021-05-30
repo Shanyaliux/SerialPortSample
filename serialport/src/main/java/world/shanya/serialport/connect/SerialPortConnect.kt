@@ -48,7 +48,7 @@ internal object SerialPortConnect {
                     SerialPort.connectCallback?.invoke()
                     if (SerialPort.autoConnectFlag) {
                         MainScope().launch {
-                            Toast.makeText(context, "请先断开当前连接", Toast.LENGTH_SHORT).show()
+                            ToastUtil.toast(context,SerialPortStrings.disconnectFirst)
                         }
                     }
                 } else {
@@ -74,7 +74,6 @@ internal object SerialPortConnect {
             SerialPort.connectStatus = true
             SerialPort.logUtil.log("SerialPort","连接成功")
             MainScope().launch {
-//                Toast.makeText(context,"连接成功", Toast.LENGTH_SHORT).show()
                 ToastUtil.toast(context,SerialPortStrings.connectSucceeded)
             }
 
@@ -84,7 +83,7 @@ internal object SerialPortConnect {
             e.printStackTrace()
             SerialPort.logUtil.log("SerialPort","连接失败")
             MainScope().launch {
-                Toast.makeText(context,"连接失败", Toast.LENGTH_SHORT).show()
+                ToastUtil.toast(context,SerialPortStrings.connectFailed)
             }
             SerialPort.connectStatus = false
             SerialPort.connectCallback?.invoke()

@@ -14,8 +14,10 @@ import world.shanya.serialport.discovery.Device
 import world.shanya.serialport.discovery.DiscoveryActivity
 import world.shanya.serialport.discovery.SerialPortDiscovery
 import world.shanya.serialport.service.SerialPortService
+import world.shanya.serialport.strings.SerialPortStrings
 import world.shanya.serialport.tools.HexStringToString
 import world.shanya.serialport.tools.LogUtil
+import world.shanya.serialport.tools.ToastUtil
 import java.io.IOException
 import java.io.InputStream
 import kotlin.collections.ArrayList
@@ -272,7 +274,9 @@ class SerialPort private constructor() {
         val intArray = ArrayList<Byte>()
         if (stingTemp.length and 0x01 != 0){
             MainScope().launch {
-                Toast.makeText(newContext,"请输入的十六进制数据保持两位，不足前面补0",Toast.LENGTH_SHORT).show()
+                newContext?.let {
+                    ToastUtil.toast(it, SerialPortStrings.hexTip)
+                }
             }
             throw  RuntimeException("字符个数不是偶数")
         }
@@ -445,7 +449,9 @@ class SerialPort private constructor() {
 
         if (bluetoothSocket == null) {
             MainScope().launch {
-                Toast.makeText(newContext,"请先连接设备",Toast.LENGTH_SHORT).show()
+                newContext?.let {context ->
+                    ToastUtil.toast(context,SerialPortStrings.connectFirst)
+                }
                 if (autoOpenDiscoveryActivityFlag) {
                     openDiscoveryActivity()
                 }
@@ -457,7 +463,9 @@ class SerialPort private constructor() {
         bluetoothSocket?.isConnected?.let {
             if (!it) {
                 MainScope().launch {
-                    Toast.makeText(newContext,"请先连接设备",Toast.LENGTH_SHORT).show()
+                    newContext?.let {context ->
+                        ToastUtil.toast(context,SerialPortStrings.connectFirst)
+                    }
                     openDiscoveryActivity()
                 }
                 return

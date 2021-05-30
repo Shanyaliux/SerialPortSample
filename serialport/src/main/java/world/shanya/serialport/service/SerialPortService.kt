@@ -17,6 +17,8 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
+import world.shanya.serialport.strings.SerialPortStrings
+import world.shanya.serialport.tools.ToastUtil
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 
@@ -105,6 +107,6 @@ class SerialPortService : IntentService("SerialPortService") {
         }
         SerialPort.connectedDevice = null
         SerialPort.connectStatus = false
-        Toast.makeText(this,"断开连接", Toast.LENGTH_SHORT).show()
+        ToastUtil.toast(this,SerialPortStrings.disconnect)
     }
 }

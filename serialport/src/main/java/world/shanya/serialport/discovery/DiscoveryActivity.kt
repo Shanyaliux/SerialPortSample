@@ -21,6 +21,8 @@ import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPort.Companion.logUtil
 import world.shanya.serialport.SerialPort.Companion.pairedDevicesList
 import world.shanya.serialport.SerialPort.Companion.unPairedDevicesList
+import world.shanya.serialport.strings.SerialPortStrings
+import world.shanya.serialport.tools.ToastUtil
 
 /**
  * DiscoveryActivity 搜索页面Activity
@@ -100,7 +102,7 @@ class DiscoveryActivity : AppCompatActivity() {
                             doDiscovery()
                         } else {
                             logUtil.log("扫描蓝牙设备","定位权限获取失败")
-                            Toast.makeText(this, "请先开启位置权限", Toast.LENGTH_SHORT).show()
+                            ToastUtil.toast(this,SerialPortStrings.permission)
                             finish()
                         }
                     }
