@@ -392,7 +392,9 @@ class SerialPort private constructor() {
      * @Version 3.0.0
      */
     fun openDiscoveryActivity() {
-        newContext?.startActivity(Intent(newContext,DiscoveryActivity::class.java))
+        val intent = Intent(newContext,DiscoveryActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        newContext?.startActivity(intent)
     }
 
     /**
@@ -403,6 +405,7 @@ class SerialPort private constructor() {
      * @Version 3.0.0
      */
     fun openDiscoveryActivity(intent: Intent) {
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         newContext?.startActivity(intent)
     }
 

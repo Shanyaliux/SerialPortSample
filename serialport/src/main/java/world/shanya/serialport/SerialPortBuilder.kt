@@ -137,13 +137,13 @@ object SerialPortBuilder {
      * @Version 3.0.0
      */
     fun build(context: Context): SerialPort {
+        if (!SerialPort.bluetoothAdapter.isEnabled) {
+            SerialPort.bluetoothAdapter.enable()
+        }
         serialPort.build(context)
         if (isAutoConnect) {
             SPUtil.getSPDevice(context)?.let { SerialPort._connectDevice(it) }
             SerialPort.autoConnectFlag = true
-        }
-        if (!SerialPort.bluetoothAdapter.isEnabled) {
-            SerialPort.bluetoothAdapter.enable()
         }
         return serialPort
     }
