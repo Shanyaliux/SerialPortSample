@@ -62,12 +62,12 @@ class SerialPortService : IntentService("SerialPortService") {
                 }
                 val bundle = Bundle()
                 bundle.putString("SerialPortReceivedData", receivedData)
+                SerialPort.logUtil.log("SerialPortService","收到数据：$receivedData")
                 val message = Message.obtain()
                 message.data = bundle
                 MainScope().launch {
                     SerialPort.receivedDataCallback?.invoke(receivedData)
                 }
-
                 flag = false
             }
         }

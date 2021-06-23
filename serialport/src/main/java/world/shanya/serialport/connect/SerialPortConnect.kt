@@ -22,11 +22,11 @@ internal object SerialPortConnect {
             super.onConnectionStateChange(gatt, status, newState)
             SerialPort.logUtil.log("onConnectionStateChange",gatt?.device?.name.toString())
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                val device = Device(gatt?.device?.name?:"",gatt?.device?.address?:"",true)
+                val device = Device(gatt?.device?.name?:"",gatt?.device?.address?:"",gatt?.device?.type?:0)
                 SerialPort.connectStatus = true
                 SerialPort.connectCallback?.invoke()
-                SerialPort.connectStatusCallback?.invoke(true,device)
-                SerialPort.connectedDevice = device
+                SerialPort.connectStatusCallback?.invoke(true,gatt?.device)
+                SerialPort.connectedDevice = gatt?.device
             }
 
             if (status == BluetoothGatt.STATE_DISCONNECTED) {
@@ -65,15 +65,15 @@ internal object SerialPortConnect {
             val bluetoothDevice =
                 SerialPort.bluetoothAdapter.getRemoteDevice(address)
             SerialPort.logUtil.log("a",bluetoothDevice.name)
-            val device = Device(bluetoothDevice.name?:"",bluetoothDevice.address,false)
+            val device = Device(bluetoothDevice.name?:"",bluetoothDevice.address,bluetoothDevice.type)
             SerialPort.bluetoothSocket =
                 bluetoothDevice.createRfcommSocketToServiceRecord(UUID.fromString(SerialPort.UUID))
             SerialPort.bluetoothSocket?.connect()
 
             //存储连接成功设备地址
             SerialPort.connectCallback?.invoke()
-            SerialPort.connectStatusCallback?.invoke(true,device)
-            SerialPort.connectedDevice = device
+            SerialPort.connectStatusCallback?.invoke(true,bluetoothDevice)
+            SerialPort.connectedDevice = bluetoothDevice
             SerialPort.connectStatus = true
             SerialPort.logUtil.log("SerialPort","连接成功")
             MainScope().launch {

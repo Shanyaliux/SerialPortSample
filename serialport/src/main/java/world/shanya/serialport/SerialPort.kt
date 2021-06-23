@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.bluetooth.*
 import android.content.Context
 import android.content.Intent
-import android.hardware.camera2.params.BlackLevelPattern
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -26,7 +25,7 @@ import kotlin.collections.ArrayList
 //找到设备接口
 typealias FindUnpairedDeviceCallback = () -> Unit
 //连接状态接口
-typealias ConnectStatusCallback = (status: Boolean, device: Device) -> Unit
+typealias ConnectStatusCallback = (status: Boolean, device: BluetoothDevice?) -> Unit
 //连接接口
 typealias ConnectCallback = () -> Unit
 //接收消息接口
@@ -58,13 +57,14 @@ class SerialPort private constructor() {
         /**********************/
 
 
-
-
-
         //已配对设备列表
-        internal val pairedDevicesList = ArrayList<BluetoothDevice>()
+        internal val pairedDevicesListBD = ArrayList<BluetoothDevice>()
         //未配对设备列表
-        internal val unPairedDevicesList = ArrayList<BluetoothDevice>()
+        internal val unPairedDevicesListBD = ArrayList<BluetoothDevice>()
+
+
+        internal val pairedDevicesList = ArrayList<Device>()
+        internal val unPairedDevicesList = ArrayList<Device>()
 
         val serialPortToast = SerialPortToast.get()
         /**
@@ -106,7 +106,7 @@ class SerialPort private constructor() {
         //自动连接标志（执行自动连接后即为 true）
         internal var autoConnectFlag = false
         //已经连接的设备
-        internal var connectedDevice: Device ?= null
+        internal var connectedDevice: BluetoothDevice ?= null
         //十六进制字符串转换成字符串标志
         internal var hexStringToStringFlag = false
         //自动打开搜索页面标志
@@ -505,6 +505,9 @@ class SerialPort private constructor() {
      * @Date 2021-3-26
      * @Version 3.0.0
      */
+    @Deprecated(message = "建议使用 getPairedDevicesListBD",
+    replaceWith = ReplaceWith(
+        expression = "getPairedDevicesListBD()"))
     fun getPairedDevicesList() = pairedDevicesList
 
     /**
@@ -514,7 +517,28 @@ class SerialPort private constructor() {
      * @Date 2021-3-26
      * @Version 3.0.0
      */
+    @Deprecated(message = "建议使用 getUnPairedDevicesListBD",
+        replaceWith = ReplaceWith(
+            expression = "getUnPairedDevicesListBD()"))
     fun getUnPairedDevicesList() = unPairedDevicesList
+
+    /**
+     * 获取已配对设备列表
+     * @return 已配对设备列表
+     * @Author Shanya
+     * @Date 2021-6-23
+     * @Version 3.1.0
+     */
+    fun getPairedDevicesListBD() = pairedDevicesListBD
+
+    /**
+     * 获取未配对设备列表
+     * @return 未配对设备列表
+     * @Author Shanya
+     * @Date 2021-6-23
+     * @Version 3.1.0
+     */
+    fun getUnPairedDevicesListBD() = unPairedDevicesListBD
 
     /**
      * 开始搜索

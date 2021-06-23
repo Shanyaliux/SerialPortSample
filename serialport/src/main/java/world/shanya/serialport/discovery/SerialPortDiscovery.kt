@@ -7,7 +7,6 @@ import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.content.IntentFilter
 import world.shanya.serialport.SerialPort
-import world.shanya.serialport.tools.LogUtil
 import java.lang.Exception
 
 internal object SerialPortDiscovery {
@@ -27,9 +26,15 @@ internal object SerialPortDiscovery {
                     if (SerialPort.ignoreNoNameDeviceFlag) {
                         if (it.name != null) {
                             addBleDevice(it)
+                            val device = Device(it.name, it.address, it.type)
+                            val deviceL = Device(it.name, it.address, it.type)
+                            addBleDevice(device, deviceL)
                         }
                     } else {
                         addBleDevice(it)
+                        val device = Device(it.name ?: "", it.address, it.type)
+                        val deviceL = Device(it.name ?: "", it.address, it.type)
+                        addBleDevice(device, deviceL)
                     }
                 }
             }
@@ -44,7 +49,27 @@ internal object SerialPortDiscovery {
     * @Version 3.1.0
     */
     private fun addBleDevice(device: BluetoothDevice) {
-        if (!SerialPort.unPairedDevicesList.contains(device) && !SerialPort.pairedDevicesList.contains(device)) {
+        if (!SerialPort.unPairedDevicesListBD.contains(device) && !SerialPort.pairedDevicesListBD.contains(device)) {
+            SerialPort.unPairedDevicesListBD.add(device)
+            SerialPort.logUtil.log("找到BLE蓝牙设备","设备名：${device.name}  设备地址：${device.address}")
+            SerialPort.findUnpairedDeviceCallback?.invoke()
+        }
+
+    }
+
+    /**
+     * 添加 BLE 设备
+     * @param device BLE设备
+     * @param deviceL 传统设备
+     * @Author Shanya
+     * @Date 2021/5/28
+     * @Version 3.1.0
+     */
+    private fun addBleDevice(device: Device, deviceL: Device) {
+        if (SerialPort.unPairedDevicesList.contains(deviceL)) {
+            SerialPort.unPairedDevicesList.remove(deviceL)
+        }
+        if (!SerialPort.unPairedDevicesList.contains(device)) {
             SerialPort.unPairedDevicesList.add(device)
             SerialPort.logUtil.log("找到BLE蓝牙设备","设备名：${device.name}  设备地址：${device.address}")
             SerialPort.findUnpairedDeviceCallback?.invoke()
@@ -91,12 +116,15 @@ internal object SerialPortDiscovery {
         SerialPort.logUtil.log("扫描传统蓝牙设备","获取已配对设备")
         val pairedDevices:Set<BluetoothDevice> = SerialPort.bluetoothAdapter.bondedDevices
         if (pairedDevices.isNotEmpty()){
+            SerialPort.pairedDevicesListBD.clear()
             SerialPort.pairedDevicesList.clear()
             for (device in pairedDevices){
-                SerialPort.pairedDevicesList.add(device)
+                SerialPort.pairedDevicesListBD.add(device)
+                SerialPort.pairedDevicesList.add(Device(device.name,device.address,device.type))
             }
         }
 
+        SerialPort.unPairedDevicesListBD.clear()
         SerialPort.unPairedDevicesList.clear()
         SerialPort.bluetoothAdapter.startDiscovery()
     }

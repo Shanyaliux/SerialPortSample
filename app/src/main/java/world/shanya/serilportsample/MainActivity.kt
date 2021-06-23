@@ -34,12 +34,13 @@ class MainActivity : AppCompatActivity() {
 
         serialPort.setConnectStatusCallback { status, device ->
             if (!status) {
-                println(device.name)
+                println(device?.name)
             }
         }
 
         buttonScan.setOnClickListener {
 //            serialPort.doDiscoveryBle()
+
         }
 
         buttonSend.setOnClickListener {

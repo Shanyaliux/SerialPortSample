@@ -9,5 +9,5 @@ package world.shanya.serialport.discovery
 data class Device(
     val name:String,
     val address:String,
-    val isBle:Boolean
+    val type:Int = 1
 )

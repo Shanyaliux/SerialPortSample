@@ -54,11 +54,12 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
     * @Version 3.1.0
     */
     private fun addDevice(device: BluetoothDevice) {
-        if (!SerialPort.unPairedDevicesList.contains(device) && !SerialPort.pairedDevicesList.contains(device)) {
+        if (!SerialPort.unPairedDevicesListBD.contains(device) && !SerialPort.pairedDevicesListBD.contains(device)) {
             SerialPort.logUtil.log(
                     "找到传统蓝牙设备",
                     "设备名：${device.name}  设备地址：${device.address}")
-            SerialPort.unPairedDevicesList.add(device)
+            SerialPort.unPairedDevicesListBD.add(device)
+            SerialPort.unPairedDevicesList.add(Device(device.name,device.address,device.type))
             SerialPort.findUnpairedDeviceCallback?.invoke()
         }
     }

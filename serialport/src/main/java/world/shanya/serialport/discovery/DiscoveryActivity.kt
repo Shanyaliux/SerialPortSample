@@ -19,8 +19,8 @@ import kotlinx.android.synthetic.main.device_cell.view.*
 import world.shanya.serialport.R
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPort.Companion.logUtil
-import world.shanya.serialport.SerialPort.Companion.pairedDevicesList
-import world.shanya.serialport.SerialPort.Companion.unPairedDevicesList
+import world.shanya.serialport.SerialPort.Companion.pairedDevicesListBD
+import world.shanya.serialport.SerialPort.Companion.unPairedDevicesListBD
 import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.tools.ToastUtil
 
@@ -155,7 +155,7 @@ class DiscoveryActivity : AppCompatActivity() {
         }
 
         SerialPort.setFindDeviceListener {
-            unpairedDevicesAdapter.setDevice(unPairedDevicesList)
+            unpairedDevicesAdapter.setDevice(unPairedDevicesListBD)
         }
     }
 
@@ -234,14 +234,14 @@ class DiscoveryActivity : AppCompatActivity() {
 
         override fun getItemCount(): Int {
             return if (pairingStatus)
-                pairedDevicesList.size
+                pairedDevicesListBD.size
             else
-                unPairedDevicesList.size
+                unPairedDevicesListBD.size
         }
 
         override fun onBindViewHolder(holder: DevicesViewHolder, position: Int) {
             if (pairingStatus) {
-                val current = pairedDevicesList[position]
+                val current = pairedDevicesListBD[position]
                 holder.textViewDeviceName.text = current.name
                 holder.textViewDeviceAddress.text = current.address
                 if (current.type == 2) {
@@ -251,7 +251,7 @@ class DiscoveryActivity : AppCompatActivity() {
                 }
             }
             else {
-                val current = unPairedDevicesList[position]
+                val current = unPairedDevicesListBD[position]
                 holder.textViewDeviceName.text = current.name
                 holder.textViewDeviceAddress.text = current.address
                 if (current.type == 2) {
