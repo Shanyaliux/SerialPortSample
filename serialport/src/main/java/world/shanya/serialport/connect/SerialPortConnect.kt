@@ -5,14 +5,12 @@ import android.bluetooth.BluetoothGattCallback
 import android.bluetooth.BluetoothProfile
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.discovery.Device
 import world.shanya.serialport.service.SerialPortService
-import world.shanya.serialport.strings.SerialPortStrings
-import world.shanya.serialport.tools.SPUtil
+import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.tools.ToastUtil
 import java.io.IOException
 import java.util.*
@@ -29,6 +27,10 @@ internal object SerialPortConnect {
                 SerialPort.connectCallback?.invoke()
                 SerialPort.connectStatusCallback?.invoke(true,device)
                 SerialPort.connectedDevice = device
+            }
+
+            if (status == BluetoothGatt.STATE_DISCONNECTED) {
+                gatt?.close()
             }
 
         }
@@ -48,7 +50,7 @@ internal object SerialPortConnect {
                     SerialPort.connectCallback?.invoke()
                     if (SerialPort.autoConnectFlag) {
                         MainScope().launch {
-                            ToastUtil.toast(context,SerialPortStrings.disconnectFirst)
+                            ToastUtil.toast(context,SerialPortToast.disconnectFirst)
                         }
                     }
                 } else {
@@ -62,6 +64,7 @@ internal object SerialPortConnect {
         try {
             val bluetoothDevice =
                 SerialPort.bluetoothAdapter.getRemoteDevice(address)
+            SerialPort.logUtil.log("a",bluetoothDevice.name)
             val device = Device(bluetoothDevice.name?:"",bluetoothDevice.address,false)
             SerialPort.bluetoothSocket =
                 bluetoothDevice.createRfcommSocketToServiceRecord(UUID.fromString(SerialPort.UUID))
@@ -74,7 +77,7 @@ internal object SerialPortConnect {
             SerialPort.connectStatus = true
             SerialPort.logUtil.log("SerialPort","连接成功")
             MainScope().launch {
-                ToastUtil.toast(context,SerialPortStrings.connectSucceeded)
+                ToastUtil.toast(context,SerialPortToast.connectSucceeded)
             }
 
             SerialPort.inputStream = SerialPort.bluetoothSocket?.inputStream
@@ -83,7 +86,7 @@ internal object SerialPortConnect {
             e.printStackTrace()
             SerialPort.logUtil.log("SerialPort","连接失败")
             MainScope().launch {
-                ToastUtil.toast(context,SerialPortStrings.connectFailed)
+                ToastUtil.toast(context,SerialPortToast.connectFailed)
             }
             SerialPort.connectStatus = false
             SerialPort.connectCallback?.invoke()

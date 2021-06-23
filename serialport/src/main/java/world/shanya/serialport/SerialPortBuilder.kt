@@ -163,8 +163,8 @@ object SerialPortBuilder {
     fun build(context: Context): SerialPort {
         serialPort.build(context)
         if (isAutoConnect) {
-            SPUtil.getSPDevice(context)?.let { SerialPort._connectDevice(it) }
-            SerialPort.autoConnectFlag = true
+//            SPUtil.getSPDevice(context)?.let { SerialPort._connectDevice(it) }
+//            SerialPort.autoConnectFlag = true
         }
         return serialPort
     }

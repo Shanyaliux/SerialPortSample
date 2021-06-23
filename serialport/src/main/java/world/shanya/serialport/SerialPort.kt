@@ -1,10 +1,10 @@
 package world.shanya.serialport
 
+import android.annotation.SuppressLint
 import android.bluetooth.*
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.widget.Toast
+import android.hardware.camera2.params.BlackLevelPattern
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ import world.shanya.serialport.discovery.Device
 import world.shanya.serialport.discovery.DiscoveryActivity
 import world.shanya.serialport.discovery.SerialPortDiscovery
 import world.shanya.serialport.service.SerialPortService
-import world.shanya.serialport.strings.SerialPortStrings
+import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.tools.HexStringToString
 import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.ToastUtil
@@ -38,6 +38,7 @@ typealias ReceivedDataCallback = (data: String) -> Unit
  * @Date 2021-3-16
  * @Version 3.0.0
  */
+@SuppressLint("StaticFieldLeak")
 class SerialPort private constructor() {
     companion object {
 
@@ -56,11 +57,16 @@ class SerialPort private constructor() {
         }
         /**********************/
 
-        //已配对设备列表
-        internal val pairedDevicesList = ArrayList<Device>()
-        //未配对设备列表
-        internal val unPairedDevicesList = ArrayList<Device>()
 
+
+
+
+        //已配对设备列表
+        internal val pairedDevicesList = ArrayList<BluetoothDevice>()
+        //未配对设备列表
+        internal val unPairedDevicesList = ArrayList<BluetoothDevice>()
+
+        val serialPortToast = SerialPortToast.get()
         /**
          * 接收发送数据格式标签
          */
@@ -202,15 +208,15 @@ class SerialPort private constructor() {
          * @Date 2021-3-16
          * @Version 3.0.0
          */
-        internal fun _connectDevice(device: Device) {
+        internal fun _connectDevice(device: BluetoothDevice) {
             newContext?.let {
                 SerialPortConnect.connectLegacy(it,device.address)
             }
         }
 
-        fun connectDevice(isBle: Boolean, device: Device) {
+        fun connectDevice(device: BluetoothDevice) {
             newContext?.let {
-                if (isBle) {
+                if (device.type == 2) {
                     SerialPortConnect.connectBle(it, device.address)
                 } else {
                     SerialPortConnect.connectLegacy(it, device.address)
@@ -275,7 +281,7 @@ class SerialPort private constructor() {
         if (stingTemp.length and 0x01 != 0){
             MainScope().launch {
                 newContext?.let {
-                    ToastUtil.toast(it, SerialPortStrings.hexTip)
+                    ToastUtil.toast(it, SerialPortToast.hexTip)
                 }
             }
             throw  RuntimeException("字符个数不是偶数")
@@ -403,7 +409,8 @@ class SerialPort private constructor() {
      * @Version 3.0.0
      */
     fun connectDevice(address: String) {
-        _connectDevice(Device("",address,false))
+        val device = bluetoothAdapter.getRemoteDevice(address)
+        _connectDevice(device)
     }
 
     fun connectBle(address: String) {
@@ -450,7 +457,7 @@ class SerialPort private constructor() {
         if (bluetoothSocket == null) {
             MainScope().launch {
                 newContext?.let {context ->
-                    ToastUtil.toast(context,SerialPortStrings.connectFirst)
+                    ToastUtil.toast(context,SerialPortToast.connectFirst)
                 }
                 if (autoOpenDiscoveryActivityFlag) {
                     openDiscoveryActivity()
@@ -464,9 +471,11 @@ class SerialPort private constructor() {
             if (!it) {
                 MainScope().launch {
                     newContext?.let {context ->
-                        ToastUtil.toast(context,SerialPortStrings.connectFirst)
+                        ToastUtil.toast(context,SerialPortToast.connectFirst)
                     }
-                    openDiscoveryActivity()
+                    if (autoOpenDiscoveryActivityFlag) {
+                        openDiscoveryActivity()
+                    }
                 }
                 return
             }

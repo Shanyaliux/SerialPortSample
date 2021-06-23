@@ -1,25 +1,17 @@
 package world.shanya.serialport.service
 
 import android.app.IntentService
-import android.app.Service
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCallback
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.IBinder
 import android.os.Message
-import android.widget.Toast
-import androidx.lifecycle.LifecycleService
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
-import world.shanya.serialport.strings.SerialPortStrings
+import world.shanya.serialport.connect.SerialPortConnect
+import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.tools.ToastUtil
-import java.io.IOException
 import java.nio.charset.StandardCharsets
 
 /**
@@ -87,18 +79,7 @@ class SerialPortService : IntentService("SerialPortService") {
         SerialPort.bluetoothSocket?.remoteDevice?.connectGatt(
                 this,
                 false,
-                object : BluetoothGattCallback() {
-                    override fun onConnectionStateChange(
-                            gatt: BluetoothGatt?,
-                            status: Int,
-                            newState: Int
-                    ) {
-                        super.onConnectionStateChange(gatt, status, newState)
-                        if (status == BluetoothGatt.STATE_DISCONNECTED) {
-                            gatt?.close()
-                        }
-                    }
-                }
+                SerialPortConnect.bluetoothGattCallback
         )?.disconnect()
         SerialPort.bluetoothSocket?.close()
         SerialPort.connectCallback?.invoke()
@@ -107,6 +88,6 @@ class SerialPortService : IntentService("SerialPortService") {
         }
         SerialPort.connectedDevice = null
         SerialPort.connectStatus = false
-        ToastUtil.toast(this,SerialPortStrings.disconnect)
+        ToastUtil.toast(this,SerialPortToast.disconnect)
     }
 }

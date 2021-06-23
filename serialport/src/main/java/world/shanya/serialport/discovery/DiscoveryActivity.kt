@@ -1,6 +1,7 @@
 package world.shanya.serialport.discovery
 
 import android.app.Dialog
+import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +9,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +21,7 @@ import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPort.Companion.logUtil
 import world.shanya.serialport.SerialPort.Companion.pairedDevicesList
 import world.shanya.serialport.SerialPort.Companion.unPairedDevicesList
-import world.shanya.serialport.strings.SerialPortStrings
+import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.tools.ToastUtil
 
 /**
@@ -102,7 +102,7 @@ class DiscoveryActivity : AppCompatActivity() {
                             doDiscovery()
                         } else {
                             logUtil.log("扫描蓝牙设备","定位权限获取失败")
-                            ToastUtil.toast(this,SerialPortStrings.permission)
+                            ToastUtil.toast(this,SerialPortToast.permission)
                             finish()
                         }
                     }
@@ -211,14 +211,13 @@ class DiscoveryActivity : AppCompatActivity() {
         RecyclerView.Adapter<DevicesAdapter.DevicesViewHolder>() {
 
         private val inflater: LayoutInflater = LayoutInflater.from(context)
-        private var pairedDevices = ArrayList<Device>()
-        private var unpairedDevices = ArrayList<Device>()
+        private var pairedDevices = ArrayList<BluetoothDevice>()
+        private var unpairedDevices = ArrayList<BluetoothDevice>()
 
         inner class DevicesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val textViewDeviceName: TextView = itemView.findViewById(R.id.textViewDeviceName)
             val textViewDeviceAddress: TextView = itemView.findViewById(R.id.textViewDeviceAddress)
             val imageViewDeviceLogo: ImageView = itemView.findViewById(R.id.imageViewDeviceLogo)
-
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DevicesViewHolder {
@@ -227,17 +226,8 @@ class DiscoveryActivity : AppCompatActivity() {
                 dialog.show()
                 SerialPortDiscovery.stopLegacyScan(this@DiscoveryActivity)
                 SerialPortDiscovery.stopBleScan()
-                val device = Device(it.textViewDeviceName.text.toString(), it.textViewDeviceAddress.text.toString(), false)
-                if (pairedDevicesList.contains(device)) {
-                    SerialPort.connectDevice(false, device)
-                } else {
-                    SerialPort.connectDevice(true, device)
-                }
-                if (unPairedDevicesList.contains(device)) {
-                    SerialPort.connectDevice(false, device)
-                } else {
-                    SerialPort.connectDevice(true, device)
-                }
+                val device = SerialPort.bluetoothAdapter.getRemoteDevice(it.textViewDeviceAddress.text.toString())
+                SerialPort.connectDevice(device)
             }
             return holder
         }
@@ -254,7 +244,7 @@ class DiscoveryActivity : AppCompatActivity() {
                 val current = pairedDevicesList[position]
                 holder.textViewDeviceName.text = current.name
                 holder.textViewDeviceAddress.text = current.address
-                if (current.isBle) {
+                if (current.type == 2) {
                     holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_ble)
                 } else {
                     holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo)
@@ -264,7 +254,7 @@ class DiscoveryActivity : AppCompatActivity() {
                 val current = unPairedDevicesList[position]
                 holder.textViewDeviceName.text = current.name
                 holder.textViewDeviceAddress.text = current.address
-                if (current.isBle) {
+                if (current.type == 2) {
                     holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_ble)
                 } else {
                     holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo)
@@ -272,7 +262,7 @@ class DiscoveryActivity : AppCompatActivity() {
             }
         }
 
-        internal fun setDevice(devices: ArrayList<Device>) {
+        internal fun setDevice(devices: ArrayList<BluetoothDevice>) {
             if (pairingStatus) {
                 pairedDevices = devices
             } else {

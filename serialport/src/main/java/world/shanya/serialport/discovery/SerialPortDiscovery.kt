@@ -26,14 +26,10 @@ internal object SerialPortDiscovery {
                 scanResult.device?.let {
                     if (SerialPort.ignoreNoNameDeviceFlag) {
                         if (it.name != null) {
-                            val device = Device(it.name, it.address, true)
-                            val deviceL = Device(it.name, it.address, false)
-                            addBleDevice(device, deviceL)
+                            addBleDevice(it)
                         }
                     } else {
-                        val device = Device(it.name ?: "", it.address, true)
-                        val deviceL = Device(it.name ?: "", it.address, false)
-                        addBleDevice(device, deviceL)
+                        addBleDevice(it)
                     }
                 }
             }
@@ -43,20 +39,17 @@ internal object SerialPortDiscovery {
     /**
     * 添加 BLE 设备
     * @param device BLE设备
-    * @param deviceL 传统设备
     * @Author Shanya
     * @Date 2021/5/28
     * @Version 3.1.0
     */
-    private fun addBleDevice(device: Device, deviceL: Device) {
-        if (SerialPort.unPairedDevicesList.contains(deviceL)) {
-            SerialPort.unPairedDevicesList.remove(deviceL)
-        }
-        if (!SerialPort.unPairedDevicesList.contains(device)) {
+    private fun addBleDevice(device: BluetoothDevice) {
+        if (!SerialPort.unPairedDevicesList.contains(device) && !SerialPort.pairedDevicesList.contains(device)) {
             SerialPort.unPairedDevicesList.add(device)
             SerialPort.logUtil.log("找到BLE蓝牙设备","设备名：${device.name}  设备地址：${device.address}")
+            SerialPort.findUnpairedDeviceCallback?.invoke()
         }
-        SerialPort.findUnpairedDeviceCallback?.invoke()
+
     }
 
     /**
@@ -100,7 +93,7 @@ internal object SerialPortDiscovery {
         if (pairedDevices.isNotEmpty()){
             SerialPort.pairedDevicesList.clear()
             for (device in pairedDevices){
-                SerialPort.pairedDevicesList.add(Device(device.name?:"",device.address,false))
+                SerialPort.pairedDevicesList.add(device)
             }
         }
 

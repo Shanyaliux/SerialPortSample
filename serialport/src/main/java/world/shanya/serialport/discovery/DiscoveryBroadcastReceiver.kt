@@ -19,15 +19,16 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
             BluetoothDevice.ACTION_FOUND -> {
                 val device =
                     intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
+
                 if (device != null) {
-                    if (SerialPort.ignoreNoNameDeviceFlag) {
-                        if (device.name != null) {
-                            val tempDevice = Device(device.name, device.address, false)
-                            addDevice(tempDevice)
+                    if (device.type != 2) {
+                        if (SerialPort.ignoreNoNameDeviceFlag) {
+                            if (device.name != null) {
+                                addDevice(device)
+                            }
+                        } else {
+                            addDevice(device)
                         }
-                    } else {
-                        val tempDevice = Device(device.name ?: "", device.address,false)
-                        addDevice(tempDevice)
                     }
                 }
             }
@@ -52,8 +53,8 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
     * @Date 2021/5/28
     * @Version 3.1.0
     */
-    private fun addDevice(device: Device) {
-        if (!SerialPort.unPairedDevicesList.contains(device)) {
+    private fun addDevice(device: BluetoothDevice) {
+        if (!SerialPort.unPairedDevicesList.contains(device) && !SerialPort.pairedDevicesList.contains(device)) {
             SerialPort.logUtil.log(
                     "找到传统蓝牙设备",
                     "设备名：${device.name}  设备地址：${device.address}")
