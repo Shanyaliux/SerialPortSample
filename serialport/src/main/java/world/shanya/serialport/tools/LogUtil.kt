@@ -13,9 +13,12 @@ internal class LogUtil constructor(
 ) {
     var status = false
 
-    fun log(title: String, content: String) {
+    fun log(title: String, content: String = "") {
         if (status) {
-            Log.d(tag, "$title  -->  $content")
+            if (content != "")
+                Log.d(tag, "$title  -->  $content")
+            else
+                Log.d(tag, title)
         }
     }
 }

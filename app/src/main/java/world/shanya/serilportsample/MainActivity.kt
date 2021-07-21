@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPortBuilder
+import world.shanya.serialport.tools.SerialPortTools
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             }
             .build(this)
 
-        SerialPort.serialPortToast.connectSucceeded.content = "sd"
+
 
         buttonConnect.setOnClickListener {
             serialPort.openDiscoveryActivity()

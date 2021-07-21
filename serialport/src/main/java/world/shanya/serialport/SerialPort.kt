@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.bluetooth.*
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import world.shanya.serialport.connect.ConnectionBroadcastReceiver
 import world.shanya.serialport.discovery.DiscoveryBroadcastReceiver
 import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.Device
@@ -81,6 +83,7 @@ class SerialPort private constructor() {
 
         //搜索结果广播接收器
         internal val discoveryBroadcastReceiver = DiscoveryBroadcastReceiver()
+        internal val connectionBroadcastReceiver = ConnectionBroadcastReceiver()
         //打印日志工具
         internal val logUtil = LogUtil("SerialPortDebug")
         //接收数据格式默认为字符串
@@ -95,10 +98,11 @@ class SerialPort private constructor() {
         internal var inputStream: InputStream?= null
         //Android蓝牙串口通信UUID
         internal var UUID = "00001101-0000-1000-8000-00805F9B34FB"
+        internal var UUID_BLE = "0000ffe1-0000-1000-8000-00805f9b34fb"
         //搜索状态LiveData
         internal var discoveryStatusLiveData = MutableLiveData<Boolean>()
         //新的上下文
-        private var newContext: Context ?= null
+        internal var newContext: Context ?= null
         //旧的上下文
         private var oldContext: Context ?= null
         //连接状态
@@ -113,6 +117,7 @@ class SerialPort private constructor() {
         internal var autoOpenDiscoveryActivityFlag = false
         //没有名字的蓝牙模块忽略
         internal var ignoreNoNameDeviceFlag = false
+
 
         /**
          * setUUID 设置UUID
@@ -223,6 +228,12 @@ class SerialPort private constructor() {
                 }
             }
         }
+
+        internal fun _legacyDisconnect() {
+            newContext?.let {
+                it.stopService(Intent(it, SerialPortService::class.java))
+            }
+        }
     }
 
     /**
@@ -259,8 +270,12 @@ class SerialPort private constructor() {
      * @Version 3.0.0
      */
     internal fun build(context: Context) {
+        oldContext?.unregisterReceiver(connectionBroadcastReceiver)
         oldContext = newContext
         newContext = context
+        val intentFilter = IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED)
+        intentFilter.priority = Int.MAX_VALUE
+        context.registerReceiver(connectionBroadcastReceiver, intentFilter)
     }
 
     /**
@@ -370,14 +385,15 @@ class SerialPort private constructor() {
      * @Version 3.0.0
      */
     fun disconnect() {
-        try {
-            connectStatus = false
-            bluetoothSocket?.close()
-            newContext?.stopService(Intent(newContext,SerialPortService::class.java))
-
-        }catch (e: IOException){
-            e.printStackTrace()
-        }
+//        try {
+//            connectStatus = false
+//            bluetoothSocket?.close()
+//            newContext?.stopService(Intent(newContext,SerialPortService::class.java))
+//
+//        }catch (e: IOException){
+//            e.printStackTrace()
+//        }
+        SerialPortConnect.bleDisconnect()
     }
 
     /**

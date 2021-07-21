@@ -81,13 +81,16 @@ class SerialPortService : IntentService("SerialPortService") {
                 false,
                 SerialPortConnect.bluetoothGattCallback
         )?.disconnect()
-        SerialPort.bluetoothSocket?.close()
-        SerialPort.connectCallback?.invoke()
-        SerialPort.connectedDevice?.let {
-            SerialPort.connectStatusCallback?.invoke(false, it)
-        }
-        SerialPort.connectedDevice = null
-        SerialPort.connectStatus = false
-        ToastUtil.toast(this,SerialPortToast.disconnect)
+
+//        SerialPort.bluetoothSocket?.close()
+//        SerialPort.connectCallback?.invoke()
+//        SerialPort.connectedDevice?.let {
+////            SerialPort.connectStatusCallback?.invoke(false, it)
+//            SerialPortConnect.connectedResult(this, false, null, it)
+//        }
+//        SerialPort.connectedDevice = null
+//        SerialPort.connectStatus = false
+//        ToastUtil.toast(this,SerialPortToast.disconnect)
+        SerialPortConnect.disconnectResult(this)
     }
 }
