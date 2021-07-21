@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/discovery_menu_item"
-        android:icon="@drawable/ic_baseline_refresh_24"
+        android:icon="@drawable/ic_action_refresh"
         android:title="Discovery"
         app:showAsAction="always" />
 </menu>

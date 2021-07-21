@@ -1,54 +1,57 @@
 package world.shanya.serilportsample
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPortBuilder
-import world.shanya.serialport.discovery.DiscoveryActivity
-import world.shanya.serialport.tools.SPUtil
+import world.shanya.serialport.strings.SerialPortToast
 
 
 class MainActivity : AppCompatActivity() {
+
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val serialPort = SerialPortBuilder
             .isDebug(true)
-            .autoConnect(true)
-            .autoHexStringToString(true)
-            .setReadDataType(SerialPort.READ_HEX)
+            .autoConnect(false)
+            .setAutoReconnectAtIntervals(false)
+            .setSendDataType(SerialPort.SEND_HEX)
+            .isIgnoreNoNameDevice(true)
             .setReceivedDataListener {
-                Log.d("SerialPortDebug", "received: ${it}")
+                Log.d("SerialPortDebug", "onCreate: $it")
             }
-            .setConnectStatusCallback { status, device ->
-                if (status) {
-                    Log.d("SerialPortDebug", "连接: ${device.address}")
-                } else {
-                    Log.d("SerialPortDebug", "断开")
+            .setConnectionStatusCallback { status, bluetoothDevice ->
+                MainScope().launch {
+                    textViewInfo.text =
+                        "status : $status \n" +
+                                "bluetoothDevice : ${bluetoothDevice?.type} \n"
                 }
             }
             .build(this)
 
-        button.setOnClickListener {
-            serialPort.openDiscoveryActivity(Intent(this,DiscoveryActivity::class.java))
+        buttonConnect.setOnClickListener {
+            serialPort.openDiscoveryActivity()
         }
 
-        button2.setOnClickListener {
+        buttonDisconnect.setOnClickListener {
             serialPort.disconnect()
         }
 
-        button3.setOnClickListener {
-//            startActivity(Intent(this, MainActivityA::class.java))
-            serialPort.connectDevice("98:D3:32:21:67:D0")
+        buttonScan.setOnClickListener {
+            serialPort.printPossibleBleUUID()
         }
 
-        button4.setOnClickListener {
-//            startActivity(Intent(this,MainActivityB::class.java))
-            serialPort.sendData("hello")
+        buttonSend.setOnClickListener {
+//            serialPort.sendData("hello\r\n")
+            serialPort.sendData("0A 0D")
         }
     }
 }
