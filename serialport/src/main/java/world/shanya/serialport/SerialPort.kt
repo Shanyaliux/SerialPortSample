@@ -27,7 +27,9 @@ import kotlin.collections.ArrayList
 //找到设备接口
 typealias FindUnpairedDeviceCallback = () -> Unit
 //连接状态接口
-typealias ConnectStatusCallback = (status: Boolean, device: BluetoothDevice?) -> Unit
+typealias ConnectionStatusCallback = (status: Boolean, bluetoothDevice: BluetoothDevice?) -> Unit
+
+typealias ConnectStatusCallback = (status: Boolean, device: Device) -> Unit
 //连接接口
 typealias ConnectCallback = () -> Unit
 //接收消息接口
@@ -181,6 +183,8 @@ class SerialPort private constructor() {
 
         //连接状态回调，外部使用（包含成功与否和连接设备）
         internal var connectStatusCallback: ConnectStatusCallback ?= null
+
+        internal var connectionStatusCallback:ConnectionStatusCallback ?= null
         /**
          * 内连接状态回调接口函数
          * @param connectStatusCallback 连接状态回调接口
@@ -191,7 +195,9 @@ class SerialPort private constructor() {
         internal fun _setConnectStatusCallback(connectStatusCallback: ConnectStatusCallback) {
             this.connectStatusCallback = connectStatusCallback
         }
-
+        internal fun _setConnectionStatusCallback(connectionStatusCallback: ConnectionStatusCallback) {
+            this.connectionStatusCallback = connectionStatusCallback
+        }
 
 
         /**
@@ -385,15 +391,16 @@ class SerialPort private constructor() {
      * @Version 3.0.0
      */
     fun disconnect() {
-//        try {
-//            connectStatus = false
-//            bluetoothSocket?.close()
-//            newContext?.stopService(Intent(newContext,SerialPortService::class.java))
-//
-//        }catch (e: IOException){
-//            e.printStackTrace()
-//        }
-        SerialPortConnect.bleDisconnect()
+        connectedDevice?.let {
+            if (it.type == 2) {
+                SerialPortConnect.bleDisconnect()
+            } else {
+                newContext?.let { context ->
+                    SerialPortConnect.legacyDisconnect(context)
+                }
+            }
+        }
+
     }
 
     /**
@@ -455,6 +462,10 @@ class SerialPort private constructor() {
      */
     fun setConnectStatusCallback(connectStatusCallback: ConnectStatusCallback) {
         _setConnectStatusCallback(connectStatusCallback)
+    }
+
+    fun setConnectionStatusCallback(connectionStatusCallback: ConnectionStatusCallback) {
+        _setConnectionStatusCallback(connectionStatusCallback)
     }
 
     /**
