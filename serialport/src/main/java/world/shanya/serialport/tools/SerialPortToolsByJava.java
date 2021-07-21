@@ -3,7 +3,21 @@ package world.shanya.serialport.tools;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
-public class SerialPortTools {
+/**
+ * SerialPortToolsByJava BLE设备发消息工具类
+ * @Author Shanya
+ * @Date 2021-7-21
+ * @version 4.0.0
+ */
+public class SerialPortToolsByJava {
+
+    /**
+     * dataSeparate 数据分段
+     * @param len 数据长度
+     * @Author Shanya
+     * @Date 2021-7-21
+     * @Version 4.0.0
+     */
     static int[] dataSeparate(int len) {
         int[] lens = new int[2];
         lens[0] = len / 20;
@@ -11,6 +25,15 @@ public class SerialPortTools {
         return lens;
     }
 
+    /**
+     * bleSendData ble设备发送数据
+     * @param data 数据
+     * @param gatt gatt
+     * @param gattCharacteristic gattCharacteristic
+     * @Author Shanya
+     * @Date 2021-7-21
+     * @Version 4.0.0
+     */
     public static void bleSendData(BluetoothGatt gatt, BluetoothGattCharacteristic gattCharacteristic, String data) {
         byte[] buff = data.getBytes();
         int len = buff.length;

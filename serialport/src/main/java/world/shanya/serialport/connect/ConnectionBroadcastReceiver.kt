@@ -17,7 +17,7 @@ class ConnectionBroadcastReceiver:BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         when (intent?.action) {
             BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
-                if (SerialPort.connectedDevice?.type == 1) {
+                SerialPortConnect.connectedLegacyDevice?.let {
                     SerialPort._legacyDisconnect()
                 }
             }

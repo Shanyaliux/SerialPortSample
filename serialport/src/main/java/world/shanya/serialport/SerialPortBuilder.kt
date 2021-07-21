@@ -1,20 +1,27 @@
 package world.shanya.serialport
 
+import android.annotation.SuppressLint
 import android.content.Context
+import world.shanya.serialport.connect.ConnectStatusCallback
+import world.shanya.serialport.connect.ConnectionStatusCallback
+import world.shanya.serialport.connect.SerialPortConnect
+import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.SPUtil
 
 
 /**
  * SerialPortBuilder 建造者类
  * @Author Shanya
- * @Date 2021-3-16
- * @Version 3.0.0
+ * @Date 2021-7-21
+ * @Version 4.0.0
  */
 object SerialPortBuilder {
     //获取SerialPort实例
+    @SuppressLint("StaticFieldLeak")
     private val serialPort = SerialPort.get()
     //是否开启自动连接标志
     private var isAutoConnect = false
+
     /**
      * 是否开启Debug模式（打印日志Logcat）
      * @param status 开启状态
@@ -26,6 +33,27 @@ object SerialPortBuilder {
         serialPort.isDebug(status)
         return this
     }
+
+    /**
+     * setLegacyUUID 设置传统设备UUID
+     * @Author Shanya
+     * @Date 2021-7-21
+     * @Version 4.0.0
+     */
+    fun setLegacyUUID(uuid: String) {
+        SerialPortConnect.UUID_LEGACY = uuid
+    }
+
+    /**
+     * setBleUUID 设置BLE设备UUID
+     * @Author Shanya
+     * @Date 2021-7-21
+     * @Version 4.0.0
+     */
+    fun setBleUUID(uuid: String) {
+        SerialPortConnect.UUID_BLE = uuid
+    }
+
     /**
      * 是否开启自动连接
      * @param status 开启状态
@@ -35,6 +63,25 @@ object SerialPortBuilder {
      */
     fun autoConnect(status: Boolean): SerialPortBuilder {
         isAutoConnect = status
+        return this
+    }
+
+    /**
+     * 是否开启间隔自动重连
+     * @param status 开启状态
+     * @param time 间隔时间 单位ms 默认值 10000
+     * @Author Shanya
+     * @Date 2021-7-21
+     * @Version 4.0.0
+     */
+    fun setAutoReconnectAtIntervals(status: Boolean, time: Int = 10000): SerialPortBuilder {
+        SerialPortConnect.autoReconnectAtIntervalsFlag = status
+        SerialPortConnect.autoReconnectIntervalsTime = time
+        if (status) {
+            SerialPortConnect.autoConnect()
+        } else {
+            SerialPortConnect.cancelAutoConnect()
+        }
         return this
     }
 
@@ -86,18 +133,27 @@ object SerialPortBuilder {
         SerialPort.sendDataType = type
         return this
     }
+
     /**
      * 连接状态回调接口函数
      * @param connectStatusCallback 连接状态回调接口
      * @Author Shanya
-     * @Date 2021-3-16
-     * @Version 3.0.0
+     * @Date 2021-7-21
+     * @Version 4.0.0
      */
+    @Deprecated("该方法在4.0.0版本开始被弃用", ReplaceWith("setConnectionStatusCallback"))
     fun setConnectStatusCallback(connectStatusCallback: ConnectStatusCallback): SerialPortBuilder {
         SerialPort._setConnectStatusCallback(connectStatusCallback)
         return this
     }
 
+    /**
+     * 连接状态回调接口函数
+     * @param connectionStatusCallback 连接状态回调接口
+     * @Author Shanya
+     * @Date 2021-3-16
+     * @Version 3.0.0
+     */
     fun setConnectionStatusCallback(connectionStatusCallback: ConnectionStatusCallback): SerialPortBuilder {
         SerialPort._setConnectionStatusCallback(connectionStatusCallback)
         return this
@@ -118,8 +174,8 @@ object SerialPortBuilder {
      * 发送数据函数
      * @param data 待发送数据
      * @Author Shanya
-     * @Date 2021-4-15
-     * @Version 3.0.0
+     * @Date 2021-7-21
+     * @Version 4.0.0
      */
     fun sendData(data: String) {
         serialPort.sendData(data)
@@ -134,17 +190,6 @@ object SerialPortBuilder {
      */
     fun doDiscovery(context: Context) {
         serialPort.doDiscovery(context)
-    }
-
-    /**
-     * setUUID 设置UUID
-     * @Author Shanya
-     * @Date 2021-5-12
-     * @Version 3.1.0
-     */
-    fun setUUID(uuid: String):SerialPortBuilder {
-        SerialPort.setUUID(uuid)
-        return this
     }
 
     /**
@@ -168,9 +213,30 @@ object SerialPortBuilder {
      */
     fun build(context: Context): SerialPort {
         serialPort.build(context)
-        if (isAutoConnect) {
-//            SPUtil.getSPDevice(context)?.let { SerialPort._connectDevice(it) }
-//            SerialPort.autoConnectFlag = true
+        SPUtil.getDeviceType(context)?.let {type ->
+            when (type) {
+                "1" -> {
+                    SPUtil.getDeviceAddress(context)?.let {
+                        SerialPortConnect.lastDeviceAddress = it
+                        if (isAutoConnect) {
+                            SerialPortConnect._connectLegacy(context, it)
+                            SerialPortConnect.autoConnectFlag = true
+                        }
+                    }
+                }
+                "2" -> {
+                    SPUtil.getDeviceAddress(context)?.let {
+                        SerialPortConnect.lastDeviceAddress = it
+                        if (isAutoConnect) {
+                            SerialPortConnect.connectBle(context, it)
+                            SerialPortConnect.autoConnectFlag = true
+                        }
+                    }
+                }
+                else -> {
+
+                }
+            }
         }
         return serialPort
     }

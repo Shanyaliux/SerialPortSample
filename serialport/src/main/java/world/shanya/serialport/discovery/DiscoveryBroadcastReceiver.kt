@@ -6,12 +6,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import world.shanya.serialport.SerialPort
+import world.shanya.serialport.tools.LogUtil
 
 /**
  * DiscoveryBroadcastReceiver 蓝牙搜索状态广播接收器
  * @Author Shanya
- * @Date 2021-5-28
- * @Version 3.1.0
+ * @Date 2021-7-21
+ * @Version 4.0.0
  */
 class DiscoveryBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -34,14 +35,14 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
             }
 
             BluetoothAdapter.ACTION_DISCOVERY_STARTED -> {
-                SerialPort.logUtil.log("扫描传统蓝牙设备","开始搜索")
-                SerialPort.discoveryStatusLiveData.value = true
+                LogUtil.log("开始搜索传统蓝牙设备")
+                SerialPortDiscovery.discoveryStatusLiveData.value = true
             }
 
             BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
-                SerialPort.logUtil.log("扫描传统蓝牙设备","停止搜索")
+                LogUtil.log("停止搜索传统蓝牙设备")
                 SerialPortDiscovery.stopBleScan()
-                SerialPort.discoveryStatusLiveData.value = false
+                SerialPortDiscovery.discoveryStatusLiveData.value = false
             }
         }
     }
@@ -50,16 +51,17 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
     * 添加传统蓝牙设备
     * @param device 设备
     * @Author Shanya
-    * @Date 2021/5/28
-    * @Version 3.1.0
+    * @Date 2021-7-21
+    * @Version 4.0.0
     */
     private fun addDevice(device: BluetoothDevice) {
-        if (!SerialPort.unPairedDevicesListBD.contains(device) && !SerialPort.pairedDevicesListBD.contains(device)) {
-            SerialPort.logUtil.log(
+        if (!SerialPortDiscovery.unPairedDevicesListBD.contains(device) &&
+            !SerialPortDiscovery.pairedDevicesListBD.contains(device)) {
+            LogUtil.log(
                     "找到传统蓝牙设备",
                     "设备名：${device.name}  设备地址：${device.address}")
-            SerialPort.unPairedDevicesListBD.add(device)
-            SerialPort.unPairedDevicesList.add(Device(device.name,device.address,device.type))
+            SerialPortDiscovery.unPairedDevicesListBD.add(device)
+            SerialPortDiscovery.unPairedDevicesList.add(Device(device.name,device.address,device.type))
             SerialPort.findUnpairedDeviceCallback?.invoke()
         }
     }

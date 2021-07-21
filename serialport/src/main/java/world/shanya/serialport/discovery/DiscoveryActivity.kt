@@ -18,10 +18,10 @@ import kotlinx.android.synthetic.main.activity_discovery.*
 import kotlinx.android.synthetic.main.device_cell.view.*
 import world.shanya.serialport.R
 import world.shanya.serialport.SerialPort
-import world.shanya.serialport.SerialPort.Companion.logUtil
-import world.shanya.serialport.SerialPort.Companion.pairedDevicesListBD
-import world.shanya.serialport.SerialPort.Companion.unPairedDevicesListBD
+import world.shanya.serialport.discovery.SerialPortDiscovery.pairedDevicesListBD
+import world.shanya.serialport.discovery.SerialPortDiscovery.unPairedDevicesListBD
 import world.shanya.serialport.strings.SerialPortToast
+import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.ToastUtil
 
 /**
@@ -46,7 +46,7 @@ class DiscoveryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discovery)
 
-        logUtil.log("内置搜索页面","创建")
+        LogUtil.log("内置搜索页面创建")
 
         //检查是否打开蓝牙
         if (!SerialPort.bluetoothAdapter.isEnabled) {
@@ -59,7 +59,7 @@ class DiscoveryActivity : AppCompatActivity() {
         dialog.setCancelable(false)
 
         //搜索状态监听
-        SerialPort.discoveryStatusLiveData.observe(this, Observer {
+        SerialPortDiscovery.discoveryStatusLiveData.observe(this, Observer {
             if (it) {
                 swipeRedreshLayout.isRefreshing = true
                 title = "正在搜索……"
@@ -81,7 +81,7 @@ class DiscoveryActivity : AppCompatActivity() {
 
         //申请定位权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            logUtil.log("扫描蓝牙设备","获取定位权限")
+            LogUtil.log("获取定位权限用于扫描蓝牙设备")
             if (!PermissionX.isGranted(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
                 PermissionX.init(this)
                     .permissions(android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -97,11 +97,11 @@ class DiscoveryActivity : AppCompatActivity() {
                     .request { allGranted, _, _ ->
                         @Suppress("ControlFlowWithEmptyBody")
                         if (allGranted) {
-                            logUtil.log("扫描蓝牙设备","定位权限获取成功")
+                            LogUtil.log("定位权限获取成功")
                             recyclerViewInit()
                             doDiscovery()
                         } else {
-                            logUtil.log("扫描蓝牙设备","定位权限获取失败")
+                            LogUtil.log("定位权限获取失败")
                             ToastUtil.toast(this,SerialPortToast.permission)
                             finish()
                         }
@@ -198,7 +198,7 @@ class DiscoveryActivity : AppCompatActivity() {
         SerialPortDiscovery.stopLegacyScan(this)
         SerialPortDiscovery.stopBleScan()
         dialog.dismiss()
-        logUtil.log("内置搜索页面","销毁")
+        LogUtil.log("内置搜索页面销毁")
     }
 
     /**
