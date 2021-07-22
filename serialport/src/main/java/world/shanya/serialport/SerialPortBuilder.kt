@@ -40,8 +40,9 @@ object SerialPortBuilder {
      * @Date 2021-7-21
      * @Version 4.0.0
      */
-    fun setLegacyUUID(uuid: String) {
+    fun setLegacyUUID(uuid: String):SerialPortBuilder {
         SerialPortConnect.UUID_LEGACY = uuid
+        return this
     }
 
     /**
@@ -50,8 +51,9 @@ object SerialPortBuilder {
      * @Date 2021-7-21
      * @Version 4.0.0
      */
-    fun setBleUUID(uuid: String) {
+    fun setBleUUID(uuid: String):SerialPortBuilder {
         SerialPortConnect.UUID_BLE = uuid
+        return this
     }
 
     /**

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         val serialPort = SerialPortBuilder
             .isDebug(true)
             .autoConnect(false)
-            .setAutoReconnectAtIntervals(false)
+            .setAutoReconnectAtIntervals(false,time = 10000)
             .setSendDataType(SerialPort.SEND_HEX)
             .isIgnoreNoNameDevice(true)
             .setReceivedDataListener {
