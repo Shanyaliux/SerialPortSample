@@ -371,13 +371,19 @@ class SerialPort private constructor() {
     }
 
     /**
-     * 连接设备
+     * 连接传统设备
      * @param address 设备地址
      * @Author Shanya
      * @Date 2021-7-21
      * @Version 4.0.0
      */
     fun connectLegacyDevice(address: String) {
+        val device = bluetoothAdapter.getRemoteDevice(address)
+        _connectLegacyDevice(device)
+    }
+
+    @Deprecated("该方法在4.0.0版本开始被弃用",ReplaceWith("connectLegacyDevice"))
+    fun connectDevice(address: String) {
         val device = bluetoothAdapter.getRemoteDevice(address)
         _connectLegacyDevice(device)
     }
