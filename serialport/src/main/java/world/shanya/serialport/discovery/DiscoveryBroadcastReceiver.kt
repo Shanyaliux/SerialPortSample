@@ -36,12 +36,14 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
 
             BluetoothAdapter.ACTION_DISCOVERY_STARTED -> {
                 LogUtil.log("开始搜索传统蓝牙设备")
+                SerialPortDiscovery.discoveryStatusCallback?.invoke(true)
                 SerialPortDiscovery.discoveryStatusLiveData.value = true
             }
 
             BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
                 LogUtil.log("停止搜索传统蓝牙设备")
                 SerialPortDiscovery.stopBleScan()
+                SerialPortDiscovery.discoveryStatusCallback?.invoke(false)
                 SerialPortDiscovery.discoveryStatusLiveData.value = false
             }
         }

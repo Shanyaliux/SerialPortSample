@@ -13,6 +13,7 @@ import java.lang.Exception
 
 //找到设备接口
 typealias FindUnpairedDeviceCallback = () -> Unit
+typealias DiscoveryStatusCallback = (status: Boolean) -> Unit
 
 /**
  * SerialPortDiscovery 搜索管理类
@@ -22,13 +23,14 @@ typealias FindUnpairedDeviceCallback = () -> Unit
  */
 internal object SerialPortDiscovery {
 
-
     //搜索状态LiveData
     internal var discoveryStatusLiveData = MutableLiveData<Boolean>()
     //已配对设备列表
     internal val pairedDevicesListBD = ArrayList<BluetoothDevice>()
     //未配对设备列表
     internal val unPairedDevicesListBD = ArrayList<BluetoothDevice>()
+    //搜索状态回调
+    internal var discoveryStatusCallback: DiscoveryStatusCallback ?= null
 
     @Deprecated(message = "该变量在4.0.0版本开始被弃用",replaceWith = ReplaceWith(expression = "pairedDevicesListBD"))
     internal val pairedDevicesList = ArrayList<Device>()
@@ -110,6 +112,7 @@ internal object SerialPortDiscovery {
     internal fun startBleScan() {
         LogUtil.log("开始搜索BLE蓝牙设备")
         SerialPort.bluetoothAdapter.bluetoothLeScanner.startScan(scanCallback)
+        discoveryStatusCallback?.invoke(true)
     }
 
     /**
@@ -122,6 +125,7 @@ internal object SerialPortDiscovery {
     internal fun stopBleScan() {
         LogUtil.log("停止搜索BLE蓝牙设备")
         SerialPort.bluetoothAdapter.bluetoothLeScanner.stopScan(scanCallback)
+        discoveryStatusCallback?.invoke(false)
     }
 
     /**
@@ -150,6 +154,7 @@ internal object SerialPortDiscovery {
         unPairedDevicesListBD.clear()
         unPairedDevicesList.clear()
         SerialPort.bluetoothAdapter.startDiscovery()
+        discoveryStatusCallback?.invoke(true)
     }
 
     /**
@@ -167,5 +172,6 @@ internal object SerialPortDiscovery {
             e.printStackTrace()
         }
         SerialPort.bluetoothAdapter.cancelDiscovery()
+        discoveryStatusCallback?.invoke(false)
     }
 }
