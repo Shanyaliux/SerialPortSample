@@ -5,6 +5,7 @@ import android.content.Context
 import world.shanya.serialport.connect.ConnectStatusCallback
 import world.shanya.serialport.connect.ConnectionStatusCallback
 import world.shanya.serialport.connect.SerialPortConnect
+import world.shanya.serialport.discovery.DiscoveryStatusCallback
 import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.SPUtil
 
@@ -162,16 +163,42 @@ object SerialPortBuilder {
     }
 
     /**
+     * 内部静态搜索状态回调接口函数
+     * @param discoveryStatusCallback 搜索状态回调接口
+     * @Author Shanya
+     * @Date 2021-8-7
+     * @Version 4.0.2
+     */
+    fun setDiscoveryStatusCallback(discoveryStatusCallback: DiscoveryStatusCallback): SerialPortBuilder {
+        SerialPort._setDiscoveryStatusListener(discoveryStatusCallback)
+        return this
+    }
+
+    /**
      * 接收数据回调接口函数
      * @param receivedDataCallback 接收数据回调接口
      * @Author Shanya
      * @Date 2021-3-16
      * @Version 3.0.0
      */
+    @Deprecated(message = "该方法在4.0.2版本开始被弃用",replaceWith = ReplaceWith("setReceivedDataCallback"))
     fun setReceivedDataListener(receivedDataCallback: ReceivedDataCallback): SerialPortBuilder {
         SerialPort._setReceivedDataListener(receivedDataCallback)
         return this
     }
+
+    /**
+     * 接收数据回调接口函数
+     * @param receivedDataCallback 接收数据回调接口
+     * @Author Shanya
+     * @Date 2021-8-7
+     * @Version 4.0.2
+     */
+    fun setReceivedDataCallback(receivedDataCallback: ReceivedDataCallback): SerialPortBuilder {
+        SerialPort._setReceivedDataListener(receivedDataCallback)
+        return this
+    }
+
     /**
      * 发送数据函数
      * @param data 待发送数据

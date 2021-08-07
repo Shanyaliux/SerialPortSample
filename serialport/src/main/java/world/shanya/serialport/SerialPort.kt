@@ -141,6 +141,17 @@ class SerialPort private constructor() {
             this.receivedDataCallback = receivedDataCallback
         }
 
+        /**
+         * 内部静态搜索状态回调接口函数
+         * @param discoveryStatusCallback 搜索状态回调接口
+         * @Author Shanya
+         * @Date 2021-8-7
+         * @Version 4.0.2
+         */
+        internal fun _setDiscoveryStatusListener(discoveryStatusCallback: DiscoveryStatusCallback) {
+            SerialPortDiscovery.discoveryStatusCallback = discoveryStatusCallback
+        }
+
         //内部连接回调，不包含连接信息（成功与否和连接设备）
         internal var connectCallback: ConnectCallback ?= null
         /**
@@ -408,8 +419,31 @@ class SerialPort private constructor() {
      * @Date 2021-3-16
      * @Version 3.0.0
      */
+    @Deprecated(message = "该方法在4.0.2版本开始被弃用",replaceWith = ReplaceWith("setReceivedDataCallback"))
     fun setReceivedDataListener(receivedDataCallback: ReceivedDataCallback) {
         _setReceivedDataListener(receivedDataCallback)
+    }
+
+    /**
+     * 接收数据回调接口函数
+     * @param receivedDataCallback 接收数据回调接口
+     * @Author Shanya
+     * @Date 2021-8-7
+     * @Version 4.0.2
+     */
+    fun setReceivedDataCallback(receivedDataCallback: ReceivedDataCallback) {
+        _setReceivedDataListener(receivedDataCallback)
+    }
+
+    /**
+     * 内部静态搜索状态回调接口函数
+     * @param discoveryStatusCallback 搜索状态回调接口
+     * @Author Shanya
+     * @Date 2021-8-7
+     * @Version 4.0.2
+     */
+    fun setDiscoveryStatusCallback(discoveryStatusCallback: DiscoveryStatusCallback) {
+        _setDiscoveryStatusListener(discoveryStatusCallback)
     }
 
     /**

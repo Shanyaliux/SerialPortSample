@@ -25,8 +25,11 @@ class MainActivity : AppCompatActivity() {
             .setAutoReconnectAtIntervals(false,time = 10000)
             .setSendDataType(SerialPort.SEND_HEX)
             .isIgnoreNoNameDevice(true)
-            .setReceivedDataListener {
-                Log.d("SerialPortDebug", "onCreate: $it")
+            .setDiscoveryStatusCallback {
+                Log.d("SerialPort", "DiscoveryStatus: $it")
+            }
+            .setReceivedDataCallback {
+                Log.d("SerialPort", "onCreate: $it")
             }
             .setConnectionStatusCallback { status, bluetoothDevice ->
                 MainScope().launch {
