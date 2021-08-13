@@ -14,6 +14,7 @@ import java.lang.Exception
 //找到设备接口
 typealias FindUnpairedDeviceCallback = () -> Unit
 typealias DiscoveryStatusCallback = (status: Boolean) -> Unit
+typealias DiscoveryStatusWithTypeCallback = (deviceType: Int, status: Boolean) -> Unit
 
 /**
  * SerialPortDiscovery 搜索管理类
@@ -29,6 +30,8 @@ internal object SerialPortDiscovery {
     internal val pairedDevicesListBD = ArrayList<BluetoothDevice>()
     //未配对设备列表
     internal val unPairedDevicesListBD = ArrayList<BluetoothDevice>()
+    //搜索状态带类型回调
+    internal var discoveryStatusWithTypeCallback: DiscoveryStatusWithTypeCallback ?= null
     //搜索状态回调
     internal var discoveryStatusCallback: DiscoveryStatusCallback ?= null
 
@@ -39,8 +42,8 @@ internal object SerialPortDiscovery {
     /**
      * 搜索 BLE 回调
      * @Author Shanya
-     * @Date 2021-7-21
-     * @Version 4.0.0
+     * @Date 2021-8-13
+     * @Version 4.0.3
      */
     private val scanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult?) {
@@ -50,16 +53,10 @@ internal object SerialPortDiscovery {
                 scanResult.device?.let {
                     if (SerialPort.ignoreNoNameDeviceFlag) {
                         if (it.name != null) {
-                            addBleDevice(it)
-                            val device = Device(it.name, it.address, it.type)
-                            val deviceL = Device(it.name, it.address, it.type)
-                            addBleDevice(device, deviceL)
+                            addDevice(it)
                         }
                     } else {
-                        addBleDevice(it)
-                        val device = Device(it.name ?: "", it.address, it.type)
-                        val deviceL = Device(it.name ?: "", it.address, it.type)
-                        addBleDevice(device, deviceL)
+                        addDevice(it)
                     }
                 }
             }
@@ -67,39 +64,22 @@ internal object SerialPortDiscovery {
     }
 
     /**
-    * 添加 BLE 设备
-    * @param device BLE设备
-    * @Author Shanya
-    * @Date 2021-7-21
-    * @Version 4.0.0
-    */
-    private fun addBleDevice(device: BluetoothDevice) {
-        if (!unPairedDevicesListBD.contains(device) && !pairedDevicesListBD.contains(device)) {
-            unPairedDevicesListBD.add(device)
-            LogUtil.log("找到BLE蓝牙设备","设备名：${device.name}  设备地址：${device.address}")
-            SerialPort.findUnpairedDeviceCallback?.invoke()
-        }
-
-    }
-
-    /**
-     * 添加 BLE 设备
-     * @param device BLE设备
-     * @param deviceL 传统设备
+     * 添加蓝牙设备
+     * @param bluetoothDevice 设备
      * @Author Shanya
-     * @Date 2021-7-21
-     * @Version 4.0.0
+     * @Date 2021-8-13
+     * @Version 4.0.3
      */
-    private fun addBleDevice(device: Device, deviceL: Device) {
-        if (unPairedDevicesList.contains(deviceL)) {
-            unPairedDevicesList.remove(deviceL)
-        }
-        if (!unPairedDevicesList.contains(device)) {
-            unPairedDevicesList.add(device)
-            LogUtil.log("找到BLE蓝牙设备","设备名：${device.name}  设备地址：${device.address}")
+    internal fun addDevice(bluetoothDevice: BluetoothDevice) {
+        if (!unPairedDevicesListBD.contains(bluetoothDevice) && !pairedDevicesListBD.contains(bluetoothDevice)) {
+            unPairedDevicesListBD.add(bluetoothDevice)
+            LogUtil.log("找到蓝牙设备","设备名：${bluetoothDevice.name}  " +
+                    "设备地址：${bluetoothDevice.address}  " +
+                    "设备类型：${bluetoothDevice.type}")
+            unPairedDevicesList.add(Device(bluetoothDevice.name ?:"",
+                bluetoothDevice.address?:"",bluetoothDevice.type))
             SerialPort.findUnpairedDeviceCallback?.invoke()
         }
-
     }
 
     /**
@@ -112,6 +92,7 @@ internal object SerialPortDiscovery {
     internal fun startBleScan() {
         LogUtil.log("开始搜索BLE蓝牙设备")
         SerialPort.bluetoothAdapter.bluetoothLeScanner.startScan(scanCallback)
+        discoveryStatusWithTypeCallback?.invoke(SerialPort.DISCOVERY_BLE, true)
         discoveryStatusCallback?.invoke(true)
     }
 
@@ -125,6 +106,7 @@ internal object SerialPortDiscovery {
     internal fun stopBleScan() {
         LogUtil.log("停止搜索BLE蓝牙设备")
         SerialPort.bluetoothAdapter.bluetoothLeScanner.stopScan(scanCallback)
+        discoveryStatusWithTypeCallback?.invoke(SerialPort.DISCOVERY_BLE, false)
         discoveryStatusCallback?.invoke(false)
     }
 
@@ -136,42 +118,40 @@ internal object SerialPortDiscovery {
      * @Version 4.0.0
      */
     internal fun startLegacyScan(context: Context) {
-        LogUtil.log("扫描传统蓝牙设备","注册传统蓝牙广播")
+        LogUtil.log("注册传统蓝牙扫描结果广播接收器")
         context.registerReceiver(SerialPort.discoveryBroadcastReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
         context.registerReceiver(SerialPort.discoveryBroadcastReceiver, IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_STARTED))
         context.registerReceiver(SerialPort.discoveryBroadcastReceiver, IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED))
-        LogUtil.log("扫描传统蓝牙设备","获取已配对设备")
+        LogUtil.log("获取已配对设备")
         val pairedDevices:Set<BluetoothDevice> = SerialPort.bluetoothAdapter.bondedDevices
         if (pairedDevices.isNotEmpty()){
             pairedDevicesListBD.clear()
             pairedDevicesList.clear()
             for (device in pairedDevices){
                 pairedDevicesListBD.add(device)
-                pairedDevicesList.add(Device(device.name,device.address,device.type))
+                pairedDevicesList.add(Device(device.name ?:"",device.address?:"",device.type))
             }
         }
 
         unPairedDevicesListBD.clear()
         unPairedDevicesList.clear()
         SerialPort.bluetoothAdapter.startDiscovery()
-        discoveryStatusCallback?.invoke(true)
     }
 
     /**
      * 停止传统蓝牙设备
      * @param context 上下文
      * @Author Shanya
-     * @Date 2021-7-21
-     * @Version 4.0.0
+     * @Date 2021-8-13
+     * @Version 4.0.3
      */
     internal fun stopLegacyScan(context: Context) {
-        LogUtil.log("扫描传统蓝牙设备","停止搜索")
+        LogUtil.log("停止搜索传统蓝牙设备")
         try {
             context.unregisterReceiver(SerialPort.discoveryBroadcastReceiver)
         } catch (e: Exception) {
-            e.printStackTrace()
+
         }
         SerialPort.bluetoothAdapter.cancelDiscovery()
-        discoveryStatusCallback?.invoke(false)
     }
 }

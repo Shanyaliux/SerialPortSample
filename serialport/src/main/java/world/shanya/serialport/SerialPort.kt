@@ -62,6 +62,10 @@ class SerialPort private constructor() {
         //发送数据格式为十六进制
         const val SEND_HEX = 4
 
+        const val DISCOVERY_BLE = 0
+        const val DISCOVERY_LEGACY = 1
+
+
         //传统设备搜索结果广播接收器
         internal val discoveryBroadcastReceiver = DiscoveryBroadcastReceiver()
         //传统设备连接状态变更广播接收器
@@ -139,6 +143,17 @@ class SerialPort private constructor() {
          */
         internal fun _setReceivedDataListener(receivedDataCallback: ReceivedDataCallback) {
             this.receivedDataCallback = receivedDataCallback
+        }
+
+        /**
+         * 内部静态搜索状态带类型回调接口函数
+         * @param discoveryStatusWithTypeCallback 搜索状态带类型回调接口
+         * @Author Shanya
+         * @Date 2021-8-13
+         * @Version 4.0.3
+         */
+        internal fun _setDiscoveryStatusWithTypeListener(discoveryStatusWithTypeCallback: DiscoveryStatusWithTypeCallback) {
+            SerialPortDiscovery.discoveryStatusWithTypeCallback = discoveryStatusWithTypeCallback
         }
 
         /**
@@ -230,7 +245,7 @@ class SerialPort private constructor() {
          * @Date 2021-7-21
          * @Version 4.0.0
          */
-        fun connectDevice(device: BluetoothDevice) {
+        internal fun _connectDevice(device: BluetoothDevice) {
             newContext?.let {
                 if (device.type == 2) {
                     SerialPortConnect.connectBle(it, device.address)
@@ -393,10 +408,22 @@ class SerialPort private constructor() {
         _connectLegacyDevice(device)
     }
 
-    @Deprecated("该方法在4.0.0版本开始被弃用",ReplaceWith("connectLegacyDevice"))
+    /**
+     * 连接函数
+     * @param device 连接设备
+     * @Author Shanya
+     * @Date 2021-8-13
+     * @Version 4.0.3
+     */
     fun connectDevice(address: String) {
-        val device = bluetoothAdapter.getRemoteDevice(address)
-        _connectLegacyDevice(device)
+        newContext?.let {
+            val device = bluetoothAdapter.getRemoteDevice(address)
+            if (device.type == BluetoothDevice.DEVICE_TYPE_LE) {
+                SerialPortConnect.connectBle(it, device.address)
+            } else {
+                SerialPortConnect.connectLegacy(it, device.address)
+            }
+        }
     }
 
     /**
@@ -433,6 +460,17 @@ class SerialPort private constructor() {
      */
     fun setReceivedDataCallback(receivedDataCallback: ReceivedDataCallback) {
         _setReceivedDataListener(receivedDataCallback)
+    }
+
+    /**
+     * 内部静态搜索状态带类型回调接口函数
+     * @param discoveryStatusWithTypeCallback 搜索状态回调接口
+     * @Author Shanya
+     * @Date 2021-8-13
+     * @Version 4.0.3
+     */
+    fun setDiscoveryStatusWithTypeCallback(discoveryStatusWithTypeCallback: DiscoveryStatusWithTypeCallback) {
+        _setDiscoveryStatusWithTypeListener(discoveryStatusWithTypeCallback)
     }
 
     /**

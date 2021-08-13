@@ -1,5 +1,6 @@
 package world.shanya.serialport.discovery
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.bluetooth.BluetoothDevice
 import android.content.Context
@@ -204,8 +205,8 @@ class DiscoveryActivity : AppCompatActivity() {
     /**
     * 设备列表适配器
     * @Author Shanya
-    * @Date 2021/5/28
-    * @Version 3.1.0
+    * @Date 2021-8-13
+    * @Version 4.0.3
     */
     inner class DevicesAdapter internal constructor(context: Context, private val pairingStatus: Boolean) :
         RecyclerView.Adapter<DevicesAdapter.DevicesViewHolder>() {
@@ -218,6 +219,7 @@ class DiscoveryActivity : AppCompatActivity() {
             val textViewDeviceName: TextView = itemView.findViewById(R.id.textViewDeviceName)
             val textViewDeviceAddress: TextView = itemView.findViewById(R.id.textViewDeviceAddress)
             val imageViewDeviceLogo: ImageView = itemView.findViewById(R.id.imageViewDeviceLogo)
+            val textViewDeviceType: TextView = itemView.findViewById(R.id.textViewDeviceType)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DevicesViewHolder {
@@ -227,7 +229,7 @@ class DiscoveryActivity : AppCompatActivity() {
                 SerialPortDiscovery.stopLegacyScan(this@DiscoveryActivity)
                 SerialPortDiscovery.stopBleScan()
                 val device = SerialPort.bluetoothAdapter.getRemoteDevice(it.textViewDeviceAddress.text.toString())
-                SerialPort.connectDevice(device)
+                SerialPort._connectDevice(device)
             }
             return holder
         }
@@ -239,25 +241,55 @@ class DiscoveryActivity : AppCompatActivity() {
                 unPairedDevicesListBD.size
         }
 
+
+        @SuppressLint("SetTextI18n")
         override fun onBindViewHolder(holder: DevicesViewHolder, position: Int) {
             if (pairingStatus) {
                 val current = pairedDevicesListBD[position]
                 holder.textViewDeviceName.text = current.name
                 holder.textViewDeviceAddress.text = current.address
-                if (current.type == 2) {
-                    holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_ble)
-                } else {
-                    holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo)
+                when (current.type) {
+                    BluetoothDevice.DEVICE_TYPE_UNKNOWN -> {
+                        holder.textViewDeviceType.text = "未知类型"
+                        holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo)
+                    }
+
+                    BluetoothDevice.DEVICE_TYPE_CLASSIC -> {
+                        holder.textViewDeviceType.text = "传统类型"
+                        holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_l)
+                    }
+                    BluetoothDevice.DEVICE_TYPE_LE -> {
+                        holder.textViewDeviceType.text = "BLE类型"
+                        holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_b)
+                    }
+                    BluetoothDevice.DEVICE_TYPE_DUAL -> {
+                        holder.textViewDeviceType.text = "传统和BLE双重类型"
+                        holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_l_b)
+                    }
                 }
             }
             else {
                 val current = unPairedDevicesListBD[position]
                 holder.textViewDeviceName.text = current.name
                 holder.textViewDeviceAddress.text = current.address
-                if (current.type == 2) {
-                    holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_ble)
-                } else {
-                    holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo)
+                when (current.type) {
+                    BluetoothDevice.DEVICE_TYPE_UNKNOWN -> {
+                        holder.textViewDeviceType.text = "未知类型"
+                        holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo)
+                    }
+
+                    BluetoothDevice.DEVICE_TYPE_CLASSIC -> {
+                        holder.textViewDeviceType.text = "传统类型"
+                        holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_l)
+                    }
+                    BluetoothDevice.DEVICE_TYPE_LE -> {
+                        holder.textViewDeviceType.text = "BLE类型"
+                        holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_b)
+                    }
+                    BluetoothDevice.DEVICE_TYPE_DUAL -> {
+                        holder.textViewDeviceType.text = "传统和BLE双重类型"
+                        holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_l_b)
+                    }
                 }
             }
         }
