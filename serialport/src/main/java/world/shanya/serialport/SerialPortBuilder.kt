@@ -6,7 +6,8 @@ import world.shanya.serialport.connect.ConnectStatusCallback
 import world.shanya.serialport.connect.ConnectionStatusCallback
 import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.DiscoveryStatusCallback
-import world.shanya.serialport.tools.LogUtil
+import world.shanya.serialport.discovery.DiscoveryStatusWithTypeCallback
+import world.shanya.serialport.discovery.SerialPortDiscovery
 import world.shanya.serialport.tools.SPUtil
 
 
@@ -151,11 +152,11 @@ object SerialPortBuilder {
     }
 
     /**
-     * 连接状态回调接口函数
-     * @param connectionStatusCallback 连接状态回调接口
+     * 连接状态带类型回调接口函数
+     * @param connectionStatusCallback 连接状态带类型回调接口
      * @Author Shanya
-     * @Date 2021-3-16
-     * @Version 3.0.0
+     * @Date 2021-8-13
+     * @Version 4.0.3
      */
     fun setConnectionStatusCallback(connectionStatusCallback: ConnectionStatusCallback): SerialPortBuilder {
         SerialPort._setConnectionStatusCallback(connectionStatusCallback)
@@ -163,14 +164,26 @@ object SerialPortBuilder {
     }
 
     /**
-     * 内部静态搜索状态回调接口函数
+     * 搜索状态回调接口函数
      * @param discoveryStatusCallback 搜索状态回调接口
      * @Author Shanya
-     * @Date 2021-8-7
-     * @Version 4.0.2
+     * @Date 2021-8-13
+     * @Version 4.0.3
      */
     fun setDiscoveryStatusCallback(discoveryStatusCallback: DiscoveryStatusCallback): SerialPortBuilder {
         SerialPort._setDiscoveryStatusListener(discoveryStatusCallback)
+        return this
+    }
+
+    /**
+     * 搜索状态回调接口函数
+     * @param discoveryStatusWithTypeCallback 搜索状态回调接口
+     * @Author Shanya
+     * @Date 2021-8-13
+     * @Version 4.0.3
+     */
+    fun setDiscoveryStatusWithTypeCallback(discoveryStatusWithTypeCallback: DiscoveryStatusWithTypeCallback): SerialPortBuilder {
+        SerialPort._setDiscoveryStatusWithTypeListener(discoveryStatusWithTypeCallback)
         return this
     }
 
@@ -232,6 +245,48 @@ object SerialPortBuilder {
         SerialPort.isIgnoreNoNameDevice(status)
         return this
     }
+
+    /**
+     * 获取已配对设备列表
+     * @return 已配对设备列表
+     * @Author Shanya
+     * @Date 2021-8-13
+     * @Version 4.0.3
+     */
+    @Deprecated(message = "建议使用 getPairedDevicesListBD",
+        replaceWith = ReplaceWith(
+            expression = "getPairedDevicesListBD()"))
+    fun getPairedDevicesList() = SerialPortDiscovery.pairedDevicesList
+
+    /**
+     * 获取未配对设备列表
+     * @return 未配对设备列表
+     * @Author Shanya
+     * @Date 2021-8-13
+     * @Version 4.0.3
+     */
+    @Deprecated(message = "建议使用 getUnPairedDevicesListBD",
+        replaceWith = ReplaceWith(
+            expression = "getUnPairedDevicesListBD()"))
+    fun getUnPairedDevicesList() = SerialPortDiscovery.unPairedDevicesList
+
+    /**
+     * 获取已配对设备列表
+     * @return 已配对设备列表
+     * @Author Shanya
+     * @Date 2021-8-13
+     * @Version 4.0.3
+     */
+    fun getPairedDevicesListBD() = SerialPortDiscovery.pairedDevicesListBD
+
+    /**
+     * 获取未配对设备列表
+     * @return 未配对设备列表
+     * @Author Shanya
+     * @Date 2021-8-13
+     * @Version 4.0.3
+     */
+    fun getUnPairedDevicesListBD() = SerialPortDiscovery.unPairedDevicesListBD
 
     /**
      * 创建实例

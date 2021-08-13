@@ -9,7 +9,6 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPortBuilder
-import world.shanya.serialport.strings.SerialPortToast
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +23,10 @@ class MainActivity : AppCompatActivity() {
             .autoConnect(false)
             .setAutoReconnectAtIntervals(false,time = 10000)
             .setSendDataType(SerialPort.SEND_HEX)
-            .isIgnoreNoNameDevice(true)
+            .isIgnoreNoNameDevice(false)
+            .setDiscoveryStatusWithTypeCallback { deviceType, status ->
+                Log.d("SerialPort", "DiscoveryStatusWithType: $deviceType -- $status")
+            }
             .setDiscoveryStatusCallback {
                 Log.d("SerialPort", "DiscoveryStatus: $it")
             }
@@ -49,7 +51,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonScan.setOnClickListener {
-            serialPort.printPossibleBleUUID()
+//            serialPort.printPossibleBleUUID()
+            serialPort.connectDevice("F8:33:31:A9:A2:94")
         }
 
         buttonSend.setOnClickListener {

@@ -11,8 +11,8 @@ import world.shanya.serialport.tools.LogUtil
 /**
  * DiscoveryBroadcastReceiver 蓝牙搜索状态广播接收器
  * @Author Shanya
- * @Date 2021-7-21
- * @Version 4.0.0
+ * @Date 2021-8-13
+ * @Version 4.0.3
  */
 class DiscoveryBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -20,22 +20,20 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
             BluetoothDevice.ACTION_FOUND -> {
                 val device =
                     intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
-
                 if (device != null) {
-                    if (device.type != 2) {
-                        if (SerialPort.ignoreNoNameDeviceFlag) {
-                            if (device.name != null) {
-                                addDevice(device)
-                            }
-                        } else {
-                            addDevice(device)
+                    if (SerialPort.ignoreNoNameDeviceFlag) {
+                        if (device.name != null) {
+                            SerialPortDiscovery.addDevice(device)
                         }
+                    } else {
+                        SerialPortDiscovery.addDevice(device)
                     }
                 }
             }
 
             BluetoothAdapter.ACTION_DISCOVERY_STARTED -> {
                 LogUtil.log("开始搜索传统蓝牙设备")
+                SerialPortDiscovery.discoveryStatusWithTypeCallback?.invoke(SerialPort.DISCOVERY_LEGACY, true)
                 SerialPortDiscovery.discoveryStatusCallback?.invoke(true)
                 SerialPortDiscovery.discoveryStatusLiveData.value = true
             }
@@ -43,28 +41,10 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
             BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
                 LogUtil.log("停止搜索传统蓝牙设备")
                 SerialPortDiscovery.stopBleScan()
+                SerialPortDiscovery.discoveryStatusWithTypeCallback?.invoke(SerialPort.DISCOVERY_LEGACY, false)
                 SerialPortDiscovery.discoveryStatusCallback?.invoke(false)
                 SerialPortDiscovery.discoveryStatusLiveData.value = false
             }
-        }
-    }
-
-    /**
-    * 添加传统蓝牙设备
-    * @param device 设备
-    * @Author Shanya
-    * @Date 2021-7-21
-    * @Version 4.0.0
-    */
-    private fun addDevice(device: BluetoothDevice) {
-        if (!SerialPortDiscovery.unPairedDevicesListBD.contains(device) &&
-            !SerialPortDiscovery.pairedDevicesListBD.contains(device)) {
-            LogUtil.log(
-                    "找到传统蓝牙设备",
-                    "设备名：${device.name}  设备地址：${device.address}")
-            SerialPortDiscovery.unPairedDevicesListBD.add(device)
-            SerialPortDiscovery.unPairedDevicesList.add(Device(device.name,device.address,device.type))
-            SerialPort.findUnpairedDeviceCallback?.invoke()
         }
     }
 
