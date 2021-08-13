@@ -12,4 +12,6 @@ object SerialPortToast {
     var disconnectFirst = SerialPortToastBean(true,"请先断开连接",Toast.LENGTH_SHORT)
     var permission = SerialPortToastBean(true,"请先开启位置权限",Toast.LENGTH_SHORT)
     var hexTip = SerialPortToastBean(true,"请输入的十六进制数据保持两位，不足前面补0",Toast.LENGTH_SHORT)
+    var openBluetoothSucceeded = SerialPortToastBean(true,"蓝牙打开成功",Toast.LENGTH_SHORT)
+    var openBluetoothFailed = SerialPortToastBean(true,"蓝牙打开失败",Toast.LENGTH_SHORT)
 }

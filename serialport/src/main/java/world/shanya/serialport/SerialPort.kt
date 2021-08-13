@@ -69,7 +69,7 @@ class SerialPort private constructor() {
         //传统设备搜索结果广播接收器
         internal val discoveryBroadcastReceiver = DiscoveryBroadcastReceiver()
         //传统设备连接状态变更广播接收器
-        internal val connectionBroadcastReceiver = ConnectionBroadcastReceiver()
+        internal val bluetoothStatusBroadcastReceiver = BluetoothStatusBroadcastReceiver()
         //接收数据格式默认为字符串
         internal var readDataType = READ_STRING
         //发送数据格式默认为字符串
@@ -277,7 +277,18 @@ class SerialPort private constructor() {
     init {
         SerialPortDiscovery.discoveryStatusLiveData.value = false
         if (!bluetoothAdapter.isEnabled) {
-            bluetoothAdapter.enable()
+            val res = bluetoothAdapter.enable()
+            if (res) {
+                LogUtil.log("蓝牙打开成功")
+                newContext?.let {
+                    ToastUtil.toast(it, SerialPortToast.openBluetoothSucceeded)
+                }
+            } else {
+                LogUtil.log("蓝牙打开失败")
+                newContext?.let {
+                    ToastUtil.toast(it, SerialPortToast.openBluetoothFailed)
+                }
+            }
         }
     }
 
@@ -301,12 +312,15 @@ class SerialPort private constructor() {
      * @Version 4.0.0
      */
     internal fun build(context: Context) {
-        oldContext?.unregisterReceiver(connectionBroadcastReceiver)
+        oldContext?.unregisterReceiver(bluetoothStatusBroadcastReceiver)
         oldContext = newContext
         newContext = context
-        val intentFilter = IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED)
-        intentFilter.priority = Int.MAX_VALUE
-        context.registerReceiver(connectionBroadcastReceiver, intentFilter)
+        val intentFilterConnection = IntentFilter(BluetoothDevice.ACTION_ACL_DISCONNECTED)
+        val intentFilterBluetoothState = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
+        intentFilterConnection.priority = Int.MAX_VALUE
+        intentFilterBluetoothState.priority = Int.MAX_VALUE
+        context.registerReceiver(bluetoothStatusBroadcastReceiver, intentFilterConnection)
+        context.registerReceiver(bluetoothStatusBroadcastReceiver, intentFilterBluetoothState)
     }
 
     /**
@@ -555,10 +569,7 @@ class SerialPort private constructor() {
      * @Version 4.0.0
      */
     fun sendData(data: String) {
-        if (!bluetoothAdapter.isEnabled){
-            bluetoothAdapter.enable()
-            return
-        }
+
         if (SerialPortConnect.connectStatus) {
             SerialPortConnect.connectedLegacyDevice?.let {
                 sendLegacyData(data)
