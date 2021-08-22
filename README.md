@@ -3,7 +3,7 @@
 ## 项目官网
 
 [www.serialport.cn](www.serialport.cn)  
-**如上述地址无法访问则可以访问一下地址**
+**如上述地址无法访问则可以访问一下地址**  
 [https://shanya.gitee.io/](https://shanya.gitee.io/)
 
 ## CSDN说明文档
