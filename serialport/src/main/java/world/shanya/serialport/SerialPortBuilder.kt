@@ -309,6 +309,9 @@ object SerialPortBuilder {
      * @Version 3.0.0
      */
     fun build(context: Context): SerialPort {
+        if (!SerialPort.bluetoothAdapter.isEnabled) {
+            SerialPort.bluetoothAdapter.enable()
+        }
         serialPort.build(context)
         SPUtil.getDeviceType(context)?.let {type ->
             when (type) {
