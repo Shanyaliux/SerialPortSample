@@ -3,6 +3,7 @@ package world.shanya.serialport
 import android.annotation.SuppressLint
 import android.content.Context
 import world.shanya.serialport.connect.ConnectStatusCallback
+import world.shanya.serialport.connect.ConnectionResultCallback
 import world.shanya.serialport.connect.ConnectionStatusCallback
 import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.DiscoveryStatusCallback
@@ -209,6 +210,18 @@ object SerialPortBuilder {
      */
     fun setReceivedDataCallback(receivedDataCallback: ReceivedDataCallback): SerialPortBuilder {
         SerialPort._setReceivedDataListener(receivedDataCallback)
+        return this
+    }
+
+    /**
+     * 连接结果回调接口函数
+     * @param connectionResultCallback 连接结果回调接口
+     * @Author Shanya
+     * @Date 2021-9-14
+     * @Version 4.1.1
+     */
+    fun setConnectionResultCallback(connectionResultCallback: ConnectionResultCallback): SerialPortBuilder {
+        SerialPort._setConnectionResultCallback(connectionResultCallback)
         return this
     }
 

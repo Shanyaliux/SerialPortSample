@@ -212,6 +212,19 @@ class SerialPort private constructor() {
             this.connectionStatusCallback = connectionStatusCallback
         }
 
+        //连接结果回调
+        internal var connectionResultCallback: ConnectionResultCallback ?= null
+
+        /**
+         * 内连接结果回调接口函数
+         * @param connectionResultCallback 连接结果回调接口
+         * @Author Shanya
+         * @Date 2021-9-14
+         * @Version 4.1.1
+         */
+        internal fun _setConnectionResultCallback(connectionResultCallback: ConnectionResultCallback) {
+            this.connectionResultCallback =connectionResultCallback
+        }
 
         /**
          * 十六进制字符串转换成字符串
@@ -519,6 +532,17 @@ class SerialPort private constructor() {
      */
     fun setConnectionStatusCallback(connectionStatusCallback: ConnectionStatusCallback) {
         _setConnectionStatusCallback(connectionStatusCallback)
+    }
+
+    /**
+     * 连接结果回调接口函数
+     * @param connectionResultCallback 连接结果回调接口
+     * @Author Shanya
+     * @Date 2021-9-14
+     * @Version 4.1.1
+     */
+    fun setConnectionResultCallback(connectionResultCallback: ConnectionResultCallback) {
+        _setConnectionResultCallback(connectionResultCallback)
     }
 
     /**

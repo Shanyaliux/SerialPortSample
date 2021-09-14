@@ -31,8 +31,16 @@ class MainActivity : AppCompatActivity() {
                 Log.d("SerialPort", "DiscoveryStatus: $it")
             }
             .setReceivedDataCallback {
-                Log.d("SerialPort", "onCreate: $it")
+                Log.d("SerialPort", "ReceivedData: $it")
             }
+//            .setConnectionResultCallback { result, bluetoothDevice ->
+//                Log.d("SerialPort", "ConnectionResult: $result")
+//                if (bluetoothDevice != null) {
+//                    Log.d("SerialPort", "ConnectionResult: ${bluetoothDevice.address}")
+//                } else {
+//                    Log.d("SerialPort", "ConnectionResult: null")
+//                }
+//            }
             .setConnectionStatusCallback { status, bluetoothDevice ->
                 MainScope().launch {
                     textViewInfo.text =
@@ -41,6 +49,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             .build(this)
+
+        serialPort.setConnectionResultCallback { result, bluetoothDevice ->
+                Log.d("SerialPort", "ConnectionResult: $result")
+                if (bluetoothDevice != null) {
+                    Log.d("SerialPort", "ConnectionResult: ${bluetoothDevice.address}")
+                } else {
+                    Log.d("SerialPort", "ConnectionResult: null")
+                }
+        }
 
         buttonConnect.setOnClickListener {
             serialPort.openDiscoveryActivity()
