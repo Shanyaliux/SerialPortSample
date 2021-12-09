@@ -196,7 +196,7 @@ internal object ToastUtil {
     }
 }
 
-internal object StringToHex {
+object StringToHex {
     /**
      * 字符串转换成十六进制
      * @param str 待转换的字符串
