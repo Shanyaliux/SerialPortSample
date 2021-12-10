@@ -3,12 +3,14 @@ package world.shanya.serilportsample
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPortBuilder
+import world.shanya.serialport.tools.SerialPortTools
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,12 +19,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val serialPort = SerialPortBuilder
             .isDebug(true)
-            .autoConnect(false)
-            .setAutoReconnectAtIntervals(false,time = 10000)
-            .setSendDataType(SerialPort.SEND_HEX)
+            .autoConnect(true)
+            .setAutoReconnectAtIntervals(false, time = 10000)
+            .setSendDataType(SerialPort.SEND_STRING)
             .isIgnoreNoNameDevice(false)
             .setDiscoveryStatusWithTypeCallback { deviceType, status ->
                 Log.d("SerialPort", "DiscoveryStatusWithType: $deviceType -- $status")
@@ -32,6 +33,18 @@ class MainActivity : AppCompatActivity() {
             }
             .setReceivedDataCallback {
                 Log.d("SerialPort", "ReceivedData: $it")
+                MainScope().launch {
+                    textViewInfo.text = it
+                }
+            }
+            .setReceivedBytesCallback {
+                MainScope().launch {
+                    Toast.makeText(
+                        this@MainActivity,
+                        SerialPortTools.bytes2string(it, "GBK"),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 //            .setConnectionResultCallback { result, bluetoothDevice ->
 //                Log.d("SerialPort", "ConnectionResult: $result")
@@ -74,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
         buttonSend.setOnClickListener {
 //            serialPort.sendData("hello\r\n")
-            serialPort.sendData("0A 0D")
+            serialPort.sendData("你好")
         }
     }
 }

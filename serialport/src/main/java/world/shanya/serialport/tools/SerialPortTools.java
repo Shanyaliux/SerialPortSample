@@ -3,13 +3,16 @@ package world.shanya.serialport.tools;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+
 /**
  * SerialPortToolsByJava BLE设备发消息工具类
  * @Author Shanya
  * @Date 2021-7-21
  * @version 4.0.0
  */
-public class SerialPortToolsByJava {
+public class SerialPortTools {
 
     /**
      * dataSeparate 数据分段
@@ -47,5 +50,43 @@ public class SerialPortToolsByJava {
             gattCharacteristic.setValue(str);
             gatt.writeCharacteristic(gattCharacteristic);
         }
+    }
+
+    /**
+     * 字节数组按要求的编码格式转换成字符串
+     * @param bytes 带转换的字节数组
+     * @param charsetName 要求的编码格式
+     * @return 转换成功的字符串
+     * @Author Shanya
+     * @Date 2021-12-10
+     * @Version 4.1.2
+     */
+    public static String bytes2string(byte[] bytes, String charsetName) {
+        String s = null;
+        try {
+            s = new String(bytes, charsetName);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return s;
+    }
+
+    /**
+     * 字符串按要求的编码格式转换成字节数组
+     * @param string 带转换的字符串
+     * @param charsetName 要求的编码格式
+     * @return 转换成功的字节数组
+     * @Author Shanya
+     * @Date 2021-12-10
+     * @Version 4.1.2
+     */
+    public static byte[] string2bytes(String string, String charsetName) {
+        byte[] bytes = null;
+        try {
+            bytes = string.getBytes(charsetName);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return bytes;
     }
 }

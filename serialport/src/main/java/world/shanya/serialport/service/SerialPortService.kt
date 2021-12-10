@@ -2,23 +2,20 @@ package world.shanya.serialport.service
 
 import android.app.IntentService
 import android.content.Intent
-import android.os.Bundle
-import android.os.Message
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.tools.LogUtil
-import java.nio.charset.StandardCharsets
+import world.shanya.serialport.tools.SerialPortTools
 
 /**
  * SerialPortService 接收数据服务
  * @UpdateContent
- * 1. 优化断开连接相关处理
- * 2. 优化部分日志和提示信息
+ * 1. 修复中文乱码问题
  * @Author Shanya
- * @Date 2021-7-21
- * @Version 4.0.0
+ * @Date 2021-12-10
+ * @Version 4.1.2
  */
 class SerialPortService : IntentService("SerialPortService") {
 
@@ -47,7 +44,7 @@ class SerialPortService : IntentService("SerialPortService") {
             }
             if (flag) {
                 receivedData = if (SerialPort.readDataType == SerialPort.READ_STRING) {
-                    String(buffer, StandardCharsets.UTF_8)
+                    SerialPortTools.bytes2string(buffer, "GBK")
                 } else {
                     val sb = StringBuilder()
                     for (i in buffer) {
@@ -63,6 +60,7 @@ class SerialPortService : IntentService("SerialPortService") {
                 LogUtil.log("传统设备收到数据", receivedData)
                 MainScope().launch {
                     SerialPort.receivedDataCallback?.invoke(receivedData)
+                    SerialPort.receivedBytesCallback?.invoke(buffer)
                 }
                 flag = false
             }

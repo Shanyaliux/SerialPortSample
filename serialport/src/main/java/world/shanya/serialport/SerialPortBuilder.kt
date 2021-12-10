@@ -214,6 +214,18 @@ object SerialPortBuilder {
     }
 
     /**
+     * 接收字节数组回调接口函数
+     * @param receivedBytesCallback 收到字节数组回调接口
+     * @Author Shanya
+     * @Date 2021-12-10
+     * @Version 4.1.2
+     */
+    fun setReceivedBytesCallback(receivedBytesCallback: ReceivedBytesCallback): SerialPortBuilder {
+        SerialPort._setReceivedBytesListener(receivedBytesCallback)
+        return this
+    }
+
+    /**
      * 连接结果回调接口函数
      * @param connectionResultCallback 连接结果回调接口
      * @Author Shanya

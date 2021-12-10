@@ -10,6 +10,9 @@ import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.strings.SerialPortToastBean
+import java.io.UnsupportedEncodingException
+import java.net.URLEncoder
+import java.nio.charset.Charset
 import java.util.*
 
 
@@ -196,16 +199,23 @@ internal object ToastUtil {
     }
 }
 
-object StringToHex {
+
+/**
+ * 数据处理工具类
+ * @Author Shanya
+ * @Date 2021-12-10
+ * @Version 4.1.2
+ */
+object DataUtil {
     /**
      * 字符串转换成十六进制
      * @param str 待转换的字符串
      * @return 十六进制数组
      * @Author Shanya
-     * @Date 2021-3-16
-     * @Version 3.0.0
+     * @Date 2021-12-10
+     * @Version 4.1.2
      */
-    fun stringToHex(str: String): ArrayList<Byte>? {
+    fun string2hex(str: String): ArrayList<Byte>? {
         val chars = "0123456789ABCDEF".toCharArray()
         val stingTemp = str.replace(" ","")
         val bs = stingTemp.toCharArray()
@@ -236,3 +246,4 @@ object StringToHex {
         return intArray
     }
 }
+

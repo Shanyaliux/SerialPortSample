@@ -14,12 +14,12 @@ import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.tools.*
 import world.shanya.serialport.tools.HexStringToString
 import world.shanya.serialport.tools.LogUtil
-import world.shanya.serialport.tools.StringToHex
 import world.shanya.serialport.tools.ToastUtil
 
 
 //接收消息接口
 typealias ReceivedDataCallback = (data: String) -> Unit
+typealias ReceivedBytesCallback = (bytes: ByteArray) -> Unit
 
 /**
  * SerialPort API
@@ -130,6 +130,19 @@ class SerialPort private constructor() {
          */
         internal fun setFindDeviceListener(findUnpairedDeviceCallback: FindUnpairedDeviceCallback) {
             this.findUnpairedDeviceCallback = findUnpairedDeviceCallback
+        }
+
+        //收到字节数组回调接口
+        internal var receivedBytesCallback: ReceivedBytesCallback ?= null
+        /**
+         * 内部静态接收字节数组回调接口函数
+         * @param receivedBytesCallback 收到字节数组回调接口
+         * @Author Shanya
+         * @Date 2021-12-10
+         * @Version 4.1.2
+         */
+        internal fun _setReceivedBytesListener(receivedBytesCallback: ReceivedBytesCallback) {
+            this.receivedBytesCallback = receivedBytesCallback
         }
 
         //收到消息回调接口
@@ -347,9 +360,9 @@ class SerialPort private constructor() {
         try {
             val outputStream = SerialPortConnect.bluetoothSocket?.outputStream
             val bos: ByteArray = if (sendDataType == SEND_STRING) {
-                data.toByteArray()
+                SerialPortTools.string2bytes(data, "GBK")
             }else{
-                StringToHex.stringToHex(data)?.toList()!!.toByteArray()
+                DataUtil.string2hex(data)?.toList()!!.toByteArray()
             }
             outputStream?.write(bos)
             LogUtil.log("SerialPort","发送数据: $data")
@@ -490,6 +503,17 @@ class SerialPort private constructor() {
     }
 
     /**
+     * 接收字节数组回调接口函数
+     * @param receivedBytesCallback 收到字节数组回调接口
+     * @Author Shanya
+     * @Date 2021-12-10
+     * @Version 4.1.2
+     */
+    fun setReceivedBytesCallback(receivedBytesCallback: ReceivedBytesCallback) {
+        _setReceivedBytesListener(receivedBytesCallback)
+    }
+
+    /**
      * 内部静态搜索状态带类型回调接口函数
      * @param discoveryStatusWithTypeCallback 搜索状态回调接口
      * @Author Shanya
@@ -582,7 +606,7 @@ class SerialPort private constructor() {
      * @Version 3.0.0
      */
     private fun sendBleData(data: String) {
-        SerialPortToolsByJava.bleSendData(SerialPortConnect.bluetoothGatt,SerialPortConnect.gattCharacteristic,data)
+        SerialPortTools.bleSendData(SerialPortConnect.bluetoothGatt,SerialPortConnect.gattCharacteristic,data)
     }
 
     /**

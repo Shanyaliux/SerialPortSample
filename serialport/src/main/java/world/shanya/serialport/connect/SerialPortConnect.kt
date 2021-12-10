@@ -10,13 +10,11 @@ import world.shanya.serialport.service.SerialPortService
 import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.SPUtil
-import world.shanya.serialport.tools.SerialPortToolsByJava
 import world.shanya.serialport.tools.ToastUtil
 import java.io.IOException
 import java.io.InputStream
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 //新连接状态接口
