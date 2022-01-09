@@ -96,6 +96,7 @@ class SerialPort private constructor() {
          */
         fun setLegacyUUID(uuid: String) {
             SerialPortConnect.UUID_LEGACY = uuid
+            LogUtil.log("设置传统设备UUID", uuid)
         }
 
         /**
@@ -106,6 +107,7 @@ class SerialPort private constructor() {
          */
         fun setBleUUID(uuid: String) {
             SerialPortConnect.UUID_BLE = uuid
+            LogUtil.log("设置BLE设备UUID", uuid)
         }
 
         /**
@@ -423,6 +425,17 @@ class SerialPort private constructor() {
      */
     fun setReadDataType(type: Int) {
         readDataType = type
+        when (type) {
+            READ_HEX -> {
+                LogUtil.log("设置接收数据格式", "十六进制")
+            }
+            READ_STRING -> {
+                LogUtil.log("设置接收数据格式", "字符串")
+            }
+            else -> {
+                LogUtil.log("未知格式，需详查！")
+            }
+        }
     }
 
 
@@ -434,6 +447,17 @@ class SerialPort private constructor() {
      */
     fun setSendDataType(type: Int) {
         sendDataType = type
+        when (type) {
+            SEND_HEX -> {
+                LogUtil.log("设置发送数据格式", "十六进制")
+            }
+            SEND_STRING -> {
+                LogUtil.log("设置发送数据格式", "字符串")
+            }
+            else -> {
+                LogUtil.log("未知格式，需详查！")
+            }
+        }
     }
 
     /**
