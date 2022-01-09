@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             .build(this)
-
+        serialPort.setSendDataType(SerialPort.SEND_HEX)
         serialPort.setConnectionResultCallback { result, bluetoothDevice ->
                 Log.d("SerialPort", "ConnectionResult: $result")
                 if (bluetoothDevice != null) {
