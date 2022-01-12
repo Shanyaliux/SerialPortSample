@@ -149,13 +149,18 @@ internal object SerialPortConnect {
      * @param context 上下文
      * @param address 设备地址
      * @Author Shanya
-     * @Date 2021-7-21
-     * @Version 4.0.0
+     * @Date 2022-1-12
+     * @Version 4.1.4
      */
     internal fun connectBle(context: Context, address: String) {
+
         val bluetoothDevice =
             SerialPort.bluetoothAdapter.getRemoteDevice(address)
-        bluetoothDevice.connectGatt(context, false, bluetoothGattCallback)
+        if (bluetoothDevice.type >= 2) {
+            bluetoothDevice.connectGatt(context, false, bluetoothGattCallback)
+        } else {
+            connectedResult(context, false, null, bluetoothDevice)
+        }
     }
 
     /**
@@ -187,20 +192,27 @@ internal object SerialPortConnect {
      * @param context 上下文
      * @param address 设备地址
      * @Author Shanya
-     * @Date 2021-7-21
-     * @Version 4.0.0
+     * @Date 2022-1-12
+     * @Version 4.1.4
      */
     internal fun _connectLegacy(context: Context, address: String) {
         var bluetoothDevice:BluetoothDevice ?= null
         try {
             bluetoothDevice =
                 SerialPort.bluetoothAdapter.getRemoteDevice(address)
-            bluetoothSocket =
-                bluetoothDevice.createRfcommSocketToServiceRecord(UUID.fromString(UUID_LEGACY))
-            bluetoothSocket?.connect()
-            connectedResult(context, true, null, bluetoothDevice)
-            inputStream = bluetoothSocket?.inputStream
-            context.startService(Intent(context, SerialPortService::class.java))
+            if (bluetoothDevice.type == BluetoothDevice.DEVICE_TYPE_CLASSIC ||
+                bluetoothDevice.type == BluetoothDevice.DEVICE_TYPE_DUAL
+            ) {
+                bluetoothSocket =
+                    bluetoothDevice.createRfcommSocketToServiceRecord(UUID.fromString(UUID_LEGACY))
+                bluetoothSocket?.connect()
+                connectedResult(context, true, null, bluetoothDevice)
+                inputStream = bluetoothSocket?.inputStream
+                context.startService(Intent(context, SerialPortService::class.java))
+            } else {
+                connectedResult(context, false, null, bluetoothDevice)
+            }
+
         } catch (e: IOException) {
             e.printStackTrace()
             connectedResult(context, false, null, bluetoothDevice)

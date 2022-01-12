@@ -21,7 +21,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val serialPort = SerialPortBuilder
             .isDebug(true)
-            .autoConnect(true)
+            .autoConnect(false)
+            .setOpenConnectionTypeDialogFlag(true)
             .setAutoReconnectAtIntervals(false, time = 10000)
             .setSendDataType(SerialPort.SEND_STRING)
             .isIgnoreNoNameDevice(false)
@@ -64,10 +65,6 @@ class MainActivity : AppCompatActivity() {
             .build(this)
 
 
-        serialPort.setBleUUID("BLE_UUID")
-        serialPort.setLegacyUUID("SPP_UUID")
-
-        serialPort.setSendDataType(SerialPort.SEND_HEX)
         serialPort.setConnectionResultCallback { result, bluetoothDevice ->
                 Log.d("SerialPort", "ConnectionResult: $result")
                 if (bluetoothDevice != null) {
@@ -90,9 +87,14 @@ class MainActivity : AppCompatActivity() {
             serialPort.connectDevice("F8:33:31:A9:A2:94")
         }
 
+        serialPort.setSendDataType(SerialPort.SEND_HEX)
+
         buttonSend.setOnClickListener {
 //            serialPort.sendData("hello\r\n")
-            serialPort.sendData("你好")
+            serialPort.sendData("0C fF")
+//            serialPort.sendData("你好")
+//            serialPort.printPossibleBleUUID()
+//            serialPort.doDiscovery(this)
         }
     }
 }

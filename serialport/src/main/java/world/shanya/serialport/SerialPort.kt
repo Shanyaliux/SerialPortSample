@@ -5,12 +5,17 @@ import android.bluetooth.*
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.core.app.ActivityCompat
+import com.permissionx.guolindev.PermissionX
 import world.shanya.serialport.connect.*
 import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.*
 import world.shanya.serialport.discovery.SerialPortDiscovery
 import world.shanya.serialport.service.SerialPortService
 import world.shanya.serialport.strings.SerialPortToast
+import world.shanya.serialport.strings.SerialPortToastBean
 import world.shanya.serialport.tools.*
 import world.shanya.serialport.tools.HexStringToString
 import world.shanya.serialport.tools.LogUtil
@@ -65,6 +70,8 @@ class SerialPort private constructor() {
         const val DISCOVERY_BLE = 0
         const val DISCOVERY_LEGACY = 1
 
+        //连接方式选择对话框标志位
+        internal var openConnectionTypeDialogFlag = false
 
         //传统设备搜索结果广播接收器
         internal val discoveryBroadcastReceiver = DiscoveryBroadcastReceiver()
@@ -262,7 +269,13 @@ class SerialPort private constructor() {
          */
         internal fun _connectLegacyDevice(device: BluetoothDevice) {
             newContext?.let {
-                SerialPortConnect.connectLegacy(it,device.address)
+                SerialPortConnect.connectLegacy(it, device.address)
+            }
+        }
+
+        internal fun _connectBleDevice(device: BluetoothDevice) {
+            newContext?.let {
+                SerialPortConnect.connectBle(it, device.address)
             }
         }
 
@@ -273,13 +286,15 @@ class SerialPort private constructor() {
          * @Date 2021-7-21
          * @Version 4.0.0
          */
-        internal fun _connectDevice(device: BluetoothDevice) {
+        internal fun _connectDevice(device: BluetoothDevice, context: Context) {
             newContext?.let {
+
                 if (device.type == 2) {
                     SerialPortConnect.connectBle(it, device.address)
                 } else {
                     SerialPortConnect.connectLegacy(it, device.address)
                 }
+
             }
         }
 
@@ -722,8 +737,19 @@ class SerialPort private constructor() {
      * @Version 4.0.0
      */
     fun doDiscovery(context: Context) {
-        SerialPortDiscovery.startLegacyScan(context)
-        SerialPortDiscovery.startBleScan()
+        if (PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        ) {
+            //判断是否以授权相机权限，没有则授权
+            LogUtil.log("请先获取定位权限！")
+            ToastUtil.toast(context, SerialPortToast.permission)
+        } else {
+            SerialPortDiscovery.startLegacyScan(context)
+            SerialPortDiscovery.startBleScan()
+        }
+
     }
 
     /**
@@ -742,7 +768,7 @@ class SerialPort private constructor() {
      * setBleUUID 设置Ble设备UUID
      * @Author Shanya
      * @Date 2022-1-12
-     * @Version 4.2.0
+     * @Version 4.1.4
      */
     fun setBleUUID(uuid: String) {
         SerialPortConnect.UUID_BLE = uuid
@@ -753,10 +779,21 @@ class SerialPort private constructor() {
      * setLegacyUUID 设置传统设备UUID
      * @Author Shanya
      * @Date 2022-1-12
-     * @Version 4.2.0
+     * @Version 4.1.4
      */
     fun setLegacyUUID(uuid: String) {
         SerialPortConnect.UUID_LEGACY = uuid
         LogUtil.log("设置传统设备UUID", uuid)
+    }
+
+    /**
+     * 默认连接页面连接方式选择对话框标志位
+     * @param status 开启状态
+     * @Author Shanya
+     * @Date 2022-1-12
+     * @Version 4.1.4
+     */
+    fun setOpenConnectionTypeDialogFlag(status: Boolean) {
+        openConnectionTypeDialogFlag = status
     }
 }

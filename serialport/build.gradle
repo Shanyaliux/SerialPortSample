@@ -49,4 +49,5 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-service:2.3.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
+    implementation 'com.blankj:utilcodex:1.31.0'
 }

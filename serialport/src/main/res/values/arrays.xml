@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="connect_string">
+        <item>BLE连接</item>
+        <item>SPP连接</item>
+    </string-array>
+</resources>

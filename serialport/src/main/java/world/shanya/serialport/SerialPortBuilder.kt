@@ -271,47 +271,60 @@ object SerialPortBuilder {
         return this
     }
 
-    /**
-     * 获取已配对设备列表
-     * @return 已配对设备列表
-     * @Author Shanya
-     * @Date 2021-8-13
-     * @Version 4.0.3
-     */
-    @Deprecated(message = "建议使用 getPairedDevicesListBD",
-        replaceWith = ReplaceWith(
-            expression = "getPairedDevicesListBD()"))
-    fun getPairedDevicesList() = SerialPortDiscovery.pairedDevicesList
+//    /**
+//     * 获取已配对设备列表
+//     * @return 已配对设备列表
+//     * @Author Shanya
+//     * @Date 2021-8-13
+//     * @Version 4.0.3
+//     */
+//    @Deprecated(message = "建议使用 getPairedDevicesListBD",
+//        replaceWith = ReplaceWith(
+//            expression = "getPairedDevicesListBD()"))
+//    fun getPairedDevicesList() = SerialPortDiscovery.pairedDevicesList
+//
+//    /**
+//     * 获取未配对设备列表
+//     * @return 未配对设备列表
+//     * @Author Shanya
+//     * @Date 2021-8-13
+//     * @Version 4.0.3
+//     */
+//    @Deprecated(message = "建议使用 getUnPairedDevicesListBD",
+//        replaceWith = ReplaceWith(
+//            expression = "getUnPairedDevicesListBD()"))
+//    fun getUnPairedDevicesList() = SerialPortDiscovery.unPairedDevicesList
+//
+//    /**
+//     * 获取已配对设备列表
+//     * @return 已配对设备列表
+//     * @Author Shanya
+//     * @Date 2021-8-13
+//     * @Version 4.0.3
+//     */
+//    fun getPairedDevicesListBD() = SerialPortDiscovery.pairedDevicesListBD
+//
+//    /**
+//     * 获取未配对设备列表
+//     * @return 未配对设备列表
+//     * @Author Shanya
+//     * @Date 2021-8-13
+//     * @Version 4.0.3
+//     */
+//    fun getUnPairedDevicesListBD() = SerialPortDiscovery.unPairedDevicesListBD
+
 
     /**
-     * 获取未配对设备列表
-     * @return 未配对设备列表
+     * 默认连接页面连接方式选择对话框标志位
+     * @param status 开启状态
      * @Author Shanya
-     * @Date 2021-8-13
-     * @Version 4.0.3
+     * @Date 2022-1-12
+     * @Version 4.1.4
      */
-    @Deprecated(message = "建议使用 getUnPairedDevicesListBD",
-        replaceWith = ReplaceWith(
-            expression = "getUnPairedDevicesListBD()"))
-    fun getUnPairedDevicesList() = SerialPortDiscovery.unPairedDevicesList
-
-    /**
-     * 获取已配对设备列表
-     * @return 已配对设备列表
-     * @Author Shanya
-     * @Date 2021-8-13
-     * @Version 4.0.3
-     */
-    fun getPairedDevicesListBD() = SerialPortDiscovery.pairedDevicesListBD
-
-    /**
-     * 获取未配对设备列表
-     * @return 未配对设备列表
-     * @Author Shanya
-     * @Date 2021-8-13
-     * @Version 4.0.3
-     */
-    fun getUnPairedDevicesListBD() = SerialPortDiscovery.unPairedDevicesListBD
+    fun setOpenConnectionTypeDialogFlag(status: Boolean):SerialPortBuilder {
+        SerialPort.openConnectionTypeDialogFlag = status
+        return this
+    }
 
     /**
      * 创建实例

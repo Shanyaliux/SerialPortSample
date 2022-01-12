@@ -1,6 +1,7 @@
 package world.shanya.serialport.discovery
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.Dialog
 import android.bluetooth.BluetoothDevice
 import android.content.Context
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_discovery.*
 import kotlinx.android.synthetic.main.device_cell.view.*
 import world.shanya.serialport.R
 import world.shanya.serialport.SerialPort
+import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.SerialPortDiscovery.pairedDevicesListBD
 import world.shanya.serialport.discovery.SerialPortDiscovery.unPairedDevicesListBD
 import world.shanya.serialport.strings.SerialPortToast
@@ -34,7 +36,7 @@ import world.shanya.serialport.tools.ToastUtil
 class DiscoveryActivity : AppCompatActivity() {
 
     //连接进度对话框
-    private lateinit var dialog: Dialog
+    private lateinit var connectProcessDialog: Dialog
 
     /**
     * Activity创建
@@ -55,9 +57,11 @@ class DiscoveryActivity : AppCompatActivity() {
         }
 
         //初始化连接进度对话框
-        dialog = Dialog(this)
-        dialog.setContentView(R.layout.progress_dialog_layout)
-        dialog.setCancelable(false)
+        connectProcessDialog = Dialog(this)
+        connectProcessDialog.setContentView(R.layout.progress_dialog_layout)
+        connectProcessDialog.setCancelable(false)
+
+
 
         //搜索状态监听
         SerialPortDiscovery.discoveryStatusLiveData.observe(this, Observer {
@@ -198,7 +202,7 @@ class DiscoveryActivity : AppCompatActivity() {
         super.onDestroy()
         SerialPortDiscovery.stopLegacyScan(this)
         SerialPortDiscovery.stopBleScan()
-        dialog.dismiss()
+        connectProcessDialog.dismiss()
         LogUtil.log("内置搜索页面销毁")
     }
 
@@ -225,11 +229,27 @@ class DiscoveryActivity : AppCompatActivity() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DevicesViewHolder {
             val holder = DevicesViewHolder(inflater.inflate(R.layout.device_cell,parent,false))
             holder.itemView.setOnClickListener {
-                dialog.show()
                 SerialPortDiscovery.stopLegacyScan(this@DiscoveryActivity)
                 SerialPortDiscovery.stopBleScan()
                 val device = SerialPort.bluetoothAdapter.getRemoteDevice(it.textViewDeviceAddress.text.toString())
-                SerialPort._connectDevice(device)
+                if (SerialPort.openConnectionTypeDialogFlag) {
+                    val connectTypeDialog = AlertDialog.Builder(this@DiscoveryActivity)
+                        .setTitle("选择连接方式")
+                        .setItems(R.array.connect_string) { dialog, which ->
+                            connectProcessDialog.show()
+                            if (which == 0) {
+                                SerialPort._connectBleDevice(device)
+                            }else if (which == 1) {
+                                SerialPort._connectLegacyDevice(device)
+                            }
+                        }
+                        .create().show()
+                }else{
+                    connectProcessDialog.show()
+                    SerialPort._connectDevice(device, this@DiscoveryActivity)
+                }
+
+
             }
             return holder
         }

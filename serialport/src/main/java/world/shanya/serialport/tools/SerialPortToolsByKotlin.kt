@@ -1,20 +1,23 @@
 package world.shanya.serialport.tools
 
+import android.app.AlertDialog
 import android.bluetooth.BluetoothDevice
 import android.content.Context
+import android.content.DialogInterface
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import world.shanya.serialport.R
 import world.shanya.serialport.SerialPort
+import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.strings.SerialPortToastBean
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.nio.charset.Charset
 import java.util.*
-
 
 /**
  * SPUtil SharePreferences管理类
@@ -217,7 +220,8 @@ object DataUtil {
      */
     fun string2hex(str: String): ArrayList<Byte>? {
         val chars = "0123456789ABCDEF".toCharArray()
-        val stingTemp = str.replace(" ","")
+        val stringUpper = str.toUpperCase()
+        val stingTemp = stringUpper.replace(" ","")
         val bs = stingTemp.toCharArray()
         var bit = 0
         var i = 0
