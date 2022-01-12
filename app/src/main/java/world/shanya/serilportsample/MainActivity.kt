@@ -62,6 +62,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             .build(this)
+
+
+        serialPort.setBleUUID("BLE_UUID")
+        serialPort.setLegacyUUID("SPP_UUID")
+
         serialPort.setSendDataType(SerialPort.SEND_HEX)
         serialPort.setConnectionResultCallback { result, bluetoothDevice ->
                 Log.d("SerialPort", "ConnectionResult: $result")

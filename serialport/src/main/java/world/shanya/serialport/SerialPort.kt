@@ -737,4 +737,26 @@ class SerialPort private constructor() {
         SerialPortDiscovery.stopLegacyScan(context)
         SerialPortDiscovery.stopBleScan()
     }
+
+    /**
+     * setBleUUID 设置Ble设备UUID
+     * @Author Shanya
+     * @Date 2022-1-12
+     * @Version 4.2.0
+     */
+    fun setBleUUID(uuid: String) {
+        SerialPortConnect.UUID_BLE = uuid
+        LogUtil.log("设置BLE设备UUID", uuid)
+    }
+
+    /**
+     * setLegacyUUID 设置传统设备UUID
+     * @Author Shanya
+     * @Date 2022-1-12
+     * @Version 4.2.0
+     */
+    fun setLegacyUUID(uuid: String) {
+        SerialPortConnect.UUID_LEGACY = uuid
+        LogUtil.log("设置传统设备UUID", uuid)
+    }
 }
