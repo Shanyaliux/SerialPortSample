@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
 
         buttonSend.setOnClickListener {
 //            serialPort.sendData("hello\r\n")
-            serialPort.sendData("0C fF")
+            serialPort.sendData("0C fF 52 65 45 48 65 54 45 65 84 45 65 14 56 48 54 85 45 84 54 85 45 54 0a 0d")
 //            serialPort.sendData("你好")
 //            serialPort.printPossibleBleUUID()
 //            serialPort.doDiscovery(this)
