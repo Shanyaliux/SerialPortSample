@@ -1,4 +1,4 @@
-package world.shanya.serilportsample
+package world.shanya.serialportsample
 
 import android.annotation.SuppressLint
 import android.os.Bundle

@@ -1,13 +1,13 @@
-package world.shanya.serilportsample
+package world.shanya.serialportsample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import world.shanya.serialport.SerialPortBuilder
 
-class MainActivityA : AppCompatActivity() {
+class MainActivityB : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_activity)
+        setContentView(R.layout.activity_main_b)
 
         val serialPort = SerialPortBuilder.isDebug(true).build(this)
     }
