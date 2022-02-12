@@ -796,4 +796,8 @@ class SerialPort private constructor() {
     fun setOpenConnectionTypeDialogFlag(status: Boolean) {
         openConnectionTypeDialogFlag = status
     }
+
+    fun requestMtu(mtu: Int):Boolean {
+        return SerialPortConnect.requestMtu(mtu)
+    }
 }

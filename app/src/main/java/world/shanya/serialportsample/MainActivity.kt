@@ -95,7 +95,9 @@ class MainActivity : AppCompatActivity() {
 
         buttonScan.setOnClickListener {
 //            serialPort.printPossibleBleUUID()
-            serialPort.connectDevice("F8:33:31:A9:A2:94")
+//            serialPort.connectDevice("F8:33:31:A9:A2:94")
+
+            Log.d("SerialPort", serialPort.requestMtu(4).toString())
         }
 
         serialPort.setSendDataType(SerialPort.SEND_HEX)

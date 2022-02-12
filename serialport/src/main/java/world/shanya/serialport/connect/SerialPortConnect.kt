@@ -382,4 +382,15 @@ internal object SerialPortConnect {
     internal fun cancelAutoConnect() {
         handler.removeCallbacks(runnable)
     }
+
+    /**
+     * Request an MTU size used for a given connection.
+     * When performing a write request operation (write without response), the data sent is truncated to the MTU size. This function may be used to request a larger MTU size to be able to send more data at once.
+     * A BluetoothGattCallback.onMtuChanged callback will indicate whether this operation was successful.
+     * Requires android.Manifest.permission.BLUETOOTH permission.
+     * Returns:true, if the new MTU value has been requested successfully
+     */
+    fun requestMtu(mtu: Int):Boolean {
+        return bluetoothGatt?.requestMtu(mtu) == false
+    }
 }
