@@ -10,6 +10,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPortBuilder
+import world.shanya.serialport.SerialPortConfig
 import world.shanya.serialport.tools.SerialPortTools
 
 
@@ -19,13 +20,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val config = SerialPortConfig()
+        config.debug = true
+        config.autoConnect = false
+        config.openConnectionTypeDialogFlag = false
+        config.autoReconnect = false
+        config.reconnectAtIntervals = 10000
+        config.ignoreNoNameDevice = false
+
         val serialPort = SerialPortBuilder
-            .isDebug(true)
-            .autoConnect(false)
-            .setOpenConnectionTypeDialogFlag(true)
-            .setAutoReconnectAtIntervals(false, time = 10000)
-            .setSendDataType(SerialPort.SEND_STRING)
-            .isIgnoreNoNameDevice(false)
+//            .isDebug(true)
+//            .autoConnect(false)
+//            .setOpenConnectionTypeDialogFlag(true)
+//            .setAutoReconnectAtIntervals(false, time = 10000)
+//            .setSendDataType(SerialPort.SEND_STRING)
+//            .isIgnoreNoNameDevice(false)
+            .setConfig(config)
             .setDiscoveryStatusWithTypeCallback { deviceType, status ->
                 Log.d("SerialPort", "DiscoveryStatusWithType: $deviceType -- $status")
             }

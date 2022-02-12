@@ -327,6 +327,30 @@ object SerialPortBuilder {
     }
 
     /**
+     * 设置配置信息
+     * @param config 配置器
+     * @Author Shanya
+     * @Date 2022-2-12
+     * @Version 4.1.5
+     */
+    fun setConfig(config: SerialPortConfig):SerialPortBuilder {
+        isDebug(config.debug)
+        setLegacyUUID(config.UUID_LEGACY)
+        setBleUUID(config.UUID_BLE)
+        autoConnect(config.autoConnect)
+        setAutoReconnectAtIntervals(config.autoReconnect, config.reconnectAtIntervals)
+        autoOpenDiscoveryActivity(config.autoOpenDiscoveryActivity)
+        autoHexStringToString(config.autoHexStringToString)
+        setReadDataType(config.readDataType)
+        setSendDataType(config.sendDataType)
+        isIgnoreNoNameDevice(config.ignoreNoNameDevice)
+        setOpenConnectionTypeDialogFlag(config.openConnectionTypeDialogFlag)
+
+        return this
+    }
+
+
+    /**
      * 创建实例
      * @param context 上下文
      * @Author Shanya
