@@ -4,6 +4,9 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import world.shanya.serialport.SerialPort;
 
@@ -40,7 +43,7 @@ public class SerialPortTools {
      */
     public static void bleSendData(BluetoothGatt gatt, BluetoothGattCharacteristic gattCharacteristic, String data) {
         new Thread(() -> {
-            byte[] buff = data.getBytes();
+            byte[] buff = SerialPortTools.string2bytes(data, "GBK");
             int len = buff.length;
             int[] lens = dataSeparate(len);
             for (int i = 0; i < lens[0]; i++) {

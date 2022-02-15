@@ -18,6 +18,7 @@ import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.nio.charset.Charset
 import java.util.*
+import kotlin.collections.AbstractList
 
 /**
  * SPUtil SharePreferences管理类
@@ -248,6 +249,10 @@ object DataUtil {
             bit = 0
         }
         return intArray
+    }
+
+    fun arrayListByte2ByteArray(data: String): ByteArray {
+        return DataUtil.string2hex(data)?.toList()!!.toByteArray()
     }
 }
 

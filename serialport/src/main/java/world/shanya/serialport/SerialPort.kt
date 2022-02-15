@@ -96,6 +96,7 @@ class SerialPort private constructor() {
         //BLE发送分包间隔延时
         var bleSendSleep = 10
 
+        fun getSendDataType() = sendDataType
 
         /**
          * setLegacyUUID 设置传统设备UUID

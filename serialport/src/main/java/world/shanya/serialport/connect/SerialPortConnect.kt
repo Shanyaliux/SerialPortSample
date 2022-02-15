@@ -4,12 +4,15 @@ import android.bluetooth.*
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.discovery.Device
 import world.shanya.serialport.service.SerialPortService
 import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.SPUtil
+import world.shanya.serialport.tools.SerialPortTools
 import world.shanya.serialport.tools.ToastUtil
 import java.io.IOException
 import java.io.InputStream
@@ -142,9 +145,27 @@ internal object SerialPortConnect {
             super.onCharacteristicChanged(gatt, characteristic)
             val value = characteristic?.value
             if (value != null && value.isNotEmpty()) {
-                val receivedData = String(value)
+//                val receivedData = String(value)
+                var receivedData = if (SerialPort.readDataType == SerialPort.READ_STRING) {
+                    SerialPortTools.bytes2string(value, "GBK")
+                } else {
+                    val sb = StringBuilder()
+                    for (i in value) {
+                        sb.append("${String.format("%2X", i)} ")
+                    }
+
+                    if (SerialPort.hexStringToStringFlag) {
+                        SerialPort._hexStringToString(sb.toString()).toString()
+                    } else {
+                        sb.toString()
+                    }
+                }
                 LogUtil.log("BLE设备收到数据", receivedData)
-                SerialPort.receivedDataCallback?.invoke(receivedData)
+                MainScope().launch {
+                    SerialPort.receivedDataCallback?.invoke(receivedData)
+                    SerialPort.receivedBytesCallback?.invoke(value)
+                }
+
             }
 
         }

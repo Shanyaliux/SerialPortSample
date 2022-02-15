@@ -30,19 +30,7 @@ class MainActivity : AppCompatActivity() {
         config.ignoreNoNameDevice = false
 
         val serialPort = SerialPortBuilder
-//            .isDebug(true)
-//            .autoConnect(false)
-//            .setOpenConnectionTypeDialogFlag(true)
-//            .setAutoReconnectAtIntervals(false, time = 10000)
-//            .setSendDataType(SerialPort.SEND_STRING)
-//            .isIgnoreNoNameDevice(false)
             .setConfig(config)
-            .setDiscoveryStatusWithTypeCallback { deviceType, status ->
-                Log.d("SerialPort", "DiscoveryStatusWithType: $deviceType -- $status")
-            }
-            .setDiscoveryStatusCallback {
-                Log.d("SerialPort", "DiscoveryStatus: $it")
-            }
             .setReceivedDataCallback {
                 Log.d("SerialPort", "ReceivedData: $it")
                 MainScope().launch {
@@ -58,14 +46,6 @@ class MainActivity : AppCompatActivity() {
                     ).show()
                 }
             }
-//            .setConnectionResultCallback { result, bluetoothDevice ->
-//                Log.d("SerialPort", "ConnectionResult: $result")
-//                if (bluetoothDevice != null) {
-//                    Log.d("SerialPort", "ConnectionResult: ${bluetoothDevice.address}")
-//                } else {
-//                    Log.d("SerialPort", "ConnectionResult: null")
-//                }
-//            }
             .setConnectionStatusCallback { status, bluetoothDevice ->
                 MainScope().launch {
                     textViewInfo.text =
@@ -75,15 +55,6 @@ class MainActivity : AppCompatActivity() {
             }
             .build(this)
 
-
-        serialPort.setConnectionResultCallback { result, bluetoothDevice ->
-                Log.d("SerialPort", "ConnectionResult: $result")
-                if (bluetoothDevice != null) {
-                    Log.d("SerialPort", "ConnectionResult: ${bluetoothDevice.address}")
-                } else {
-                    Log.d("SerialPort", "ConnectionResult: null")
-                }
-        }
 
         buttonConnect.setOnClickListener {
             serialPort.openDiscoveryActivity()
@@ -97,22 +68,12 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        serialPort.setSendDataType(SerialPort.SEND_HEX)
+//        serialPort.setSendDataType(SerialPort.SEND_HEX)
+        serialPort.setReadDataType(SerialPort.READ_HEX)
 
         buttonSend.setOnClickListener {
-//            serialPort.sendData("hello\r\n")
-            serialPort.sendData("1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop" +
-                    "1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop" +
-                    "1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop" +
-                    "1234567890asdfghjkl.qwertyuiop" +
-                    "1234567890asdfghjkl.qwertyuiop" +
-                    "1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop" +
-                    "1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop" +
-                    "1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop" +
-                    "1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop")
-//            serialPort.sendData("你好")
-//            serialPort.printPossibleBleUUID()
-//            serialPort.doDiscovery(this)
+
+            serialPort.sendData("0f ff")
         }
     }
 }
