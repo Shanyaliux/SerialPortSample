@@ -9,6 +9,7 @@ import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.DiscoveryStatusCallback
 import world.shanya.serialport.discovery.DiscoveryStatusWithTypeCallback
 import world.shanya.serialport.discovery.SerialPortDiscovery
+import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.SPUtil
 
 
@@ -56,6 +57,16 @@ object SerialPortBuilder {
      */
     fun setBleUUID(uuid: String):SerialPortBuilder {
         SerialPortConnect.UUID_BLE = uuid
+        return this
+    }
+
+    fun setBleReadUUID(uuid: String):SerialPortBuilder {
+        SerialPortConnect.UUID_BLE_READ = uuid
+        return this
+    }
+
+    fun setBleSendUUID(uuid: String):SerialPortBuilder {
+        SerialPortConnect.UUID_BLE_SEND = uuid
         return this
     }
 
@@ -337,6 +348,8 @@ object SerialPortBuilder {
         isDebug(config.debug)
         setLegacyUUID(config.UUID_LEGACY)
         setBleUUID(config.UUID_BLE)
+        setBleReadUUID(config.UUID_BLE_READ)
+        setBleSendUUID(config.UUID_BLE_SEND)
         autoConnect(config.autoConnect)
         setAutoReconnectAtIntervals(config.autoReconnect, config.reconnectAtIntervals)
         autoOpenDiscoveryActivity(config.autoOpenDiscoveryActivity)

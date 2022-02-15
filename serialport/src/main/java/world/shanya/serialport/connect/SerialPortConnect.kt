@@ -4,6 +4,7 @@ import android.bluetooth.*
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
+import android.util.Log
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
@@ -16,8 +17,10 @@ import world.shanya.serialport.tools.SerialPortTools
 import world.shanya.serialport.tools.ToastUtil
 import java.io.IOException
 import java.io.InputStream
+import java.lang.NullPointerException
+import java.lang.RuntimeException
 import java.util.*
-import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 //新连接状态接口
@@ -46,6 +49,10 @@ internal object SerialPortConnect {
     internal var UUID_LEGACY = "00001101-0000-1000-8000-00805F9B34FB"
     //BLE设备UUID
     internal var UUID_BLE = "0000ffe1-0000-1000-8000-00805f9b34fb"
+    //BLE 接收UUID
+    internal var UUID_BLE_READ = ""
+    //BLE 发送UUID
+    internal var UUID_BLE_SEND = ""
     //是否开启间隔自动重连
     internal var autoReconnectAtIntervalsFlag = false
     //开启间隔自动重连时间间隔 单位ms
@@ -65,11 +72,12 @@ internal object SerialPortConnect {
     //上一次成功连接的设备地址
     internal var lastDeviceAddress = ""
 
-    internal var gattCharacteristic: BluetoothGattCharacteristic? = null
+    internal var readGattCharacteristic: BluetoothGattCharacteristic? = null
+    internal var sendGattCharacteristic: BluetoothGattCharacteristic? = null
 
     internal var bluetoothGatt: BluetoothGatt? = null
 
-    internal var bleUUIDList = ArrayList<String>()
+    internal var gattCharacteristicList = HashMap<String, Int>()
     /**
      * bluetoothGattCallback BLE设备连接回调
      * @Author Shanya
@@ -105,21 +113,44 @@ internal object SerialPortConnect {
         override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
             super.onServicesDiscovered(gatt, status)
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                bleUUIDList.clear()
+                gattCharacteristicList.clear()
                 gatt?.services?.let {
                     for (gattService in it) {
+
                         val gattCharacteristics = gattService.characteristics
                         for (gattCharacteristic in gattCharacteristics) {
                             val uuid = gattCharacteristic.uuid.toString()
-                            bleUUIDList.add(uuid)
-                            if (uuid == UUID_BLE) {
-                                this@SerialPortConnect.gattCharacteristic = gattCharacteristic
+                            val properties = gattCharacteristic.properties
+                            gattCharacteristicList[uuid] = properties
+                            if (UUID_BLE_SEND == "") {
+                                if (uuid == UUID_BLE) {
+                                    this@SerialPortConnect.sendGattCharacteristic = gattCharacteristic
+                                }
+                            } else {
+                                if (uuid == UUID_BLE_SEND) {
+                                    this@SerialPortConnect.sendGattCharacteristic = gattCharacteristic
+                                }
+                            }
+                            if (UUID_BLE_READ == "") {
+                                if (uuid == UUID_BLE) {
+                                    this@SerialPortConnect.readGattCharacteristic = gattCharacteristic
+                                }
+                            }
+                            else {
+                                if (uuid == UUID_BLE_READ) {
+                                    this@SerialPortConnect.readGattCharacteristic = gattCharacteristic
+                                }
                             }
                         }
                     }
                 }
             }
-            gatt?.setCharacteristicNotification(gattCharacteristic,true)
+            try {
+                gatt?.setCharacteristicNotification(readGattCharacteristic, true)
+            } catch (e: NullPointerException) {
+                Log.e("SerialPort", "BLE接收UUID不正确，请检查！")
+                throw RuntimeException("BLE接收UUID不正确，请检查！")
+            }
         }
 
         override fun onCharacteristicWrite(

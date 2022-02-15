@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
         config.autoReconnect = false
         config.reconnectAtIntervals = 10000
         config.ignoreNoNameDevice = false
+        config.UUID_BLE = "sad"
+        config.UUID_BLE_READ = "0000ffe1-0000-1000-8000-00805f9b34fb"
+        config.UUID_BLE_SEND = "0000ffe1-0000-1000-8000-00805f9b34fb"
 
         val serialPort = SerialPortBuilder
             .setConfig(config)
@@ -65,11 +68,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonScan.setOnClickListener {
-
+            serialPort.printPossibleBleUUID()
         }
 
 //        serialPort.setSendDataType(SerialPort.SEND_HEX)
-        serialPort.setReadDataType(SerialPort.READ_HEX)
+//        serialPort.setReadDataType(SerialPort.READ_HEX)
 
         buttonSend.setOnClickListener {
 

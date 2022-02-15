@@ -2,6 +2,7 @@ package world.shanya.serialport.tools;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -43,6 +44,9 @@ public class SerialPortTools {
      */
     public static void bleSendData(BluetoothGatt gatt, BluetoothGattCharacteristic gattCharacteristic, String data) {
         new Thread(() -> {
+            if (gattCharacteristic == null) {
+                throw new RuntimeException("BLE发送UUID不正确，请检查！");
+            }
             byte[] buff = SerialPortTools.string2bytes(data, "GBK");
             int len = buff.length;
             int[] lens = dataSeparate(len);

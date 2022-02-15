@@ -6,16 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.os.Build
 import androidx.core.app.ActivityCompat
-import com.permissionx.guolindev.PermissionX
 import world.shanya.serialport.connect.*
 import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.*
 import world.shanya.serialport.discovery.SerialPortDiscovery
 import world.shanya.serialport.service.SerialPortService
 import world.shanya.serialport.strings.SerialPortToast
-import world.shanya.serialport.strings.SerialPortToastBean
 import world.shanya.serialport.tools.*
 import world.shanya.serialport.tools.HexStringToString
 import world.shanya.serialport.tools.LogUtil
@@ -118,6 +115,16 @@ class SerialPort private constructor() {
         fun setBleUUID(uuid: String) {
             SerialPortConnect.UUID_BLE = uuid
             LogUtil.log("设置BLE设备UUID", uuid)
+        }
+
+        fun setBleReadUUID(uuid: String) {
+            SerialPortConnect.UUID_BLE_READ = uuid
+            LogUtil.log("设置BLE设备接收UUID", uuid)
+        }
+
+        fun setBleSendUUID(uuid: String) {
+            SerialPortConnect.UUID_BLE_SEND = uuid
+            LogUtil.log("设置BLE设备发送UUID", uuid)
         }
 
         /**
@@ -618,13 +625,15 @@ class SerialPort private constructor() {
      * @Version 4.0.0
      */
     fun printPossibleBleUUID() {
-        if (SerialPortConnect.bleUUIDList.size == 0) {
+        if (SerialPortConnect.gattCharacteristicList.size == 0) {
             LogUtil.log("请先连接BLE设备之后，再执行此函数！")
             return
         }
-        for (uuid in SerialPortConnect.bleUUIDList) {
-            LogUtil.log("PossibleBleUUID",uuid)
+        for (gattCharacteristic in SerialPortConnect.gattCharacteristicList) {
+            LogUtil.log("PossibleBleUUID", gattCharacteristic.key)
+            LogUtil.log("Properties", gattCharacteristic.value.toString(2))
         }
+        LogUtil.log("Properties 具体含义请查询官网, https://shanyaliux.cn/serialport")
     }
 
     /**
@@ -648,7 +657,7 @@ class SerialPort private constructor() {
      * @Version 3.0.0
      */
     private fun sendBleData(data: String) {
-        SerialPortTools.bleSendData(SerialPortConnect.bluetoothGatt,SerialPortConnect.gattCharacteristic,data)
+        SerialPortTools.bleSendData(SerialPortConnect.bluetoothGatt,SerialPortConnect.sendGattCharacteristic,data)
     }
 
     /**
@@ -776,6 +785,16 @@ class SerialPort private constructor() {
     fun setBleUUID(uuid: String) {
         SerialPortConnect.UUID_BLE = uuid
         LogUtil.log("设置BLE设备UUID", uuid)
+    }
+
+    fun setBleReadUUID(uuid: String) {
+        SerialPortConnect.UUID_BLE_READ = uuid
+        LogUtil.log("设置BLE设备接收UUID", uuid)
+    }
+
+    fun setBleSendUUID(uuid: String) {
+        SerialPortConnect.UUID_BLE_SEND = uuid
+        LogUtil.log("设置BLE设备发送UUID", uuid)
     }
 
     /**
