@@ -74,6 +74,12 @@ internal object SerialPortConnect {
      * @Version 4.0.0
      */
     private val bluetoothGattCallback = object : BluetoothGattCallback() {
+
+        override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) {
+            super.onMtuChanged(gatt, mtu, status)
+            LogUtil.log("MTU", mtu.toString())
+        }
+
         override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
             super.onConnectionStateChange(gatt, status, newState)
 

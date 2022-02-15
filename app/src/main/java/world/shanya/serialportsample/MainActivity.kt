@@ -94,17 +94,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonScan.setOnClickListener {
-//            serialPort.printPossibleBleUUID()
-//            serialPort.connectDevice("F8:33:31:A9:A2:94")
 
-            Log.d("SerialPort", serialPort.requestMtu(4).toString())
         }
 
         serialPort.setSendDataType(SerialPort.SEND_HEX)
 
         buttonSend.setOnClickListener {
 //            serialPort.sendData("hello\r\n")
-            serialPort.sendData("0C fF 52 65 45 48 65 54 45 65 84 45 65 14 56 48 54 85 45 84 54 85 45 54 0a 0d")
+            serialPort.sendData("1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop" +
+                    "1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop" +
+                    "1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop" +
+                    "1234567890asdfghjkl.qwertyuiop" +
+                    "1234567890asdfghjkl.qwertyuiop" +
+                    "1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop" +
+                    "1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop" +
+                    "1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop" +
+                    "1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop1234567890asdfghjkl.qwertyuiop")
 //            serialPort.sendData("你好")
 //            serialPort.printPossibleBleUUID()
 //            serialPort.doDiscovery(this)

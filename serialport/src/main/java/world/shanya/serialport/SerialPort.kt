@@ -93,6 +93,8 @@ class SerialPort private constructor() {
         internal var autoOpenDiscoveryActivityFlag = false
         //是否在搜索是忽略没有名字的蓝牙设备
         internal var ignoreNoNameDeviceFlag = false
+        //BLE发送分包间隔延时
+        var bleSendSleep = 10
 
 
         /**

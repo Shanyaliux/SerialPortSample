@@ -4,7 +4,8 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
+
+import world.shanya.serialport.SerialPort;
 
 /**
  * SerialPortToolsByJava BLE设备发消息工具类
@@ -38,18 +39,29 @@ public class SerialPortTools {
      * @Version 4.0.0
      */
     public static void bleSendData(BluetoothGatt gatt, BluetoothGattCharacteristic gattCharacteristic, String data) {
-        byte[] buff = data.getBytes();
-        int len = buff.length;
-        int[] lens = dataSeparate(len);
-        for (int i = 0; i < lens[0]; i++) {
-            String str = new String(buff, 20 * i, 20);
-            gattCharacteristic.setValue(str);
-        }
-        if (lens[1] != 0) {
-            String str = new String(buff, 20 * lens[0], lens[1]);
-            gattCharacteristic.setValue(str);
-            gatt.writeCharacteristic(gattCharacteristic);
-        }
+        new Thread(() -> {
+            byte[] buff = data.getBytes();
+            int len = buff.length;
+            int[] lens = dataSeparate(len);
+            for (int i = 0; i < lens[0]; i++) {
+                String str = new String(buff, 20 * i, 20);
+                gattCharacteristic.setValue(str);
+                gatt.writeCharacteristic(gattCharacteristic);
+                try {
+                    Thread.sleep(SerialPort.Companion.getBleSendSleep());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (lens[1] != 0) {
+                String str = new String(buff, 20 * lens[0], lens[1]);
+                LogUtil.INSTANCE.log("data", str);
+                gattCharacteristic.setValue(str);
+                gatt.writeCharacteristic(gattCharacteristic);
+            }
+        }).start();
+
+
     }
 
     /**
