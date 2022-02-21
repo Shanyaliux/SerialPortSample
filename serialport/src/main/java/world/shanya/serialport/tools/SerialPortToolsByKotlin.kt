@@ -252,7 +252,7 @@ object DataUtil {
     }
 
     fun arrayListByte2ByteArray(data: String): ByteArray {
-        return DataUtil.string2hex(data)?.toList()!!.toByteArray()
+        return string2hex(data)?.toList()!!.toByteArray()
     }
 }
 

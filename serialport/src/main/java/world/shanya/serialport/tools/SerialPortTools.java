@@ -47,6 +47,7 @@ public class SerialPortTools {
             if (gattCharacteristic == null) {
                 throw new RuntimeException("BLE发送UUID不正确，请检查！");
             }
+            LogUtil.INSTANCE.log("BLE设备发送数据", data);
             byte[] buff = SerialPortTools.string2bytes(data, "GBK");
             int len = buff.length;
             int[] lens = dataSeparate(len);
@@ -62,13 +63,10 @@ public class SerialPortTools {
             }
             if (lens[1] != 0) {
                 String str = new String(buff, 20 * lens[0], lens[1]);
-                LogUtil.INSTANCE.log("data", str);
                 gattCharacteristic.setValue(str);
                 gatt.writeCharacteristic(gattCharacteristic);
             }
         }).start();
-
-
     }
 
     /**

@@ -78,6 +78,8 @@ internal object SerialPortConnect {
     internal var bluetoothGatt: BluetoothGatt? = null
 
     internal var gattCharacteristicList = HashMap<String, Int>()
+
+    internal var gattServiceList = HashMap<String, HashMap<String, Int>>()
     /**
      * bluetoothGattCallback BLE设备连接回调
      * @Author Shanya
@@ -116,7 +118,6 @@ internal object SerialPortConnect {
                 gattCharacteristicList.clear()
                 gatt?.services?.let {
                     for (gattService in it) {
-
                         val gattCharacteristics = gattService.characteristics
                         for (gattCharacteristic in gattCharacteristics) {
                             val uuid = gattCharacteristic.uuid.toString()
@@ -142,6 +143,7 @@ internal object SerialPortConnect {
                                 }
                             }
                         }
+                        gattServiceList[gattService.uuid.toString()] = gattCharacteristicList
                     }
                 }
             }
@@ -187,8 +189,7 @@ internal object SerialPortConnect {
             super.onCharacteristicChanged(gatt, characteristic)
             val value = characteristic?.value
             if (value != null && value.isNotEmpty()) {
-//                val receivedData = String(value)
-                var receivedData = if (SerialPort.readDataType == SerialPort.READ_STRING) {
+                val receivedData = if (SerialPort.readDataType == SerialPort.READ_STRING) {
                     SerialPortTools.bytes2string(value, "GBK")
                 } else {
                     val sb = StringBuilder()

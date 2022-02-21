@@ -629,9 +629,12 @@ class SerialPort private constructor() {
             LogUtil.log("请先连接BLE设备之后，再执行此函数！")
             return
         }
-        for (gattCharacteristic in SerialPortConnect.gattCharacteristicList) {
-            LogUtil.log("PossibleBleUUID", gattCharacteristic.key)
-            LogUtil.log("Properties", gattCharacteristic.value.toString(2))
+        for (gattService in SerialPortConnect.gattServiceList) {
+            LogUtil.log("Service", gattService.key)
+            for (gattCharacteristic in gattService.value) {
+                LogUtil.log("   Characteristic", gattCharacteristic.key)
+                LogUtil.log("   Properties", gattCharacteristic.value.toString(2))
+            }
         }
         LogUtil.log("Properties 具体含义请查询官网, https://shanyaliux.cn/serialport")
     }

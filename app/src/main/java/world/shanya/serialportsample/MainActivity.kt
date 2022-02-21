@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         val config = SerialPortConfig()
         config.debug = true
-        config.autoConnect = false
+        config.autoConnect = true
         config.openConnectionTypeDialogFlag = false
         config.autoReconnect = false
         config.reconnectAtIntervals = 10000
@@ -71,12 +71,12 @@ class MainActivity : AppCompatActivity() {
             serialPort.printPossibleBleUUID()
         }
 
-//        serialPort.setSendDataType(SerialPort.SEND_HEX)
+        serialPort.setSendDataType(SerialPort.SEND_HEX)
 //        serialPort.setReadDataType(SerialPort.READ_HEX)
 
         buttonSend.setOnClickListener {
 
-            serialPort.sendData("0f ff")
+            serialPort.sendData("0FFF")
         }
     }
 }
