@@ -146,7 +146,18 @@ internal object SerialPortConnect {
                 }
             }
             try {
-                gatt?.setCharacteristicNotification(readGattCharacteristic, true)
+                val isEnableNotify = gatt?.setCharacteristicNotification(readGattCharacteristic, true)
+                if (isEnableNotify == true) {
+                    val descriptorsList = readGattCharacteristic?.descriptors
+                    descriptorsList?.let {
+                        if (it.size > 0) {
+                            for (descriptors in it) {
+                                descriptors.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+                                bluetoothGatt?.writeDescriptor(descriptors)
+                            }
+                        }
+                    }
+                }
             } catch (e: NullPointerException) {
                 Log.e("SerialPort", "BLE接收UUID不正确，请检查！")
                 throw RuntimeException("BLE接收UUID不正确，请检查！")
