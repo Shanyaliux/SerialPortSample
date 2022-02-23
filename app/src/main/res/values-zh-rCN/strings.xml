@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ 项目名：SerialPortSample
+  ~ 模块名：SerialPortSample.app
+  ~ 类名：strings.xml
+  ~ 作者：Shanya
+  ~ 日期：2022/2/23 下午6:27
+  ~ Copyright  (c)  2021  https://shanyaliux.cn
+  -->
+
+<resources>
+    <string name="app_name">蓝牙串口助手</string>
+</resources>
