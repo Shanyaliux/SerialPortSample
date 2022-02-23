@@ -5,15 +5,15 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "world.shanya.serilportsample"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -45,4 +45,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation project(':serialport')
+
+    implementation 'io.github.medyo:android-about-page:2.0.0'
+    implementation 'com.github.xuexiangjys:XUpdate:2.1.1'
+    implementation 'com.github.xuexiangjys.XUpdateAPI:xupdate-easy:1.0.1'
+    // 如果需要使用断点续传下载功能的话添加该依赖（可选）
+    implementation 'com.github.xuexiangjys.XUpdateAPI:xupdate-downloader-aria:1.0.1'
 }
