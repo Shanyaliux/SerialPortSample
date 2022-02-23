@@ -9,7 +9,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "world.shanya.serilportsample"
+        applicationId "world.shanya.serialportsample"
         minSdkVersion 21
         targetSdkVersion 32
         versionCode 1

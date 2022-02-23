@@ -25,6 +25,7 @@ class AboutActivity : AppCompatActivity() {
         val versionElement = Element()
         versionElement.gravity = Gravity.CENTER
         versionElement.title = "版本号: " + packageManager.getPackageInfo(packageName, 0).versionName
+        println(packageName)
 
         val authorElement = Element()
         authorElement.gravity = Gravity.CENTER
