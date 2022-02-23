@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        serialPort = SerialPortBuilder.setConfig(SPTools.getSerialPortConfig(this)).build(this)
+        SerialPortBuilder.setConfig(SPTools.getSerialPortConfig(this))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

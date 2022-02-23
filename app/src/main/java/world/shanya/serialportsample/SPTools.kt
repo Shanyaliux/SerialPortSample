@@ -40,9 +40,9 @@ object SPTools {
     fun getSerialPortConfig(context: Context): SerialPortConfig {
         val config = SerialPortConfig()
         if (getString(context, SPP_UUID) == "") {
-//            config.UUID_LEGACY = "00001101-0000-1000-8000-00805F9B34FB"
+            config.UUID_LEGACY = "00001101-0000-1000-8000-00805F9B34FB"
         } else {
-//            config.UUID_LEGACY = getString(context, SPP_UUID)
+            config.UUID_LEGACY = getString(context, SPP_UUID)
         }
 
         if (getString(context, BLE_R_UUID) == "") {
