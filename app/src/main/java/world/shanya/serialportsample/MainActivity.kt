@@ -13,20 +13,20 @@ import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPortBuilder
 
 
+
+
+
 class MainActivity : AppCompatActivity() {
 
     private var serialPort:SerialPort ?= null
-    private val jsonUrl = "https://gitee.com/Shanya/serialportappupdate/raw/master/update.json"
+    private val checkUpdate = CheckUpdate(this)
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        EasyUpdate.create(this, jsonUrl)
-//            .supportBackgroundUpdate(true)
-//            .update()
-
+        checkUpdate.check()
 
         val config = SPTools.getSerialPortConfig(this)
         val stringBuilder = StringBuilder()
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                     buttonConnect.isEnabled = !status
                     buttonSetting.isEnabled = !status
                     buttonDisconnect.isEnabled = status
-                    if (status == false) {
+                    if (!status) {
                         textViewName.text = ""
                         textViewAddress.text = ""
                         textViewType.text = ""
@@ -108,9 +108,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AboutActivity::class.java))
         }
         if (item.itemId == R.id.menu_check_update) {
-//            EasyUpdate.create(this, jsonUrl)
-//                .supportBackgroundUpdate(true)
-//                .update()
+            checkUpdate.check()
         }
         return super.onOptionsItemSelected(item)
     }

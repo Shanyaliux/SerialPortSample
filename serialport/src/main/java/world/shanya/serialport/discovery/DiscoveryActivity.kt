@@ -87,6 +87,7 @@ class DiscoveryActivity : AppCompatActivity() {
             requestList.add(Manifest.permission.BLUETOOTH_SCAN)
             requestList.add(Manifest.permission.BLUETOOTH_ADVERTISE)
             requestList.add(Manifest.permission.BLUETOOTH_CONNECT)
+            requestList.add(Manifest.permission.ACCESS_FINE_LOCATION)
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestList.add(Manifest.permission.ACCESS_FINE_LOCATION)
         }
