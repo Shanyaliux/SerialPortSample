@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.xuexiang.xupdate.easy.EasyUpdate
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -24,9 +23,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        EasyUpdate.create(this, jsonUrl)
-            .supportBackgroundUpdate(true)
-            .update()
+//        EasyUpdate.create(this, jsonUrl)
+//            .supportBackgroundUpdate(true)
+//            .update()
+
 
         val config = SPTools.getSerialPortConfig(this)
         val stringBuilder = StringBuilder()
@@ -108,9 +108,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AboutActivity::class.java))
         }
         if (item.itemId == R.id.menu_check_update) {
-            EasyUpdate.create(this, jsonUrl)
-                .supportBackgroundUpdate(true)
-                .update()
+//            EasyUpdate.create(this, jsonUrl)
+//                .supportBackgroundUpdate(true)
+//                .update()
         }
         return super.onOptionsItemSelected(item)
     }

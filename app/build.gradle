@@ -46,9 +46,12 @@ dependencies {
 
     implementation project(':serialport')
 
-    implementation 'io.github.medyo:android-about-page:2.0.0'
+
     implementation 'com.github.xuexiangjys:XUpdate:2.1.1'
-    implementation 'com.github.xuexiangjys.XUpdateAPI:xupdate-easy:1.0.1'
+    implementation 'io.github.medyo:android-about-page:2.0.0'
+    implementation 'com.guolindev.permissionx:permissionx:1.6.1'
+//    implementation 'com.github.xuexiangjys:XUpdate:2.1.1'
+//    implementation 'com.github.xuexiangjys.XUpdateAPI:xupdate-easy:1.0.1'
     // 如果需要使用断点续传下载功能的话添加该依赖（可选）
-    implementation 'com.github.xuexiangjys.XUpdateAPI:xupdate-downloader-aria:1.0.1'
+//    implementation 'com.github.xuexiangjys.XUpdateAPI:xupdate-downloader-aria:1.0.1'
 }

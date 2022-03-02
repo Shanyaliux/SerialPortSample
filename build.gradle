@@ -16,8 +16,8 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
         maven { url "https://jitpack.io" }
+        mavenCentral()
     }
     tasks.withType(Javadoc) {
         options.addStringOption('Xdoclint:none', '-quiet')

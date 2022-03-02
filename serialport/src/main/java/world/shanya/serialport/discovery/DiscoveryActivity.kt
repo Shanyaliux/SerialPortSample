@@ -1,17 +1,18 @@
 package world.shanya.serialport.discovery
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.Observer
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,12 +21,9 @@ import kotlinx.android.synthetic.main.activity_discovery.*
 import kotlinx.android.synthetic.main.device_cell.view.*
 import world.shanya.serialport.R
 import world.shanya.serialport.SerialPort
-import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.SerialPortDiscovery.pairedDevicesListBD
 import world.shanya.serialport.discovery.SerialPortDiscovery.unPairedDevicesListBD
-import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.tools.LogUtil
-import world.shanya.serialport.tools.ToastUtil
 
 /**
  * DiscoveryActivity 搜索页面Activity
@@ -64,7 +62,7 @@ class DiscoveryActivity : AppCompatActivity() {
 
 
         //搜索状态监听
-        SerialPortDiscovery.discoveryStatusLiveData.observe(this, Observer {
+        SerialPortDiscovery.discoveryStatusLiveData.observe(this, {
             if (it) {
                 swipeRedreshLayout.isRefreshing = true
                 title = "正在搜索……"
@@ -84,41 +82,37 @@ class DiscoveryActivity : AppCompatActivity() {
             doDiscovery()
         }
 
-        //申请定位权限
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            LogUtil.log("获取定位权限用于扫描蓝牙设备")
-            if (!PermissionX.isGranted(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-                PermissionX.init(this)
-                    .permissions(android.Manifest.permission.ACCESS_FINE_LOCATION)
-                    .explainReasonBeforeRequest()
-                    .onExplainRequestReason { scope, deniedList ->
-                        val message = "需要您同意位置权限用于搜索设备，否则搜索功能将不可用。"
-                        scope.showRequestReasonDialog(deniedList, message, "确定", "取消")
-                    }
-                    .onForwardToSettings { scope, deniedList ->
-                        val message = "需要您去设置页面同意位置权限用于搜索设备，否则搜索功能将不可用。"
-                        scope.showForwardToSettingsDialog(deniedList, message, "确定", "取消")
-                    }
-                    .request { allGranted, _, _ ->
-                        @Suppress("ControlFlowWithEmptyBody")
-                        if (allGranted) {
-                            LogUtil.log("定位权限获取成功")
-                            recyclerViewInit()
-                            doDiscovery()
-                        } else {
-                            LogUtil.log("定位权限获取失败")
-                            ToastUtil.toast(this,SerialPortToast.permission)
-                            finish()
-                        }
-                    }
-            }
+        val requestList = ArrayList<String>()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            requestList.add(Manifest.permission.BLUETOOTH_SCAN)
+            requestList.add(Manifest.permission.BLUETOOTH_ADVERTISE)
+            requestList.add(Manifest.permission.BLUETOOTH_CONNECT)
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestList.add(Manifest.permission.ACCESS_FINE_LOCATION)
         }
-
-        //设备列表初始化
-        recyclerViewInit()
-        //开始搜索
-        doDiscovery()
-
+        if (requestList.isNotEmpty()) {
+            PermissionX.init(this)
+                .permissions(requestList)
+                .explainReasonBeforeRequest()
+                .onExplainRequestReason { scope, deniedList ->
+                    val message = "需要您同意以下权限才能正常使用"
+                    scope.showRequestReasonDialog(deniedList, message, "允许", "拒绝")
+                }
+                .request { allGranted, grantedList, deniedList ->
+                    if (allGranted) {
+//                        Toast.makeText(this, "所有申请的权限都已通过", Toast.LENGTH_SHORT).show()
+                        LogUtil.log("蓝牙权限获取成功")
+                        //设备列表初始化
+                        recyclerViewInit()
+                        //开始搜索
+                        doDiscovery()
+                    } else {
+                        Toast.makeText(this, "需要您手动授予附近的位置权限", Toast.LENGTH_SHORT).show()
+                        LogUtil.log("蓝牙权限获取失败")
+                        finish()
+                    }
+                }
+        }
     }
 
     /**
@@ -200,8 +194,14 @@ class DiscoveryActivity : AppCompatActivity() {
     */
     override fun onDestroy() {
         super.onDestroy()
-        SerialPortDiscovery.stopLegacyScan(this)
-        SerialPortDiscovery.stopBleScan()
+        try {
+            SerialPortDiscovery.stopLegacyScan(this)
+            SerialPortDiscovery.stopBleScan()
+        } catch (e: SecurityException) {
+            e.printStackTrace()
+            LogUtil.log("没有获取蓝牙权限！")
+        }
+
         connectProcessDialog.dismiss()
         LogUtil.log("内置搜索页面销毁")
     }
