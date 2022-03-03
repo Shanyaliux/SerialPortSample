@@ -37,14 +37,22 @@ SerialPort 是一个开源的对 Android 蓝牙串口通信的轻量封装库，
 - 自动重连机制
 - Toast 提示内容修改
 
-## 项目官网
+## 使用
+编辑`Build.gradle`文件并添加以下依赖项。
+```groovy
+repositories {
+  google()
+  mavenCentral()
+}
+
+dependencies {
+    implementation 'cn.shanyaliux.serialport:serialport:4.1.7'
+}
+```
+
+## 说明文档
 
 [https://shanyaliux.cn/serialport/](https://shanyaliux.cn/serialport/)
-
-## CSDN说明文档
-
-[Kotlin版本说明文档](https://blog.csdn.net/qq_41121080/article/details/118990337)  
-[Java版本说明文档](https://blog.csdn.net/qq_41121080/article/details/118992207)
 
 ## Demo示例源码
 
