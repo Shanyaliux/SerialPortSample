@@ -345,8 +345,8 @@ object SerialPortBuilder {
      * @Version 4.1.5
      */
     fun setConfig(config: SerialPortConfig):SerialPortBuilder {
-        isDebug(config.debug)
-//        isDebug(true)
+//        isDebug(config.debug)
+        isDebug(true)
         setLegacyUUID(config.UUID_LEGACY)
         setBleUUID(config.UUID_BLE)
         setBleReadUUID(config.UUID_BLE_READ)

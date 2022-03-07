@@ -11,6 +11,8 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPortBuilder
+import world.shanya.serialport.SerialPortServer
+import android.bluetooth.BluetoothAdapter
 
 
 
@@ -32,7 +34,11 @@ class MainActivity : AppCompatActivity() {
         val stringBuilder = StringBuilder()
 
         buttonDisconnect.isEnabled = false
-
+        val serialPortServer = SerialPortServer(this)
+        serialPortServer.setServerReceivedDataCallback {
+            stringBuilder.append(it)
+            textViewReceiced.text = stringBuilder.toString()
+        }
         serialPort = SerialPortBuilder
             .isDebug(true)
             .setConfig(config)
@@ -65,7 +71,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonConnect.setOnClickListener {
-            serialPort?.openDiscoveryActivity()
+//            serialPort?.openDiscoveryActivity()
+            val discoveryIntent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE)
+            discoveryIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300)
+            startActivity(discoveryIntent)
+            serialPortServer.openServer()
         }
 
         buttonDisconnect.setOnClickListener {
@@ -89,7 +99,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonSend.setOnClickListener {
-            serialPort?.sendData(editTextTextSend.text.toString())
+//            serialPort?.sendData(editTextTextSend.text.toString())
+            serialPortServer.sendData(editTextTextSend.text.toString())
         }
     }
 
