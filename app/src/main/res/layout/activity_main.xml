@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
-        android:text="连接"
+        android:text="打开服务"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonDisconnect"
         app:layout_constraintEnd_toStartOf="@+id/buttonSetting"
