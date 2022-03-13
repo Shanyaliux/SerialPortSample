@@ -3,26 +3,27 @@
  * 模块名：SerialPortSample.app
  * 类名：CheckUpdate.kt
  * 作者：Shanya
- * 日期：2022/3/2 下午6:51
+ * 日期：2022/3/13 下午8:42
  * Copyright  (c)  2021  https://shanyaliux.cn
  */
 
-package world.shanya.serialportsample
-
-import android.os.Looper
-import com.azhon.appupdate.config.UpdateConfiguration
+package world.shanya.serialportsample.utils
 
 import com.ejlchina.okhttps.HTTP
 import com.ejlchina.okhttps.gson.GsonMsgConvertor
 import com.ejlchina.okhttps.HttpResult
-import com.ejlchina.okhttps.OnCallback
 import android.app.Activity
 import com.azhon.appupdate.manager.DownloadManager
 import com.azhon.appupdate.utils.ApkUtil
+import world.shanya.serialportsample.R
 
 
 private const val jsonUrl = "https://gitee.com/Shanya/serialportappupdate/raw/master/update.json"
 
+
+/**
+ * 检查更新
+ */
 class CheckUpdate(private val activity: Activity) {
     private val http = HTTP.builder()
         .baseUrl(jsonUrl)

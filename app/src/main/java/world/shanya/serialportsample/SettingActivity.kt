@@ -13,9 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
 import kotlinx.android.synthetic.main.activity_setting.*
-import world.shanya.serialport.SerialPort
-import world.shanya.serialport.SerialPortBuilder
-import world.shanya.serialport.SerialPortConfig
+import world.shanya.serialportsample.utils.SPTools
 
 class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

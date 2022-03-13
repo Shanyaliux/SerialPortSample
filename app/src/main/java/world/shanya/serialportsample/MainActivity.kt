@@ -5,92 +5,84 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.SerialPortBuilder
-
-
-
+import world.shanya.serialportsample.pagers.KeyFragment
+import world.shanya.serialportsample.pagers.MessageFragment
+import world.shanya.serialportsample.utils.CheckUpdate
+import world.shanya.serialportsample.utils.SPTools
 
 
 class MainActivity : AppCompatActivity() {
 
     private var serialPort:SerialPort ?= null
     private val checkUpdate = CheckUpdate(this)
+    private var toolMenu: Menu ?= null
+    private val myViewModel: MyViewModel by viewModels()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //启动时检查更新
         checkUpdate.check()
 
-        val config = SPTools.getSerialPortConfig(this)
-        val stringBuilder = StringBuilder()
+        viewPager2.adapter = object : FragmentStateAdapter(this) {
+            override fun getItemCount() = 2
 
-        buttonDisconnect.isEnabled = false
+            override fun createFragment(position: Int) =
+                when (position) {
+                    0 -> MessageFragment()
+                    else -> KeyFragment()
+                }
+        }
+
+        TabLayoutMediator(tabLayout,viewPager2){ _, _ -> }.attach()
+
+        val config = SPTools.getSerialPortConfig(this)
 
         serialPort = SerialPortBuilder
-            .isDebug(true)
             .setConfig(config)
+            .isDebug(true)
             .setReceivedDataCallback {
-                stringBuilder.append(it)
-                textViewReceiced.text = stringBuilder.toString()
+                myViewModel.receivedStringBuilder.append(it)
+                myViewModel.receivedLiveData.value = myViewModel.receivedStringBuilder
             }
             .setConnectionStatusCallback { status, bluetoothDevice ->
                 MainScope().launch {
-                    buttonConnect.isEnabled = !status
-                    buttonSetting.isEnabled = !status
-                    buttonDisconnect.isEnabled = status
                     if (!status) {
-                        textViewName.text = ""
-                        textViewAddress.text = ""
-                        textViewType.text = ""
+                        //断开连接
+                        toolMenu?.let {
+                            val menuItemConnect = it.findItem(R.id.menu_connect)
+                            menuItemConnect.title = "连接"
+                            myViewModel.deviceInfoLiveData.value =
+                                DeviceInfo("", "", "")
+                        }
                     } else {
-                        textViewName.text = bluetoothDevice?.name
-                        textViewAddress.text = bluetoothDevice?.address
-                        textViewType.text = bluetoothDevice?.type.toString()
+                        //连接成功
+                        toolMenu?.let {
+                            val menuItemConnect = it.findItem(R.id.menu_connect)
+                            menuItemConnect.title = "断开"
+                            myViewModel.deviceInfoLiveData.value =
+                                DeviceInfo(bluetoothDevice?.name ?: "",
+                                    bluetoothDevice?.address ?: "",
+                                    bluetoothDevice?.type.toString()
+                                )
+                        }
                     }
-
                 }
-
             }
             .build(this)
-
-        buttonSetting.setOnClickListener {
-            startActivity(Intent(this, SettingActivity::class.java))
-        }
-
-        buttonConnect.setOnClickListener {
-            serialPort?.openDiscoveryActivity()
-        }
-
-        buttonDisconnect.setOnClickListener {
-            serialPort?.disconnect()
-        }
-
-        switchReceiveType.setOnCheckedChangeListener { compoundButton, b ->
-            if (b) {
-                serialPort?.setReadDataType(SerialPort.READ_HEX)
-            } else {
-                serialPort?.setReadDataType(SerialPort.READ_STRING)
-            }
-        }
-
-        switchSendType.setOnCheckedChangeListener { compoundButton, b ->
-            if (b) {
-                serialPort?.setSendDataType(SerialPort.SEND_HEX)
-            } else {
-                serialPort?.setSendDataType(SerialPort.SEND_STRING)
-            }
-        }
-
-        buttonSend.setOnClickListener {
-            serialPort?.sendData(editTextTextSend.text.toString())
-        }
     }
 
     override fun onResume() {
@@ -100,15 +92,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
+        toolMenu = menu
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_about) {
-            startActivity(Intent(this, AboutActivity::class.java))
-        }
-        if (item.itemId == R.id.menu_check_update) {
-            checkUpdate.check()
+        when (item.itemId) {
+            R.id.menu_about ->
+                startActivity(Intent(this, AboutActivity::class.java))
+            R.id.menu_check_update ->
+                checkUpdate.check()
+            R.id.menu_connect -> {
+                if (item.title == "连接") {
+                    serialPort?.openDiscoveryActivity()
+                } else {
+                    serialPort?.disconnect()
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }

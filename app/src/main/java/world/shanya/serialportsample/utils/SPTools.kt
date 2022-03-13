@@ -1,17 +1,20 @@
 /*
  * 项目名：SerialPortSample
  * 模块名：SerialPortSample.app
- * 类名：Tools.kt
+ * 类名：SPTools.kt
  * 作者：Shanya
- * 日期：2022/2/23 下午1:01
+ * 日期：2022/3/13 下午8:42
  * Copyright  (c)  2021  https://shanyaliux.cn
  */
 
-package world.shanya.serialportsample
+package world.shanya.serialportsample.utils
 
 import android.content.Context
 import world.shanya.serialport.SerialPortConfig
 
+/**
+ * 设置偏好存储类
+ */
 object SPTools {
     private const val SP_SettingName = "SerialPortSetting"
     const val SPP_UUID = "SPP_UUID"

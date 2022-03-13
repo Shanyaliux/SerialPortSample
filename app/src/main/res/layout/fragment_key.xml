@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ 项目名：SerialPortSample
+  ~ 模块名：SerialPortSample.app
+  ~ 类名：fragment_key.xml
+  ~ 作者：Shanya
+  ~ 日期：2022/3/13 下午10:21
+  ~ Copyright  (c)  2021  https://shanyaliux.cn
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".pagers.KeyFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
