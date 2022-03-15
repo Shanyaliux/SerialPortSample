@@ -109,7 +109,7 @@ object SerialPortBuilder {
      * @Version 3.0.0
      */
     fun autoOpenDiscoveryActivity(status: Boolean): SerialPortBuilder {
-        SerialPort.autoOpenDiscoveryActivityFlag = true
+        SerialPort.autoOpenDiscoveryActivityFlag = status
         return this
     }
 

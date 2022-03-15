@@ -20,6 +20,7 @@ class MyViewModel: ViewModel() {
 }
 
 data class DeviceInfo(
+    val isConnected: Boolean,
     val deviceName:String,
     val deviceAddr:String,
     val deviceType:String

@@ -5,10 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
@@ -66,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                             val menuItemConnect = it.findItem(R.id.menu_connect)
                             menuItemConnect.title = "连接"
                             myViewModel.deviceInfoLiveData.value =
-                                DeviceInfo("", "", "")
+                                DeviceInfo(false,"", "", "")
                         }
                     } else {
                         //连接成功
@@ -74,7 +72,8 @@ class MainActivity : AppCompatActivity() {
                             val menuItemConnect = it.findItem(R.id.menu_connect)
                             menuItemConnect.title = "断开"
                             myViewModel.deviceInfoLiveData.value =
-                                DeviceInfo(bluetoothDevice?.name ?: "",
+                                DeviceInfo(true,
+                                    bluetoothDevice?.name ?: "",
                                     bluetoothDevice?.address ?: "",
                                     bluetoothDevice?.type.toString()
                                 )
@@ -100,8 +99,8 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_about ->
                 startActivity(Intent(this, AboutActivity::class.java))
-            R.id.menu_check_update ->
-                checkUpdate.check()
+            R.id.menu_setting ->
+                startActivity(Intent(this, SettingActivity::class.java))
             R.id.menu_connect -> {
                 if (item.title == "连接") {
                     serialPort?.openDiscoveryActivity()
