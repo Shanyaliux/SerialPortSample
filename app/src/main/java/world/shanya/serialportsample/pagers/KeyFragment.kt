@@ -14,29 +14,37 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
+import com.afollestad.materialdialogs.LayoutMode
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
+import kotlinx.android.synthetic.main.fragment_key.view.*
+import kotlinx.android.synthetic.main.key_button_info_dialog.view.*
+import world.shanya.serialport.SerialPortBuilder
 import world.shanya.serialportsample.R
+import world.shanya.serialportsample.utils.KeyButtonInfo
+import world.shanya.serialportsample.utils.KeySpTools
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [KeyFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class KeyFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var isEditMode = false
+    private val keyButtonInfoHashMap = HashMap<Int, KeyButtonInfo>()
+    private val keyButtonIds = arrayOf(
+        R.id.key_button1, R.id.key_button2, R.id.key_button3,
+        R.id.key_button4, R.id.key_button5, R.id.key_button6,
+        R.id.key_button7, R.id.key_button8, R.id.key_button9,
+        R.id.key_button10, R.id.key_button11, R.id.key_button12,
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+
     }
 
     override fun onCreateView(
@@ -44,26 +52,61 @@ class KeyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_key, container, false)
+        val root = inflater.inflate(R.layout.fragment_key, container, false)
+
+        //读取按键信息
+        for (keyButtonId in keyButtonIds) {
+            keyButtonInfoHashMap[keyButtonId] = KeySpTools.getButtonInfo(requireActivity(), keyButtonId)
+            val button = root.findViewById<Button>(keyButtonId)
+            button.text = keyButtonInfoHashMap[keyButtonId]?.buttonName?:""
+        }
+
+        root.switchEditMode.setOnCheckedChangeListener { _, b ->
+            isEditMode = b
+        }
+
+        root.key_button1.setOnClickListener(keyButtonListener)
+        root.key_button2.setOnClickListener(keyButtonListener)
+        root.key_button3.setOnClickListener(keyButtonListener)
+        root.key_button4.setOnClickListener(keyButtonListener)
+        root.key_button5.setOnClickListener(keyButtonListener)
+        root.key_button6.setOnClickListener(keyButtonListener)
+        root.key_button7.setOnClickListener(keyButtonListener)
+        root.key_button8.setOnClickListener(keyButtonListener)
+        root.key_button9.setOnClickListener(keyButtonListener)
+        root.key_button10.setOnClickListener(keyButtonListener)
+        root.key_button11.setOnClickListener(keyButtonListener)
+        root.key_button12.setOnClickListener(keyButtonListener)
+
+        return root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment KeyFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            KeyFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private val keyButtonListener = View.OnClickListener {
+        if (isEditMode) {
+            openDialog(it.id)
+        } else {
+            SerialPortBuilder.sendData(keyButtonInfoHashMap[it.id]?.buttonData?:"")
+        }
+
     }
+
+    private fun openDialog(id: Int) {
+        MaterialDialog(requireActivity(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            customView(R.layout.key_button_info_dialog)
+            getCustomView().editTextTextButtonName.setText(keyButtonInfoHashMap[id]?.buttonName?:"")
+            getCustomView().editTextTextButtonData.setText(keyButtonInfoHashMap[id]?.buttonData?:"")
+            positiveButton {
+                val keyButtonInfo = KeyButtonInfo(getCustomView().editTextTextButtonName.text.toString(),
+                    getCustomView().editTextTextButtonData.text.toString())
+                KeySpTools.putButtonInfo(requireActivity(), id, keyButtonInfo)
+                keyButtonInfoHashMap[id] = keyButtonInfo
+                val button = requireActivity().findViewById<Button>(id)
+                button.text = keyButtonInfo.buttonName
+            }
+            negativeButton {
+
+            }
+        }
+    }
+
 }

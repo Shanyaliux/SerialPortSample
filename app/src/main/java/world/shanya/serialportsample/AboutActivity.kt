@@ -15,9 +15,14 @@ import android.view.Gravity
 import android.view.View
 import mehdi.sakout.aboutpage.AboutPage
 import mehdi.sakout.aboutpage.Element
+import world.shanya.serialportsample.utils.CheckUpdate
+import java.lang.Exception
 
 
 class AboutActivity : AppCompatActivity() {
+
+    private val checkUpdate = CheckUpdate(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
@@ -25,7 +30,9 @@ class AboutActivity : AppCompatActivity() {
         val versionElement = Element()
         versionElement.gravity = Gravity.CENTER
         versionElement.title = "版本号: " + packageManager.getPackageInfo(packageName, 0).versionName
-        println(packageName)
+        versionElement.setOnClickListener {
+                checkUpdate.check(true)
+        }
 
         val authorElement = Element()
         authorElement.gravity = Gravity.CENTER
@@ -33,7 +40,7 @@ class AboutActivity : AppCompatActivity() {
 
         val aboutPage: View = AboutPage(this)
             .isRTL(false)
-            .setDescription("SerialPort封装库的简单Demo")
+            .setDescription("SerialPort封装库的全功能示例APP")
 //            .setCustomFont(String) // or Typeface
             .setImage(R.mipmap.ic_launcher_logo)
 //            .addItem(Element().setTitle(packageManager.getPackageInfo(packageName, 0).versionName))

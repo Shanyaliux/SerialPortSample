@@ -17,7 +17,7 @@ import world.shanya.serialport.SerialPortBuilder
 import world.shanya.serialportsample.pagers.KeyFragment
 import world.shanya.serialportsample.pagers.MessageFragment
 import world.shanya.serialportsample.utils.CheckUpdate
-import world.shanya.serialportsample.utils.SPTools
+import world.shanya.serialportsample.utils.SettingSPTools
 
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         TabLayoutMediator(tabLayout,viewPager2){ _, _ -> }.attach()
 
-        val config = SPTools.getSerialPortConfig(this)
+        val config = SettingSPTools.getSerialPortConfig(this)
 
         serialPort = SerialPortBuilder
             .setConfig(config)
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        SerialPortBuilder.setConfig(SPTools.getSerialPortConfig(this))
+        SerialPortBuilder.setConfig(SettingSPTools.getSerialPortConfig(this))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
