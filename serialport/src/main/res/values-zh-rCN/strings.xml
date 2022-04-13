@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ 项目名：SerialPortSample
+  ~ 模块名：SerialPortSample.serialport
+  ~ 类名：strings.xml
+  ~ 作者：Shanya
+  ~ 日期：2022/4/13 下午10:28
+  ~ Copyright  (c)  2021  https://shanyaliux.cn
+  -->
+
+<resources>
+    <string name="connectSucceededToast">连接成功</string>
+    <string name="connectFailedToast">连接失败</string>
+    <string name="disconnectToast">断开连接</string>
+    <string name="connectFirstToast">请先连接设备</string>
+    <string name="disconnectFirstToast">请先断开连接</string>
+    <string name="permissionToast">请先开启位置权限</string>
+    <string name="hexTipToast">请输入的十六进制数据保持两位</string>
+    <string name="openBluetoothSucceededToast">蓝牙打开成功</string>
+    <string name="openBluetoothFailedToast">蓝牙打开失败</string>
+    <string name="discovery_discovering">正在搜索……</string>
+    <string name="discovery_select_device_connect">请选择一个设备连接</string>
+    <string name="discovery_permission_message">需要您同意以下权限才能正常使用</string>
+    <string name="discovery_permission_allow">允许</string>
+    <string name="discovery_permission_deny">拒绝</string>
+    <string name="discovery_select_discovery_method">选择连接方式</string>
+    <string name="discovery_unknow">未知类型</string>
+    <string name="discovery_traditional">传统类型</string>
+    <string name="discovery_ble">BLE类型</string>
+    <string name="discovery_dual">双重类型</string>
+    <string name="discovery_paired_device">已配对设备</string>
+    <string name="discovery_available_device">可用设备</string>
+</resources>

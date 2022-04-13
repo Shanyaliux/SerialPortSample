@@ -23,7 +23,9 @@ import world.shanya.serialport.R
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.discovery.SerialPortDiscovery.pairedDevicesListBD
 import world.shanya.serialport.discovery.SerialPortDiscovery.unPairedDevicesListBD
+import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.tools.LogUtil
+import world.shanya.serialport.tools.ToastUtil
 
 /**
  * DiscoveryActivity 搜索页面Activity
@@ -65,10 +67,10 @@ class DiscoveryActivity : AppCompatActivity() {
         SerialPortDiscovery.discoveryStatusLiveData.observe(this, {
             if (it) {
                 swipeRedreshLayout.isRefreshing = true
-                title = "正在搜索……"
+                title = getString(R.string.discovery_discovering)
             } else {
                 swipeRedreshLayout.isRefreshing = false
-                title = "请选择一个设备连接"
+                title = getString(R.string.discovery_select_device_connect)
             }
         })
 
@@ -96,19 +98,20 @@ class DiscoveryActivity : AppCompatActivity() {
                 .permissions(requestList)
                 .explainReasonBeforeRequest()
                 .onExplainRequestReason { scope, deniedList ->
-                    val message = "需要您同意以下权限才能正常使用"
-                    scope.showRequestReasonDialog(deniedList, message, "允许", "拒绝")
+                    val message = getString(R.string.discovery_permission_message)
+                    scope.showRequestReasonDialog(deniedList, message,
+                        getString(R.string.discovery_permission_allow),
+                        getString(R.string.discovery_permission_deny))
                 }
                 .request { allGranted, grantedList, deniedList ->
                     if (allGranted) {
-//                        Toast.makeText(this, "所有申请的权限都已通过", Toast.LENGTH_SHORT).show()
                         LogUtil.log("蓝牙权限获取成功")
                         //设备列表初始化
                         recyclerViewInit()
                         //开始搜索
                         doDiscovery()
                     } else {
-                        Toast.makeText(this, "需要您手动授予附近的位置权限", Toast.LENGTH_SHORT).show()
+                        ToastUtil.toast(this, SerialPortToast.permission)
                         LogUtil.log("蓝牙权限获取失败")
                         finish()
                     }
@@ -123,7 +126,7 @@ class DiscoveryActivity : AppCompatActivity() {
     * @Version 3.1.0
     */
     private fun doDiscovery() {
-        title = "正在搜索……"
+        title = getString(R.string.discovery_discovering)
         SerialPortDiscovery.startLegacyScan(this)
         SerialPortDiscovery.startBleScan()
     }
@@ -234,8 +237,8 @@ class DiscoveryActivity : AppCompatActivity() {
                 SerialPortDiscovery.stopBleScan()
                 val device = SerialPort.bluetoothAdapter.getRemoteDevice(it.textViewDeviceAddress.text.toString())
                 if (SerialPort.openConnectionTypeDialogFlag) {
-                    val connectTypeDialog = AlertDialog.Builder(this@DiscoveryActivity)
-                        .setTitle("选择连接方式")
+                    AlertDialog.Builder(this@DiscoveryActivity)
+                        .setTitle(getString(R.string.discovery_select_discovery_method))
                         .setItems(R.array.connect_string) { dialog, which ->
                             connectProcessDialog.show()
                             if (which == 0) {
@@ -271,20 +274,20 @@ class DiscoveryActivity : AppCompatActivity() {
                 holder.textViewDeviceAddress.text = current.address
                 when (current.type) {
                     BluetoothDevice.DEVICE_TYPE_UNKNOWN -> {
-                        holder.textViewDeviceType.text = "未知类型"
+                        holder.textViewDeviceType.text = getString(R.string.discovery_unknow)
                         holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo)
                     }
 
                     BluetoothDevice.DEVICE_TYPE_CLASSIC -> {
-                        holder.textViewDeviceType.text = "传统类型"
+                        holder.textViewDeviceType.text = getString(R.string.discovery_traditional)
                         holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_l)
                     }
                     BluetoothDevice.DEVICE_TYPE_LE -> {
-                        holder.textViewDeviceType.text = "BLE类型"
+                        holder.textViewDeviceType.text = getString(R.string.discovery_ble)
                         holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_b)
                     }
                     BluetoothDevice.DEVICE_TYPE_DUAL -> {
-                        holder.textViewDeviceType.text = "传统和BLE双重类型"
+                        holder.textViewDeviceType.text = getString(R.string.discovery_dual)
                         holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_l_b)
                     }
                 }
@@ -295,20 +298,20 @@ class DiscoveryActivity : AppCompatActivity() {
                 holder.textViewDeviceAddress.text = current.address
                 when (current.type) {
                     BluetoothDevice.DEVICE_TYPE_UNKNOWN -> {
-                        holder.textViewDeviceType.text = "未知类型"
+                        holder.textViewDeviceType.text = getString(R.string.discovery_unknow)
                         holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo)
                     }
 
                     BluetoothDevice.DEVICE_TYPE_CLASSIC -> {
-                        holder.textViewDeviceType.text = "传统类型"
+                        holder.textViewDeviceType.text = getString(R.string.discovery_traditional)
                         holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_l)
                     }
                     BluetoothDevice.DEVICE_TYPE_LE -> {
-                        holder.textViewDeviceType.text = "BLE类型"
+                        holder.textViewDeviceType.text = getString(R.string.discovery_ble)
                         holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_b)
                     }
                     BluetoothDevice.DEVICE_TYPE_DUAL -> {
-                        holder.textViewDeviceType.text = "传统和BLE双重类型"
+                        holder.textViewDeviceType.text = getString(R.string.discovery_dual)
                         holder.imageViewDeviceLogo.setImageResource(R.mipmap.device_logo_l_b)
                     }
                 }

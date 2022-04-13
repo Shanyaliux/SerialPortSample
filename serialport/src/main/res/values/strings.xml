@@ -1,1 +1,24 @@
-<resources></resources>
+<resources>
+
+    <string name="connectSucceededToast">Connection succeeded</string>
+    <string name="connectFailedToast">Connection failed</string>
+    <string name="disconnectToast">Disconnect</string>
+    <string name="connectFirstToast">Please connect the device first</string>
+    <string name="disconnectFirstToast">Please disconnect first</string>
+    <string name="permissionToast">Please enable location permission first</string>
+    <string name="hexTipToast">Please enter hexadecimal data with two digits</string>
+    <string name="openBluetoothSucceededToast">Bluetooth turned on successfully</string>
+    <string name="openBluetoothFailedToast">Failed to turn on bluetooth</string>
+    <string name="discovery_discovering">Discovering...</string>
+    <string name="discovery_select_device_connect">Please select a device to connect</string>
+    <string name="discovery_permission_message">You need to agree to the following permissions for normal use</string>
+    <string name="discovery_permission_allow">Allow</string>
+    <string name="discovery_permission_deny">Deny</string>
+    <string name="discovery_select_discovery_method">Choose a connection method</string>
+    <string name="discovery_unknow">unknown type</string>
+    <string name="discovery_traditional">traditional type</string>
+    <string name="discovery_ble">BLE type</string>
+    <string name="discovery_dual">dual type</string>
+    <string name="discovery_paired_device">Paired device</string>
+    <string name="discovery_available_device">Available device</string>
+</resources>

@@ -26,12 +26,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="已配对设备"
+            android:text="@string/discovery_paired_device"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline2">
-        </TextView>
+            app:layout_constraintTop_toTopOf="@+id/guideline2"></TextView>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"
@@ -46,12 +45,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="可用设备"
+            android:text="@string/discovery_available_device"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline3">
-        </TextView>
+            app:layout_constraintTop_toTopOf="@+id/guideline3"></TextView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewPaired"

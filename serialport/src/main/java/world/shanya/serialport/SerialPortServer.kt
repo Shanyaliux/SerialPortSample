@@ -14,13 +14,14 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import world.shanya.serialport.server.SerialPortServerService
 import world.shanya.serialport.server.SerialPortServerThread
+import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.SerialPortTools
+import world.shanya.serialport.tools.ToastUtil
 
 typealias ServerReceivedDataCallback = (data: String) -> Unit
 typealias ServerConnectStatusCallback = (status: Boolean) -> Unit
@@ -50,7 +51,7 @@ class SerialPortServer constructor(private val context: Context) {
             }
             MainScope().launch {
                 serverContext?.let {
-                    Toast.makeText(it, "连接成功", Toast.LENGTH_SHORT).show()
+                    ToastUtil.toast(it, SerialPortToast.connectSucceeded)
                     it.startService(Intent(it, SerialPortServerService::class.java))
                 }
 

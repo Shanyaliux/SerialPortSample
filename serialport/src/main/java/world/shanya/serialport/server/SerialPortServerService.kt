@@ -2,7 +2,6 @@ package world.shanya.serialport.server
 
 import android.app.IntentService
 import android.content.Intent
-import android.widget.Toast
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import world.shanya.serialport.SerialPortServer
@@ -21,7 +20,6 @@ class SerialPortServerService : IntentService("SerialPortServerService") {
     override fun onCreate() {
         super.onCreate()
         LogUtil.log("蓝牙服务端收消息服务开启")
-        Toast.makeText(this,"蓝牙服务端收消息服务开启", Toast.LENGTH_SHORT ).show()
     }
 
     override fun onHandleIntent(intent: Intent?) {
