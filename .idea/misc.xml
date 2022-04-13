@@ -5,10 +5,14 @@
       <map>
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.15572916666666667" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/activity_about.xml" value="0.25" />
-        <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/activity_main.xml" value="0.335" />
+        <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/activity_main_activity.xml" value="0.13958333333333334" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/activity_main_b.xml" value="0.13958333333333334" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/activity_setting.xml" value="0.375" />
+        <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/data_type_layout.xml" value="0.18333333333333332" />
+        <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/fragment_key.xml" value="0.165" />
+        <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/fragment_message.xml" value="0.2484725050916497" />
+        <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/key_button_info_dialog.xml" value="0.25" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/menu/menu.xml" value="0.26875" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.15572916666666667" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/mipmap-anydpi-v26/ic_launcher_logo.xml" value="0.15572916666666667" />

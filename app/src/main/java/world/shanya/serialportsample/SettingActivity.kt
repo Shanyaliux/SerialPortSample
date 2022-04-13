@@ -13,9 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
 import kotlinx.android.synthetic.main.activity_setting.*
-import world.shanya.serialport.SerialPort
-import world.shanya.serialport.SerialPortBuilder
-import world.shanya.serialport.SerialPortConfig
+import world.shanya.serialportsample.utils.SettingSPTools
 
 class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,43 +21,43 @@ class SettingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_setting)
 
         editTextTextSPPUUID.addTextChangedListener {
-            SPTools.putData(this, SPTools.SPP_UUID, it.toString())
+            SettingSPTools.putData(this, SettingSPTools.SPP_UUID, it.toString())
         }
 
         editTextTextBLEUUIDR.addTextChangedListener {
-            SPTools.putData(this, SPTools.BLE_R_UUID, it.toString())
+            SettingSPTools.putData(this, SettingSPTools.BLE_R_UUID, it.toString())
         }
 
         editTextTextBLEUUIDS.addTextChangedListener {
-            SPTools.putData(this, SPTools.BLE_S_UUID, it.toString())
+            SettingSPTools.putData(this, SettingSPTools.BLE_S_UUID, it.toString())
         }
 
         switchAutoConnect.setOnCheckedChangeListener { _, b ->
-            SPTools.putData(this, SPTools.AUTO_CONNECT, b.toString())
+            SettingSPTools.putData(this, SettingSPTools.AUTO_CONNECT, b.toString())
         }
 
         switchAutoReconnectAtIntervals.setOnCheckedChangeListener { _, b ->
-            SPTools.putData(this, SPTools.RECONNECT, b.toString())
+            SettingSPTools.putData(this, SettingSPTools.RECONNECT, b.toString())
         }
 
         editTextIntervalsTime.addTextChangedListener {
-            SPTools.putData(this, SPTools.INTERVALS_TIME, it.toString())
+            SettingSPTools.putData(this, SettingSPTools.INTERVALS_TIME, it.toString())
         }
 
         switchIgnoreNoNameDevice.setOnCheckedChangeListener { _, b ->
-            SPTools.putData(this, SPTools.IGNORE_NO_NAME, b.toString())
+            SettingSPTools.putData(this, SettingSPTools.IGNORE_NO_NAME, b.toString())
         }
 
         switchConnectionTypeSelect.setOnCheckedChangeListener { _, b ->
-            SPTools.putData(this, SPTools.CONNECTION_SELECT, b.toString())
+            SettingSPTools.putData(this, SettingSPTools.CONNECTION_SELECT, b.toString())
         }
 
         switchOpenDiscoveryActivity.setOnCheckedChangeListener { _, b ->
-            SPTools.putData(this, SPTools.OPEN_DISCOVERY, b.toString())
+            SettingSPTools.putData(this, SettingSPTools.OPEN_DISCOVERY, b.toString())
         }
 
         switchHexStringToString.setOnCheckedChangeListener { _, b ->
-            SPTools.putData(this, SPTools.HEX_TO_STRING, b.toString())
+            SettingSPTools.putData(this, SettingSPTools.HEX_TO_STRING, b.toString())
         }
     }
 
@@ -69,41 +67,41 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun initSetting() {
-        if (SPTools.getString(this, SPTools.SPP_UUID) == "") {
+        if (SettingSPTools.getString(this, SettingSPTools.SPP_UUID) == "") {
             editTextTextSPPUUID.setText("00001101-0000-1000-8000-00805F9B34FB")
         } else {
-            editTextTextSPPUUID.setText(SPTools.getString(this, SPTools.SPP_UUID))
+            editTextTextSPPUUID.setText(SettingSPTools.getString(this, SettingSPTools.SPP_UUID))
         }
 
-        if (SPTools.getString(this, SPTools.BLE_R_UUID) == "") {
+        if (SettingSPTools.getString(this, SettingSPTools.BLE_R_UUID) == "") {
             editTextTextBLEUUIDR.setText("0000ffe1-0000-1000-8000-00805f9b34fb")
         } else {
-            editTextTextBLEUUIDR.setText(SPTools.getString(this, SPTools.BLE_R_UUID))
+            editTextTextBLEUUIDR.setText(SettingSPTools.getString(this, SettingSPTools.BLE_R_UUID))
         }
 
-        if (SPTools.getString(this, SPTools.BLE_S_UUID) == "") {
+        if (SettingSPTools.getString(this, SettingSPTools.BLE_S_UUID) == "") {
             editTextTextBLEUUIDS.setText("0000ffe1-0000-1000-8000-00805f9b34fb")
         } else {
-            editTextTextBLEUUIDS.setText(SPTools.getString(this, SPTools.BLE_S_UUID))
+            editTextTextBLEUUIDS.setText(SettingSPTools.getString(this, SettingSPTools.BLE_S_UUID))
         }
 
-        switchAutoConnect.isChecked = SPTools.getSwitchSetting(this, SPTools.AUTO_CONNECT)
+        switchAutoConnect.isChecked = SettingSPTools.getSwitchSetting(this, SettingSPTools.AUTO_CONNECT)
 
-        switchAutoReconnectAtIntervals.isChecked = SPTools.getSwitchSetting(this, SPTools.RECONNECT)
+        switchAutoReconnectAtIntervals.isChecked = SettingSPTools.getSwitchSetting(this, SettingSPTools.RECONNECT)
 
-        if (SPTools.getString(this, SPTools.INTERVALS_TIME) == "") {
+        if (SettingSPTools.getString(this, SettingSPTools.INTERVALS_TIME) == "") {
             editTextIntervalsTime.setText("10000")
         } else {
-            editTextIntervalsTime.setText(SPTools.getString(this, SPTools.INTERVALS_TIME))
+            editTextIntervalsTime.setText(SettingSPTools.getString(this, SettingSPTools.INTERVALS_TIME))
         }
 
-        switchIgnoreNoNameDevice.isChecked = SPTools.getSwitchSetting(this, SPTools.IGNORE_NO_NAME)
+        switchIgnoreNoNameDevice.isChecked = SettingSPTools.getSwitchSetting(this, SettingSPTools.IGNORE_NO_NAME)
 
-        switchConnectionTypeSelect.isChecked = SPTools.getSwitchSetting(this, SPTools.CONNECTION_SELECT)
+        switchConnectionTypeSelect.isChecked = SettingSPTools.getSwitchSetting(this, SettingSPTools.CONNECTION_SELECT)
 
-        switchOpenDiscoveryActivity.isChecked = SPTools.getSwitchSetting(this, SPTools.OPEN_DISCOVERY)
+        switchOpenDiscoveryActivity.isChecked = SettingSPTools.getSwitchSetting(this, SettingSPTools.OPEN_DISCOVERY)
 
-        switchHexStringToString.isChecked = SPTools.getSwitchSetting(this, SPTools.HEX_TO_STRING)
+        switchHexStringToString.isChecked = SettingSPTools.getSwitchSetting(this, SettingSPTools.HEX_TO_STRING)
     }
 
 
