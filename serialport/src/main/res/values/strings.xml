@@ -6,7 +6,7 @@
     <string name="connectFirstToast">Please connect the device first</string>
     <string name="disconnectFirstToast">Please disconnect first</string>
     <string name="permissionToast">Please enable location permission first</string>
-    <string name="hexTipToast">Please enter hexadecimal data with two digits</string>
+    <string name="hexTipToast">Please keep two digits for each hexadecimal data entered, and the insufficient is 0 in the front</string>
     <string name="openBluetoothSucceededToast">Bluetooth turned on successfully</string>
     <string name="openBluetoothFailedToast">Failed to turn on bluetooth</string>
     <string name="discovery_discovering">Discovering...</string>

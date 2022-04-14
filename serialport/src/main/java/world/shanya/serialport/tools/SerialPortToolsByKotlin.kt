@@ -197,7 +197,11 @@ internal object ToastUtil {
     fun toast(context: Context, serialPortToastBean: SerialPortToastBean) {
         if (serialPortToastBean.status) {
             MainScope().launch {
-                Toast.makeText(context,serialPortToastBean.content,serialPortToastBean.time).show()
+                Toast.makeText(
+                    context,
+                    context.getString(serialPortToastBean.content),
+                    serialPortToastBean.time
+                ).show()
             }
         }
     }

@@ -461,6 +461,8 @@ internal object SerialPortConnect {
      * Returns:true, if the new MTU value has been requested successfully
      */
     fun requestMtu(mtu: Int):Boolean {
-        return bluetoothGatt?.requestMtu(mtu) == false
+        val boolean = bluetoothGatt?.requestMtu(mtu) == false
+        Thread.sleep(600)
+        return boolean
     }
 }

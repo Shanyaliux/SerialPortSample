@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.permissionx.guolindev.PermissionX
 import kotlinx.android.synthetic.main.activity_discovery.*
 import kotlinx.android.synthetic.main.device_cell.view.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import world.shanya.serialport.R
 import world.shanya.serialport.SerialPort
 import world.shanya.serialport.discovery.SerialPortDiscovery.pairedDevicesListBD
@@ -26,6 +28,8 @@ import world.shanya.serialport.discovery.SerialPortDiscovery.unPairedDevicesList
 import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.ToastUtil
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * DiscoveryActivity 搜索页面Activity
@@ -129,6 +133,19 @@ class DiscoveryActivity : AppCompatActivity() {
         title = getString(R.string.discovery_discovering)
         SerialPortDiscovery.startLegacyScan(this)
         SerialPortDiscovery.startBleScan()
+        SerialPort.discoveryTimeOut = false
+        Timer().schedule(object: TimerTask(){
+            override fun run() {
+                SerialPort.discoveryTimeOut = true
+                MainScope().launch {
+                    SerialPortDiscovery.stopLegacyScan(this@DiscoveryActivity)
+                    SerialPortDiscovery.stopBleScan()
+                    SerialPortDiscovery.discoveryStatusWithTypeCallback?.invoke(SerialPort.DISCOVERY_LEGACY, false)
+                    SerialPortDiscovery.discoveryStatusCallback?.invoke(false)
+                    SerialPortDiscovery.discoveryStatusLiveData.value = false
+                }
+            }
+        }, SerialPort.discoveryTime)
     }
 
     /**

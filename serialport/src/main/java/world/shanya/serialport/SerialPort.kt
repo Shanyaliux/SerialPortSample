@@ -7,6 +7,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import world.shanya.serialport.connect.*
 import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.*
@@ -17,6 +19,7 @@ import world.shanya.serialport.tools.*
 import world.shanya.serialport.tools.HexStringToString
 import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.ToastUtil
+import java.util.*
 
 
 //接收消息接口
@@ -92,6 +95,9 @@ class SerialPort private constructor() {
         internal var ignoreNoNameDeviceFlag = false
         //BLE发送分包间隔延时
         var bleSendSleep = 10
+
+        internal var discoveryTimeOut = false
+        internal var discoveryTime:Long = 12000
 
         fun getSendDataType() = sendDataType
 
@@ -763,6 +769,20 @@ class SerialPort private constructor() {
         } else {
             SerialPortDiscovery.startLegacyScan(context)
             SerialPortDiscovery.startBleScan()
+            discoveryTimeOut = false
+            Timer().schedule(object:TimerTask(){
+                override fun run() {
+                    discoveryTimeOut = true
+                    MainScope().launch {
+                        newContext?.let {
+                            cancelDiscovery(it)
+                        }
+                        SerialPortDiscovery.discoveryStatusWithTypeCallback?.invoke(DISCOVERY_LEGACY, false)
+                        SerialPortDiscovery.discoveryStatusCallback?.invoke(false)
+                        SerialPortDiscovery.discoveryStatusLiveData.value = false
+                    }
+                }
+            }, discoveryTime)
         }
 
     }
@@ -777,6 +797,7 @@ class SerialPort private constructor() {
     fun cancelDiscovery(context: Context) {
         SerialPortDiscovery.stopLegacyScan(context)
         SerialPortDiscovery.stopBleScan()
+        discoveryTimeOut = true
     }
 
     /**
@@ -825,4 +846,9 @@ class SerialPort private constructor() {
     fun requestMtu(mtu: Int):Boolean {
         return SerialPortConnect.requestMtu(mtu)
     }
+
+    fun setDiscoveryTime(time: Long) {
+        discoveryTime = time
+    }
+
 }

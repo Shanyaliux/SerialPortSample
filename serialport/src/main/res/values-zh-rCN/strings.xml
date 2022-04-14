@@ -14,7 +14,7 @@
     <string name="connectFirstToast">请先连接设备</string>
     <string name="disconnectFirstToast">请先断开连接</string>
     <string name="permissionToast">请先开启位置权限</string>
-    <string name="hexTipToast">请输入的十六进制数据保持两位</string>
+    <string name="hexTipToast">请输入的十六进制数据保持两位, 不足的补0</string>
     <string name="openBluetoothSucceededToast">蓝牙打开成功</string>
     <string name="openBluetoothFailedToast">蓝牙打开失败</string>
     <string name="discovery_discovering">正在搜索……</string>

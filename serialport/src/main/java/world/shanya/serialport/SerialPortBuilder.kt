@@ -363,6 +363,10 @@ object SerialPortBuilder {
         return this
     }
 
+    fun setDiscoveryTime(time: Long): SerialPortBuilder {
+        serialPort.setDiscoveryTime(time)
+        return this
+    }
 
     /**
      * 创建实例

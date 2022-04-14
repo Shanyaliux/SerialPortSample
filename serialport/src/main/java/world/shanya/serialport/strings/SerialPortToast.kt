@@ -1,17 +1,18 @@
 package world.shanya.serialport.strings
 
 import android.widget.Toast
+import world.shanya.serialport.R
 
 object SerialPortToast {
     fun get() = this
 
-    var connectSucceeded = SerialPortToastBean(true,"连接成功",Toast.LENGTH_SHORT)
-    var connectFailed = SerialPortToastBean(true,"连接失败",Toast.LENGTH_SHORT)
-    var disconnect = SerialPortToastBean(true,"断开连接",Toast.LENGTH_SHORT)
-    var connectFirst = SerialPortToastBean(true,"请先连接设备",Toast.LENGTH_SHORT)
-    var disconnectFirst = SerialPortToastBean(true,"请先断开连接",Toast.LENGTH_SHORT)
-    var permission = SerialPortToastBean(true,"请先开启位置权限",Toast.LENGTH_SHORT)
-    var hexTip = SerialPortToastBean(true,"请输入的十六进制数据保持两位，不足前面补0",Toast.LENGTH_SHORT)
-    var openBluetoothSucceeded = SerialPortToastBean(true,"蓝牙打开成功",Toast.LENGTH_SHORT)
-    var openBluetoothFailed = SerialPortToastBean(true,"蓝牙打开失败",Toast.LENGTH_SHORT)
+    var connectSucceeded = SerialPortToastBean(true, R.string.connectSucceededToast,Toast.LENGTH_SHORT)
+    var connectFailed = SerialPortToastBean(true,R.string.connectFailedToast,Toast.LENGTH_SHORT)
+    var disconnect = SerialPortToastBean(true,R.string.disconnectToast,Toast.LENGTH_SHORT)
+    var connectFirst = SerialPortToastBean(true,R.string.connectFirstToast,Toast.LENGTH_SHORT)
+    var disconnectFirst = SerialPortToastBean(true,R.string.disconnectFirstToast,Toast.LENGTH_SHORT)
+    var permission = SerialPortToastBean(true,R.string.permissionToast,Toast.LENGTH_SHORT)
+    var hexTip = SerialPortToastBean(true,R.string.hexTipToast,Toast.LENGTH_SHORT)
+    var openBluetoothSucceeded = SerialPortToastBean(true,R.string.openBluetoothSucceededToast,Toast.LENGTH_SHORT)
+    var openBluetoothFailed = SerialPortToastBean(true,R.string.openBluetoothFailedToast,Toast.LENGTH_SHORT)
 }

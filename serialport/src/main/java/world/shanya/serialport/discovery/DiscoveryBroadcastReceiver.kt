@@ -40,10 +40,20 @@ class DiscoveryBroadcastReceiver : BroadcastReceiver() {
 
             BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
                 LogUtil.log("停止搜索传统蓝牙设备")
-                SerialPortDiscovery.stopBleScan()
-                SerialPortDiscovery.discoveryStatusWithTypeCallback?.invoke(SerialPort.DISCOVERY_LEGACY, false)
-                SerialPortDiscovery.discoveryStatusCallback?.invoke(false)
-                SerialPortDiscovery.discoveryStatusLiveData.value = false
+                if (!SerialPort.discoveryTimeOut) {
+                    context?.let {
+                        SerialPortDiscovery.startLegacyScan(it)
+                        SerialPortDiscovery.startBleScan()
+                    }
+                } else {
+                    context?.let {
+                        SerialPortDiscovery.startLegacyScan(it)
+                        SerialPortDiscovery.startBleScan()
+                    }
+                    SerialPortDiscovery.discoveryStatusWithTypeCallback?.invoke(SerialPort.DISCOVERY_LEGACY, false)
+                    SerialPortDiscovery.discoveryStatusCallback?.invoke(false)
+                    SerialPortDiscovery.discoveryStatusLiveData.value = false
+                }
             }
         }
     }
