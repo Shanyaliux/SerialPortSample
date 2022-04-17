@@ -8,7 +8,7 @@
   </p>
   <p>
     <b>
-      一个 Android 蓝牙串口通信的封装库
+      An android bluetooth kit library
     </b>
   </p>
   <p>
@@ -26,19 +26,19 @@
   <br />
 </div>
 
-## SerialPort简介
+## SerialPort
 
-SerialPort 是一个开源的对 Android 蓝牙串口通信的轻量封装库，轻松解决了构建自己的串口调试APP的复杂程度，让人可以专注追求自己设计，不用考虑蓝牙串口底层的配置。
+SerialPort is an open source lightweight package library for Android Bluetooth serial communication, which easily solves the complexity of building your own serial debugging APP, allowing people to focus on their own design without considering the underlying configuration of the Bluetooth serial port.
 
-- 链式调用，一次到位
-- 传统与BLE兼顾
-- 内置必备搜索界面
-- 搜索、连接状态监听
-- 自动重连机制
-- Toast 提示内容修改
+- Chain call
+- Legacy and BLE
+- Built-in must-have search interface
+- Search and connection status monitoring
+- Automatic reconnection mechanism
+- Toast prompt content modification
 
-## 使用
-编辑`Build.gradle`文件并添加以下依赖项。
+## Usage
+Edit the `Build.gradle` file and add the following dependencies.
 ```groovy
 repositories {
   google()
@@ -46,15 +46,15 @@ repositories {
 }
 
 dependencies {
-    implementation 'cn.shanyaliux.serialport:serialport:4.1.7'
+    implementation 'cn.shanyaliux.serialport:serialport:4.1.8'
 }
 ```
 
-## 说明文档
+## Documentation
 
 [https://shanyaliux.cn/serialport/](https://shanyaliux.cn/serialport/)
 
-## Demo示例源码
+## Demo sample source code
 
-[Java版本](https://gitee.com/Shanya/SerialPortDemoByJava)  
-[Kotlin版本](https://gitee.com/Shanya/SerialPortDemoByKotlin)
+[Java](https://gitee.com/Shanya/SerialPortDemoByJava)  
+[Kotlin](https://gitee.com/Shanya/SerialPortDemoByKotlin)
