@@ -28,7 +28,7 @@
 
 ## SerialPort
 
-SerialPort is an open source lightweight package library for Android Bluetooth serial communication, which easily solves the complexity of building your own serial debugging APP, allowing people to focus on their own design without considering the underlying configuration of the Bluetooth serial port.
+SerialPort is an open source android bluetooth lightweight package library that easily solves the complexity of building your own bluetooth application, allowing people to focus on their own designs without considering the underlying configuration of android bluetooth.
 
 - Chain call
 - Legacy and BLE
