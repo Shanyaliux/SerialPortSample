@@ -1,26 +1,26 @@
 # Toast
 
-## 配置方法
+## Configuration method
 
 ```kotlin
-//是否显示
+//whether to display
 SerialPortToast.connectSucceeded.status = true
-//提示内容
-SerialPortToast.connectSucceeded.content = "连接成功"
-//显示时长 Toast.LENGTH_SHORT 或 Toast.LENGTH_LONG
+//prompt content (content is a string id)
+SerialPortToast.connectSucceeded.content = R.string.connectSucceededToast
+//Display duration Toast.LENGTH_SHORT or Toast.LENGTH_LONG
 SerialPortToast.connectSucceeded.time = Toast.LENGTH_SHORT
 ```
 
-## 可选配置项
+## Optional configuration items
 
-| 项目                   | 描述                             | 默认值                                    |
-| ---------------------- | -------------------------------- | ----------------------------------------- |
-| connectSucceeded       | 连接成功时                       | 连接成功                                  |
-| connectFailed          | 连接失败时                       | 连接失败                                  |
-| disconnect             | 断开连接时                       | 断开连接                                  |
-| connectFirst           | 未连接设备时执行发送数据         | 请先连接设备                              |
-| disconnectFirst        | 已连接设备后执行连接操作         | 请先断开连接                              |
-| permission             | 询问是否开启定位权限             | 请先开启位置权限                          |
-| hexTip                 | 发送十六进制时，数据格式不对提示 | 请输入的十六进制数据保持两位，不足前面补0 |
-| openBluetoothSucceeded | 打开蓝牙成功时                   | 蓝牙打开成功                              |
-| openBluetoothFailed    | 打开蓝牙失败时                   | 蓝牙打开失败                              |
+|          item          |                          describe                           |                           defaults                           |
+| :--------------------: | :---------------------------------------------------------: | :----------------------------------------------------------: |
+|    connectSucceeded    |              When the connection is successful              |                     Connection succeeded                     |
+|     connectFailed      |                  When the connection fails                  |                      Connection failed                       |
+|       disconnect       |                      When disconnected                      |                          Disconnect                          |
+|      connectFirst      |            Send data when no device is connected            |               Please connect the device first                |
+|    disconnectFirst     | Perform the connect operation after the device is connected |                   Please disconnect first                    |
+|       permission       |          Ask whether to enable location permission          |           Please enable location permission first            |
+|         hexTip         |   When sending hexadecimal, the data format is incorrect    | Please keep two digits for each hexadecimal data entered, and the insufficient is 0 in the front |
+| openBluetoothSucceeded |        When the bluetooth is turned on successfully         |               Bluetooth turned on successfully               |
+|  openBluetoothFailed   |               When turning on bluetooth fails               |                 Failed to turn on bluetooth                  |

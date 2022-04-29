@@ -1,76 +1,75 @@
-# Get Started (Kotlin)
+# Basic usage (Kotlin)
 
-### 构建SerialPort实例
+### Build SerialPort instance
 
 ```Kotlin
 val serialPort = SerialPortBuilder.build(this)
 ```
-### 搜索设备
+### Search device
 
-使用方法 `doDiscovery(context)` 搜索设备：
+Use the method `doDiscovery(context)` to search for devices:
 ```kotlin
 serialPort.doDiscovery(this)
 ```
 
-使用方法 `getPairedDevicesListBD()` 和 `getUnPairedDevicesListBD()` 获取搜索结果：
+Use the methods `getPairedDevicesListBD()` and `getUnPairedDevicesListBD()` to get search results:
 
 
 ```kotlin
-serialPort.getPairedDevicesListBD()		//获取已配对设备列表
-serialPort.getUnPairedDevicesListBD()	//获取未配对设备列表
+serialPort.getPairedDevicesListBD()		//Get a list of paired devices
+serialPort.getUnPairedDevicesListBD()	//Get a list of unpaired devices
 ```
-### 连接设备
+**If the search is not over, the list of unpaired devices may be empty or incomplete.**
 
-想要成功的连接设备，并且完成通信，设置正确的UUID是必不可少的一步。
+### Connect the device
 
-#### 设置传统设备UUID
+Setting the correct UUID is an essential step in order to successfully connect the device and complete the communication.
 
-使用 `SerialPort` 的静态方法 `setLegacyUUID(uuid)` 设置传统设备的UUID：
+#### Set legacy device UUID
+
+Use the static method `setLegacyUUID(uuid)` of `SerialPort` to set the UUID of the legacy device:
 
 
 ```kotlin
 SerialPort.setLegacyUUID("00001101-0000-1000-8000-00805F9B34FB")
 ```
 
-传统设备**一般**情况下，可以不用设置UUID，使用默认的即可。
+For traditional devices **generally**, you can use the default UUID without setting UUID.
 
 
-#### 设置BLE设备UUID
+#### Set BLE device UUID
 
-使用 `SerialPort` 的静态方法 `setBleUUID(uuid)` 设置BLE设备的UUID：
+Use the static method `setLegacyUUID(uuid)` of `SerialPort` to set the UUID of the BLE device:
 
 
 ```kotlin
 SerialPort.setBleUUID("0000ffe1-0000-1000-8000-00805f9b34fb")
 ```
 
+In most cases, BLE devices need to set UUID. For specific UUID, you can check the manual or consult the seller.
 
-BLE设备大多数情况下都需要设置UUID，具体的UUID可以查询手册或咨询卖家。
-
-除此之外，也可以使用方法 `printPossibleBleUUID()` 打印出可行的UUID，自行选择尝试：
+In addition, you can also use the method `printPossibleBleUUID()` to print out a feasible UUID, and try it yourself:
 
 ```kotlin
 serialPort.printPossibleBleUUID()
 ```
 
+#### Establish connection
 
-#### 建立连接
-
-使用方法 `openDiscoveryActivity()` 打开内置的搜索页面选择设备进行连接：
+Use the method `openDiscoveryActivity()` to open the built-in search page and select a device to connect to:
 
 
 ```kotlin
 serialPort.openDiscoveryActivity()
 ```
 
-**不想使用内置的搜索页面怎么办？**
+**What if you don't want to use the built-in search page? **
 
-可以设置自定义的搜索页面或者直接使用设备地址进行连接。详见[使用自定义的界面](./discovery_connect_kotlin.html#id3)
+You can set up a custom search page or connect directly using the device address. See [Use a custom interface](./discovery_connect_kotlin.html#id3)
 
+### Receive message
 
-### 接收消息
-
-使用方法 `setReceivedDataCallback(receivedDataCallback)`  设置一个接收消息监听器：
+Use the method `setReceivedDataCallback(receivedDataCallback)` to set up a received message listener:
 
 ```kotlin
 serialPort.setReceivedDataCallback { data ->
@@ -78,7 +77,7 @@ serialPort.setReceivedDataCallback { data ->
         }
 ```
 
-除此之外，你还可以在构建实例时配置监听器：
+In addition to this, you can also configure the listener when building the instance:
 
 ```kotlin
 val serialPort = SerialPortBuilder
@@ -88,14 +87,13 @@ val serialPort = SerialPortBuilder
             .build(this)
 ```
 
-### 发送消息
+### Send a message
 
-使用方法 `sendData(data)` 发送消息：
+Send a message using the method `sendData(data)`:
 
 ```kotlin
 serialPort.sendData("Hello World")
 ```
 
-**至此，你已经可以快速的开发一款能够完成基本收发数据的串口应用了。当然，`SerialPort` 还有着更多的功能，请继续阅读说明文档。**
-
+**At this point, you can quickly develop a serial port application that can complete basic sending and receiving data. Of course, `SerialPort` has many more functions, please continue to read the documentation. **
 

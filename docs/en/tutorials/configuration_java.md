@@ -111,5 +111,16 @@ The parameters that can be set by the configurator are shown in the following ta
 |      ignoreNoNameDevice      |              (bool) true / **false**              |
 | openConnectionTypeDialogFlag |              (bool) true / **false**              |
 
-Among them, please refer to the precautions for setting UUID: [ble device set UUID](./discovery_connect_java.html#ble)
+**Among them, please refer to the precautions for setting UUID: [ble device set UUID](./discovery_connect_java.html#ble)**
+
+## Set search duration
+
+Use this method to configure how long to search for devices:
+
+```java
+//The parameter is time, in milliseconds
+SerialPort serialPort = SerialPortBuilder.INSTANCE
+                .setDiscoveryTime(10000)
+                .build(this);
+```
 

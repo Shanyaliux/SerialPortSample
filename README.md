@@ -13,7 +13,7 @@
   </p>
   <p>
 
-[![docs](https://img.shields.io/badge/docs-latest-blue)](https://mmdetection.readthedocs.io/en/latest/)
+[![docs](https://img.shields.io/badge/docs-latest-blue)](https://serialportsample.readthedocs.io/en/latest/)
 [![license](https://img.shields.io/github/license/open-mmlab/mmdetection.svg)](https://github.com/Shanyaliux/SerialPortSample/blob/master/LICENSE)
 [![open issues](https://isitmaintained.com/badge/open/open-mmlab/mmdetection.svg)](https://github.com/Shanyaliux/SerialPortSample/issues)
   <br />

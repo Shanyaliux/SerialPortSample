@@ -1,58 +1,58 @@
 # Received and send
 
-## 设置数据格式
+## Set data format
 
-使用方法 `setReadDataType(type)` 和 `setSendDataType(type)` 来设置手法数据的格式：
+Use the methods `setReadDataType(type)` and `setSendDataType(type)` to format the technique data:
 
-### 设置接收消息格式
+### Set the received message format
 
 ```java
-//SerialPort.READ_HEX 十六进制
-//SerialPort.READ_STRING 字符串
-//不设置则默认字符串形式
+//SerialPort.READ_HEX hex
+//SerialPort.READ_STRING string
+//If not set, the default string form
 serialPort.setReadDataType(SerialPort.READ_HEX);
 ```
 
-除此之外，你还可以在构建实例时设置接收数据格式：
+In addition to this, you can also set the received data format when building the instance:
 
 ```java
-//SerialPort.READ_HEX 十六进制
-//SerialPort.READ_STRING 字符串
-//不设置则默认字符串形式
+//SerialPort.READ_HEX hex
+//SerialPort.READ_STRING string
+//If not set, the default string form
 SerialPort serialPort = SerialPortBuilder.INSTANCE
                 .setReadDataType(SerialPort.READ_HEX)
                 .build(this);
 ```
 
-### 设置发送数据格式
+### Set the send data format
 
 ```java
-//SerialPort.SEND_HEX 十六进制
-//SerialPort.SEND_STRING 字符串
-//不设置则默认字符串形式
+//SerialPort.SEND_HEX hex
+//SerialPort.SEND_STRING string
+//If not set, the default string form
 serialPort.setSendDataType(SerialPort.SEND_HEX);
 ```
 
-除此之外，你还可以在构建实例时设置接收数据格式：
+In addition to this, you can also set the send data format when building the instance:
 
 ```java
-//SerialPort.SEND_HEX 十六进制
-//SerialPort.SEND_STRING 字符串
-//不设置则默认字符串形式
+//SerialPort.SEND_HEX hex
+//SerialPort.SEND_STRING string
+//If not set, the default string form
 SerialPort serialPort = SerialPortBuilder.INSTANCE
                 .setSendDataType(SerialPort.SEND_HEX)
                 .build(this);
 ```
 
-目前针对于BLE设备的数据收发暂不支持设置格式，仅支持字符串格式。如果实在需要十六进制的数据格式，暂时可以参考传统设备的处理方式自行实现。
+Currently, the data sending and receiving for BLE devices does not support the setting format, only the string format is supported. If you really need the hexadecimal data format, you can temporarily implement it by referring to the processing method of traditional equipment.
 
-参考代码链接：[HexStringToString](https://gitee.com/Shanya/SerialPortSample/blob/master/serialport/src/main/java/world/shanya/serialport/tools/SerialPortToolsByKotlin.kt#L112)、[StringToHex](https://gitee.com/Shanya/SerialPortSample/blob/master/serialport/src/main/java/world/shanya/serialport/tools/SerialPortToolsByKotlin.kt#L199)
+Reference code link: [HexStringToString](https://gitee.com/Shanya/SerialPortSample/blob/master/serialport/src/main/java/world/shanya/serialport/tools/SerialPortToolsByKotlin.kt#L112)、[StringToHex](https://gitee.com/Shanya/SerialPortSample/blob/master/serialport/src/main/java/world/shanya/serialport/tools/SerialPortToolsByKotlin.kt#L199)
 
-## 接收消息
+## Receive message
 
-### 字符串 和 十六进制
+### String and hex
 
-使用方法 `setReceivedDataCallback(receivedDataCallback)`  设置一个接收消息监听器：
+Use the method `setReceivedDataCallback(receivedDataCallback)` to set up a received message listener:
 
 ```java
 serialPort.setReceivedDataCallback( (data) -> {
@@ -61,7 +61,7 @@ serialPort.setReceivedDataCallback( (data) -> {
         });
 ```
 
-除此之外，你还可以在构建实例时配置监听器：
+In addition to this, you can also configure the listener when building the instance:
 
 ```java
 SerialPort serialPort = SerialPortBuilder.INSTANCE
@@ -72,9 +72,9 @@ SerialPort serialPort = SerialPortBuilder.INSTANCE
                 .build(this);
 ```
 
-### 字节数组
+### Byte array
 
-在接收消息的时候，也可以选择获取**字节数组**，方法如下：
+When receiving a message, you can also choose to obtain a **byte array** as follows:
 
 ```java
 serialPort.setReceivedBytesCallback( (bytes) -> {
@@ -83,7 +83,7 @@ serialPort.setReceivedBytesCallback( (bytes) -> {
         });
 ```
 
-除此之外，你还可以在构建实例时配置监听器：
+In addition to this, you can also configure the listener when building the instance:
 
 ```java
 SerialPort serialPort = SerialPortBuilder.INSTANCE
@@ -94,20 +94,20 @@ SerialPort serialPort = SerialPortBuilder.INSTANCE
                 .build(this);
 ```
 
-## 发送消息
+## Send a message
 
-使用方法 `sendData(data)` 发送消息：
+Send a message using the method `sendData(data)`:
 
-### 字符串
+### String
 
 ```java
 serialPort.sendData("Hello World");
 ```
 
-### 十六进制
+### hex
 
 ```java
 serialPort.sendData("0C FF");
 ```
 
-所有的十六进制应为**两位**，不足两位的前方补0，不区分大小写。
+All hexadecimals should be **two digits**, with 0 in front of the less than two digits, case-insensitive.

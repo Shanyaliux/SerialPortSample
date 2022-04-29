@@ -14,7 +14,7 @@ val serialPort = SerialPortBuilder
 
 ### Reconnect at startup
 
-After this function is enabled, an automatic reconnection will be performed when the instance is constructed, and the reconnection object is the last successfully connected device. The settings are as follows:
+After this function is enabled, an automatic reconnection will be performed when the instance is constructed, and the reconnection object is the last **successfully connected** device. The settings are as follows:
 
 ```kotlin
 val serialPort = SerialPortBuilder
@@ -24,7 +24,7 @@ val serialPort = SerialPortBuilder
 
 ### Automatic reconnection at intervals
 
-After this function is turned on, it will automatically reconnect once at intervals (the time can be set by yourself), and the reconnection object is the last successfully connected device. The settings are as follows:
+After this function is turned on, it will automatically reconnect once at intervals (the time can be set by yourself), and the reconnection object is the last **successfully connected** device. The settings are as follows:
 
 ```kotlin
 val serialPort = SerialPortBuilder
@@ -66,7 +66,7 @@ val serialPort = SerialPortBuilder
             .build(this)
 ```
 
-Of course, you can also do the conversion manually using the method hexStringToString(hexString):
+Of course, you can also do the conversion manually using the method `hexStringToString(hexString)`:
 
 ```kotlin
 string = serialPort.hexStringToString(hexString)
@@ -83,7 +83,7 @@ val serialPort = SerialPortBuilder
 
 ## Configurator
 
-Configurator You can pass the above multiple configurations into SerialPortBuilder at one time.
+Configurator You can pass the above multiple configurations into `SerialPortBuilder` at one time.
 
 ```kotlin
 val config = SerialPortConfig()
@@ -112,4 +112,15 @@ The parameters that can be set by the configurator are shown in the following ta
 | openConnectionTypeDialogFlag |              (bool) true / **false**              |
 
 **Among them, please refer to the precautions for setting UUID: [ble device set UUID](./discovery_connect_kotlin.html#ble)**
+
+## Set search duration
+
+Use this method to configure how long to search for devices:
+
+```kotlin
+//The parameter is time, in milliseconds
+val serialPort = SerialPortBuilder
+            .setDiscoveryTime(10000)
+            .build(this)
+```
 

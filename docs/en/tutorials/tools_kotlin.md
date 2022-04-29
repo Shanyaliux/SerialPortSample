@@ -1,12 +1,12 @@
 # Tools
 
-## 打印UUID及其属性
+## Print UUID and its attributes
 
-若我们不能知晓当前BLE设备的UUID可以调用函数`printPossibleBleUUID`来打印出当前连接设备的可选UUID
+If we don't know the UUID of the current BLE device, we can call the function `printPossibleBleUUID` to print out the optional UUID of the currently connected device
 
-其中`Properties` 为二进制数，其每一位对应的意思见下表：
+Where `Properties` is a binary number, and the meaning of each bit is shown in the following table:
 
-| 数值（以十六进制表示） |              意思               |
+| value (in hexadecimal) |              mean               |
 | :--------------------: | :-----------------------------: |
 |          0x01          |          broadcastable          |
 |          0x02          |            readable             |
@@ -19,37 +19,37 @@
 
 
 
-## 字符串转换成十六进制
+## String2hex
 
 ```kotlin
 /**
- * 字符串转换成十六进制
- * @param str 待转换的字符串
- * @return 十六进制数组
+ * Convert string to hexadecimal
+ * @param str String to convert
+ * @return hex array
  */
 DataUtil.string2hex("Hello")
 ```
 
-## 字节数组按要求的编码格式转换成字符串
+## Bytes2string
 
 ```kotlin
 /**
- * 字节数组按要求的编码格式转换成字符串
- * @param bytes 带转换的字节数组
- * @param charsetName 要求的编码格式
- * @return 转换成功的字符串
+ * The byte array is converted into a string according to the required encoding format
+ * @param bytes byte array to convert
+ * @param charsetName Required encoding format
+ * @return Converted string
  */
 SerialPortTools.bytes2string(bytes, "GBK")
 ```
 
-## 字符串按要求的编码格式转换成字节数组
+## String2bytes
 
 ```kotlin
 /**
- * 字符串按要求的编码格式转换成字节数组
- * @param string 带转换的字符串
- * @param charsetName 要求的编码格式
- * @return 转换成功的字节数组
+ * The string is converted into a byte array according to the required encoding format
+ * @param string String to convert
+ * @param charsetName Required encoding format
+ * @return Converted byte array
  */
 SerialPortTools.bytes2string("Hello", "GBK")
 ```

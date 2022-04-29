@@ -112,3 +112,14 @@ val serialPort = SerialPortBuilder
 
 **其中关于UUID的设置注意事项参考: [ble设备设置UUID](./discovery_connect_kotlin.html#ble)**
 
+## 设置搜索时长
+
+使用此方法配置搜索设备时长：
+
+```kotlin
+//参数为时间，单位毫秒
+val serialPort = SerialPortBuilder
+            .setDiscoveryTime(10000)
+            .build(this)
+```
+
