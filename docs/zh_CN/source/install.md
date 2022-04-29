@@ -27,7 +27,7 @@ dependencies {
 2. 添加依赖
     ```groovy
     dependencies {
-    implementation 'com.gitee.Shanya:SerialPortSample:4.1.6'  //国内仓库
-    implementation 'com.github.Shanyaliux:SerialPortSample:4.1.6'   //国外仓库
+        implementation 'com.gitee.Shanya:SerialPortSample:4.1.6'        //国内仓库
+        implementation 'com.github.Shanyaliux:SerialPortSample:4.1.6'   //国外仓库
     }
     ```

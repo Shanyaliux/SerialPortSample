@@ -11,18 +11,47 @@
    :caption: 开始你的第一步
 
    install
-   getting-started
+   getting_started_kotlin
+   getting_started_java
 
 
 .. toctree::
    :maxdepth: 2
-   :caption: 教程
+   :caption: 教程 (Kotlin)
 
-   configuration
+   configuration_kotlin
+   discovery_connect_kotlin
+   received_send_kotlin
+   toast_kotlin
+   tools_kotlin
 
 
-Indices and tables
-==================
+.. toctree::
+   :maxdepth: 2
+   :caption: 教程 (Java)
 
-* :ref:`genindex`
-* :ref:`search`
+   configuration_java
+   discovery_connect_java
+   received_send_java
+   toast_java
+   tools_java
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 说明
+
+   questions
+   sponsor
+
+
+.. toctree::
+   :caption: 语言切换
+
+   switch_language
+
+.. Indices and tables
+.. ==================
+
+.. * :ref:`genindex`
+.. * :ref:`search`

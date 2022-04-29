@@ -44,29 +44,30 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="install.html">安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting-started.html">快速上手</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="getting-started.html#id2">安装</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="getting-started.html#jitpack">添加 JitPack 仓库</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="getting-started.html#id3">将 JitPack 存储库添加到您的构建文件中</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id4">添加依赖</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="getting-started.html#id5">国内仓库</a></li>
-<li class="toctree-l4"><a class="reference internal" href="getting-started.html#id6">国外仓库</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="getting-started.html#id7">使用</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="getting-started.html#serialport">构建SerialPort</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id8">搜索设备</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id9">连接设备</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html#kotlin">Kotlin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getting-started.html#serialport">构建SerialPort实例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id2">搜索设备</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id3">连接设备</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="getting-started.html#uuid">设置传统设备UUID</a></li>
 <li class="toctree-l4"><a class="reference internal" href="getting-started.html#bleuuid">设置BLE设备UUID</a></li>
-<li class="toctree-l4"><a class="reference internal" href="getting-started.html#id10">建立连接</a></li>
+<li class="toctree-l4"><a class="reference internal" href="getting-started.html#id4">建立连接</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id11">接收消息</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id12">发送消息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id5">接收消息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id6">发送消息</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html#java">Java</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id7">构建SerialPort实例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id8">搜索设备</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id9">连接设备</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="getting-started.html#id10">设置传统设备UUID</a></li>
+<li class="toctree-l4"><a class="reference internal" href="getting-started.html#id11">设置BLE设备UUID</a></li>
+<li class="toctree-l4"><a class="reference internal" href="getting-started.html#id12">建立连接</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id13">接收消息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getting-started.html#id14">发送消息</a></li>
 </ul>
 </li>
 </ul>
@@ -121,16 +122,16 @@
 <p>在调试程序的时候，我们可以打开调试模式，这样就会打印各式各样的日志信息，在正式发布APP时关掉此开关即可减少资源的开销。设置方式如下：</p>
 <p>:::: code-group</p>
 <p>::: code-group-item Kotlin</p>
-<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span> <span class="nv">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span>
-            <span class="p">.</span><span class="na">isDebug</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-            <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="nv">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">isDebug</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
 <p>::: code-group-item Java</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span> <span class="n">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span>
-                <span class="p">.</span><span class="na">isDebug</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span><span class="w"> </span><span class="n">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">isDebug</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
@@ -143,16 +144,16 @@
 <p>开启此功能后，会在构建实例的时候执行一次自动重连，重连对象为上一次<strong>成功连接</strong>的设备。设置方式如下：</p>
 <p>:::: code-group</p>
 <p>::: code-group-item Kotlin</p>
-<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span> <span class="nv">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span>
-            <span class="p">.</span><span class="na">autoConnect</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-            <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="nv">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">autoConnect</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
 <p>::: code-group-item Java</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span> <span class="n">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span>
-                <span class="p">.</span><span class="na">autoConnect</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span><span class="w"> </span><span class="n">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">autoConnect</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
@@ -163,18 +164,18 @@
 <p>开启此功能后，会间隔一段时间自动重连一次（时间可自行设置），重连对象为上一次<strong>成功连接</strong>的设备。设置方式如下：</p>
 <p>:::: code-group</p>
 <p>::: code-group-item Kotlin</p>
-<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span> <span class="nv">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span>
-			<span class="c1">//第二个参数为间隔时间，若不指定则为默认 10000Ms</span>
-            <span class="p">.</span><span class="na">setAutoReconnectAtIntervals</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="m">10000</span><span class="p">)</span>
-            <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="nv">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="w"></span>
+<span class="w">			</span><span class="c1">//第二个参数为间隔时间，若不指定则为默认 10000Ms</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">setAutoReconnectAtIntervals</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="m">10000</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
 <p>::: code-group-item Java</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span> <span class="n">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span>
-    			<span class="c1">//第二个参数为间隔时间，若不指定则为默认 10000Ms</span>
-                <span class="p">.</span><span class="na">setAutoReconnectAtIntervals</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span><span class="w"> </span><span class="n">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span><span class="w"></span>
+<span class="w">    			</span><span class="c1">//第二个参数为间隔时间，若不指定则为默认 10000Ms</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">setAutoReconnectAtIntervals</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="mi">10000</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
@@ -186,16 +187,16 @@
 <p>开启此功能后，搜索设备时就会自动忽略设备名为空的设备。设置方式如下：</p>
 <p>:::: code-group</p>
 <p>::: code-group-item Kotlin</p>
-<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span> <span class="nv">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span>
-            <span class="p">.</span><span class="na">isIgnoreNoNameDevice</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-            <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="nv">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">isIgnoreNoNameDevice</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
 <p>::: code-group-item Java</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span> <span class="n">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span>
-                <span class="p">.</span><span class="na">isIgnoreNoNameDevice</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span><span class="w"> </span><span class="n">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">isIgnoreNoNameDevice</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
@@ -209,16 +210,16 @@
 <p>开启此功能后，在发送数据时，若发现未连接设备则会自动打开内置的搜索页面。设置方式如下：</p>
 <p>:::: code-group</p>
 <p>::: code-group-item Kotlin</p>
-<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span> <span class="nv">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span>
-            <span class="p">.</span><span class="na">autoOpenDiscoveryActivity</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-            <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="nv">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">autoOpenDiscoveryActivity</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
 <p>::: code-group-item Java</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span> <span class="n">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span>
-                <span class="p">.</span><span class="na">autoOpenDiscoveryActivity</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span><span class="w"> </span><span class="n">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">autoOpenDiscoveryActivity</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
@@ -229,23 +230,23 @@
 <p>开启此功能后，在收到的数据为十六进制时，会自动将其转换为字符串。设置方式如下：</p>
 <p>:::: code-group</p>
 <p>::: code-group-item Kotlin</p>
-<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span> <span class="nv">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span>
-            <span class="p">.</span><span class="na">autoHexStringToString</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-            <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="nv">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">autoHexStringToString</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
 <p>::: code-group-item Java</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span> <span class="n">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span>
-                <span class="p">.</span><span class="na">autoHexStringToString</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span><span class="w"> </span><span class="n">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">autoHexStringToString</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
 <p>::::</p>
 <p>::: tip 提示</p>
 <p>当然，你也可以使用方法 <code class="docutils literal notranslate"><span class="pre">hexStringToString(hexString)</span></code> 手动进行转换：</p>
-<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="n">serialPort</span><span class="p">.</span><span class="na">hexStringToString</span><span class="p">(</span><span class="n">hexString</span><span class="p">)</span>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="n">string</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serialPort</span><span class="p">.</span><span class="na">hexStringToString</span><span class="p">(</span><span class="n">hexString</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
@@ -255,16 +256,16 @@
 <p>开启此功能后在内置页面点击设备进行连接的时候，可以手动选择连接方式。但请注意若你的设备不支持你所选的连接方式，则连接不会成功。</p>
 <p>:::: code-group</p>
 <p>::: code-group-item Kotlin</p>
-<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span> <span class="nv">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span>
-            <span class="p">.</span><span class="na">setOpenConnectionTypeDialogFlag</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-            <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="nv">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">setOpenConnectionTypeDialogFlag</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
 <p>::: code-group-item Java</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span> <span class="n">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span>
-                <span class="p">.</span><span class="na">setOpenConnectionTypeDialogFlag</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPort</span><span class="w"> </span><span class="n">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">setOpenConnectionTypeDialogFlag</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
@@ -275,18 +276,18 @@
 <p>配置可以将上述的多种配置一次性传入<code class="docutils literal notranslate"><span class="pre">SerialPortBuilder</span></code>。</p>
 <p>:::: code-group</p>
 <p>::: code-group-item Kotlin</p>
-<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span> <span class="nv">config</span> <span class="o">=</span> <span class="n">SerialPortConfig</span><span class="p">()</span>
-<span class="kd">val</span> <span class="nv">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span>
-            <span class="p">.</span><span class="na">setConfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-            <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="kd">val</span><span class="w"> </span><span class="nv">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortConfig</span><span class="p">()</span><span class="w"></span>
+<span class="kd">val</span><span class="w"> </span><span class="nv">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">setConfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>
 <p>::: code-group-item Java</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPortConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SerialPortConfig</span><span class="p">();</span>
-<span class="n">SerialPort</span> <span class="n">serialPort</span> <span class="o">=</span> <span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span>
-                <span class="p">.</span><span class="na">setConfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-                <span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SerialPortConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SerialPortConfig</span><span class="p">();</span><span class="w"></span>
+<span class="n">SerialPort</span><span class="w"> </span><span class="n">serialPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SerialPortBuilder</span><span class="p">.</span><span class="na">INSTANCE</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">setConfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="w"></span>
+<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <p>:::</p>

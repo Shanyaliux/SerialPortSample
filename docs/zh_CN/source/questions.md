@@ -8,7 +8,7 @@
 
 ### 有自动重连机制吗？
 
-有，可以设置在启动时重连，也可以间隔时间自动重连。详见[自动重连](/serialport/guide/configuration/#自动重连)
+有，可以设置在启动时重连，也可以间隔时间自动重连。详见[自动重连](./configuration_kotlin.html#id3)
 
 ## 常见问题
 
@@ -18,23 +18,23 @@
 
 ### 为什么BLE设备连接成功了，不能收发消息，有时还是发出异常？
 
-BLE设备连接成功后，还需要设置正确的UUID才可以正常通信。具体设置方法见[设置BLE设备UUID](/serialport/guide/discovery_connect/#ble设备)
+BLE设备连接成功后，还需要设置正确的UUID才可以正常通信。具体设置方法见[设置BLE设备UUID](./discovery_connect_kotlin.html#ble)
 
 ## 还有其他问题怎么解决？
 
 ### 开启调试模式
 
-打开调试模式查看打印的日志信息。详见[调试模式](/serialport/guide/configuration/#调试模式)
+打开调试模式查看打印的日志信息。详见[调试模式](./configuration_kotlin.html#id2)
 
 ### 利用强大的搜索引擎
 
-![google](/serialport/google.png)
+![google](./_static/image/google.png)
 
-![baidu](/serialport/baidu.png)
+![baidu](./_static/image/baidu.png)
 
 ### 加群
 
 若通过以上方法仍未解决问题，请加入QQ技术交流群。
 
-![qq](/serialport/qq.png)
+![qq](./_static/image/qq.png)
 
