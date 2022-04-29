@@ -1,8 +1,8 @@
-# 快速上手
+# Getting started
 
-## 安装
+## Install
 
-编辑Build.gradle文件并添加以下依赖项。
+Edit `Build.gradle`
 
 ```groovy
 repositories {
@@ -17,7 +17,7 @@ dependencies {
 
 ::: details 使用4.1.6及以下版本参考此处
 
-#### 添加 JitPack 仓库
+#### Add JitPack repositorie
 
 ##### 将 JitPack 存储库添加到您的构建文件中
 
@@ -30,7 +30,7 @@ allprojects {
 }
 ```
 
-#### 添加依赖
+#### Add dependencies
 
 ##### 国内仓库
 
@@ -54,9 +54,9 @@ dependencies {
 
 :::
 
-## 使用
+## Usage
 
-### 构建SerialPort
+### Build SerialPort
 
 :::: code-group
 
