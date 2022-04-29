@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 project = 'SerialPort'
 copyright = '2021-2022, Shanya'
 author = 'Shanya'
-
+language = 'zh_CN'
 
 # def get_version():
 #     with open(version_file, 'r') as f:

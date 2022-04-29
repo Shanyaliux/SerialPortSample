@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 project = 'SerialPort'
 copyright = '2021-2022, Shanya'
 author = 'Shanya'
-
+language = 'en'
 
 # def get_version():
 #     with open(version_file, 'r') as f:
@@ -84,7 +84,7 @@ html_theme_options = {
         },
     ],
     # Specify the language of shared menu
-    'menu_lang':'en'
+    'menu_lang': 'en'
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,

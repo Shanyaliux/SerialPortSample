@@ -28,13 +28,13 @@ BLE设备连接成功后，还需要设置正确的UUID才可以正常通信。�
 
 ### 利用强大的搜索引擎
 
-![google](./_static/image/google.png)
+![](./_static/image/google.png)
 
-![baidu](./_static/image/baidu.png)
+![](./_static/image/baidu.png)
 
 ### 加群
 
 若通过以上方法仍未解决问题，请加入QQ技术交流群。
 
-![qq](./_static/image/qq.png)
+![](./_static/image/qq.png)
 
