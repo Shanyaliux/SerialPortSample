@@ -8,9 +8,17 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: 开始你的第一步
 
+   install
    getting-started
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 教程
+
+   configuration
 
 
 Indices and tables

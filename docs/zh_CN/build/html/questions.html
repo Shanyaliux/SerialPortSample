@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>搜索 &mdash; SerialPort 4.1.8 文档</title>
+  <title>有疑必看 &mdash; SerialPort 4.1.8 文档</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-    
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -20,10 +20,8 @@
         <script src="_static/copybutton.js"></script>
         <script src="_static/translations.js"></script>
     <script src="_static/js/theme.js"></script>
-    <script src="_static/searchtools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
-    <link rel="search" title="搜索" href="#" /> 
+    <link rel="search" title="搜索" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -34,7 +32,7 @@
             <a href="index.html" class="icon icon-home"> SerialPort
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -105,8 +103,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>搜索</li>
+      <li>有疑必看</li>
       <li class="wy-breadcrumbs-aside">
+            <a href="_sources/questions.md.txt" rel="nofollow"> 查看页面源码</a>
       </li>
   </ul>
   <hr/>
@@ -114,18 +113,49 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      请启用 JavaScript 以便使用搜索功能
-    </p>
-  </div>
-  </noscript>
+  <section id="id1">
+<h1>有疑必看<a class="headerlink" href="#id1" title="永久链接至标题"></a></h1>
+<section id="id2">
+<h2>功能支持<a class="headerlink" href="#id2" title="永久链接至标题"></a></h2>
+<section id="ble">
+<h3>支持BLE设备吗？<a class="headerlink" href="#ble" title="永久链接至标题"></a></h3>
+<p>支持，<code class="docutils literal notranslate"><span class="pre">SerialPort</span></code> 从 <code class="docutils literal notranslate"><span class="pre">4.0.0</span></code> 版本开始全面支持BLE设备。</p>
+</section>
+<section id="id3">
+<h3>有自动重连机制吗？<a class="headerlink" href="#id3" title="永久链接至标题"></a></h3>
+<p>有，可以设置在启动时重连，也可以间隔时间自动重连。详见<a class="reference external" href="/serialport/guide/configuration/#%E8%87%AA%E5%8A%A8%E9%87%8D%E8%BF%9E">自动重连</a></p>
+</section>
+</section>
+<section id="id4">
+<h2>常见问题<a class="headerlink" href="#id4" title="永久链接至标题"></a></h2>
+<section id="id5">
+<h3>为什么自定义页面的可用设备列表为空？<a class="headerlink" href="#id5" title="永久链接至标题"></a></h3>
+<p>在Android6.0之后一定要给上定位权限才可以搜索到可用设备。</p>
+</section>
+<section id="id6">
+<h3>为什么BLE设备连接成功了，不能收发消息，有时还是发出异常？<a class="headerlink" href="#id6" title="永久链接至标题"></a></h3>
+<p>BLE设备连接成功后，还需要设置正确的UUID才可以正常通信。具体设置方法见<a class="reference external" href="/serialport/guide/discovery_connect/#ble%E8%AE%BE%E5%A4%87">设置BLE设备UUID</a></p>
+</section>
+</section>
+<section id="id7">
+<h2>还有其他问题怎么解决？<a class="headerlink" href="#id7" title="永久链接至标题"></a></h2>
+<section id="id8">
+<h3>开启调试模式<a class="headerlink" href="#id8" title="永久链接至标题"></a></h3>
+<p>打开调试模式查看打印的日志信息。详见<a class="reference external" href="/serialport/guide/configuration/#%E8%B0%83%E8%AF%95%E6%A8%A1%E5%BC%8F">调试模式</a></p>
+</section>
+<section id="id9">
+<h3>利用强大的搜索引擎<a class="headerlink" href="#id9" title="永久链接至标题"></a></h3>
+<p><img alt="google" src="serialport/google.png" /></p>
+<p><img alt="baidu" src="serialport/baidu.png" /></p>
+</section>
+<section id="id10">
+<h3>加群<a class="headerlink" href="#id10" title="永久链接至标题"></a></h3>
+<p>若通过以上方法仍未解决问题，请加入QQ技术交流群。</p>
+<p><img alt="qq" src="serialport/qq.png" /></p>
+</section>
+</section>
+</section>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
           </div>
@@ -151,14 +181,7 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-  <script>
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script id="searchindexloader"></script>
-   
-
+  </script> 
 
 </body>
 </html>
