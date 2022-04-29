@@ -1,4 +1,4 @@
-# 有疑必看
+# FREQUENTLY ASKED QUESTIONS
 
 ## 功能支持
 

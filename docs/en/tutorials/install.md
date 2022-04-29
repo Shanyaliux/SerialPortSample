@@ -1,4 +1,4 @@
-# 安装
+# Install
 
 编辑`Build.gradle`文件并添加以下依赖项。
 

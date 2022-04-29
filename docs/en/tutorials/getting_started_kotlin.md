@@ -1,4 +1,4 @@
-# 快速上手 (Kotlin)
+# Get Started (Kotlin)
 
 ### 构建SerialPort实例
 

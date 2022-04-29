@@ -1,4 +1,4 @@
-# 快速上手 (Java)
+# Get Started (Java)
 
 ### 构建SerialPort实例
 

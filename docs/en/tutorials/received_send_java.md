@@ -1,4 +1,4 @@
-# 收发数据
+# Received and send
 
 ## 设置数据格式
 

@@ -1,4 +1,4 @@
-# 搜索和连接
+# Discovery and connect
 
 ## 内置的界面
 

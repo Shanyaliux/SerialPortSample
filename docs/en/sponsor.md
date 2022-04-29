@@ -1,4 +1,4 @@
-# 赞助
+# Sponsor
 
 SerialPort 是采用 Apache-2.0 许可的开源项目，使用完全免费，但您的赞助可以使 SerialPort 获得更健康稳定的发展。
 

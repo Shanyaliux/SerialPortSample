@@ -1,4 +1,4 @@
-# 配置
+# Configuration
 
 ## 调试模式
 
