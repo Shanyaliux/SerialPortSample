@@ -3,7 +3,7 @@ Welcome to SerialPort's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Get Started
+   :caption: 开始你的第一步
 
    tutorials/install
    tutorials/getting_started_kotlin
@@ -11,7 +11,7 @@ Welcome to SerialPort's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: tutorials (Kotlin)
+   :caption:  教程 (Kotlin)
 
    tutorials/configuration_kotlin
    tutorials/discovery_connect_kotlin
@@ -21,7 +21,7 @@ Welcome to SerialPort's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: tutorials (Java)
+   :caption: 教程 (Java)
 
    tutorials/configuration_java
    tutorials/discovery_connect_java
@@ -32,13 +32,13 @@ Welcome to SerialPort's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Notes
+   :caption: 说明
 
-   tutorials/questions
-   tutorials/sponsor
+   questions
+   sponsor
 
 .. toctree::
-   :caption: Switch Language
+   :caption: 语言切换
 
    switch_language.md
 

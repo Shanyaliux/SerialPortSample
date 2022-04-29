@@ -34,8 +34,8 @@ Welcome to SerialPort's documentation!
    :maxdepth: 2
    :caption: Notes
 
-   tutorials/questions
-   tutorials/sponsor
+   questions
+   sponsor
 
 .. toctree::
    :caption: Switch Language
