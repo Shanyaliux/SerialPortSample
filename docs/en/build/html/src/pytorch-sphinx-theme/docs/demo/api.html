@@ -1,0 +1,593 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. test_py_module &mdash; SerialPort  documentation</title>
+  
+
+  <link rel="shortcut icon" href="../../../../_static/images/logo192.png" />
+  
+  
+
+  
+
+  
+  
+  
+
+  
+
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/readthedocs.css" type="text/css" />
+  <link rel="index" title="Index" href="../../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../../search.html" />
+  <!-- Google Analytics -->
+  <script type="text/javascript">
+    var collapsedSections = [];
+  </script>
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+  <script>
+    MathJax = {
+        chtml: {
+            scale: 1,
+            minScale: 1,
+        },
+        svg: {
+            scale: 1,
+            minScale: 1,
+        }
+    }
+</script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="../../../../_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../../_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../../_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../../_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../../_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="../../../../_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+    integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href=""
+        aria-label="OpenMMLab"></a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://github.com/Shanyaliux/SerialPortSample" target="_blank">GitHub</a>
+          </li>
+<!--          <li >-->
+<!--            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">-->
+<!--              <a-->
+<!--                class="resource-option with-down-arrow">-->
+<!--                Docs-->
+<!--              </a>-->
+<!--              <div class="resources-dropdown-menu">-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmcv.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMCV </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://openmim.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MIM </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmaction2.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMAction2 </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmclassification.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMClassification </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmdetection.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMDetection </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmdetection3d.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMDetection3D </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmediting.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMEditing </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmgeneration.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMGeneration </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmocr.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMOCR </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmpose.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMPose </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmsegmentation.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMSegmentation </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmtracking.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMTracking </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmflow.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMFlow </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmfewshot.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMFewShot </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmhuman3d.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMHuman3D </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmselfsup.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMSelfSup </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmrazor.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMRazor </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmdeploy.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMDeploy </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://mmrotate.readthedocs.io/en/latest/" target="_blank">-->
+<!--                  <span class="dropdown-title">MMRotate </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--              </div>-->
+<!--          </li>-->
+<!--          <li >-->
+<!--            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">-->
+<!--              <a-->
+<!--                class="resource-option with-down-arrow">-->
+<!--                OpenMMLab-->
+<!--              </a>-->
+<!--              <div class="resources-dropdown-menu">-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://openmmlab.com/" target="_blank">-->
+<!--                  <span class="dropdown-title">Homepage </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://platform.openmmlab.com/" target="_blank">-->
+<!--                  <span class="dropdown-title">Open Platform </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://github.com/open-mmlab/" target="_blank">-->
+<!--                  <span class="dropdown-title">GitHub </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://twitter.com/OpenMMLab" target="_blank">-->
+<!--                  <span class="dropdown-title">Twitter </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--                <a class="doc-dropdown-option nav-dropdown-item"-->
+<!--                  href="https://zhihu.com/people/openmmlab" target="_blank">-->
+<!--                  <span class="dropdown-title">Zhihu </span>-->
+<!--                  <p></p>-->
+<!--                </a>-->
+<!---->
+<!--              </div>-->
+<!--          </li>-->
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+  
+
+  <div class="table-of-contents-link-wrapper">
+    <span>Table of Contents</span>
+    <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+  </div>
+
+  <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+    <div class="pytorch-side-scroll">
+      <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <div class="pytorch-left-menu-search">
+          
+
+          
+          
+          
+          
+
+          
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        
+        
+        
+        
+        
+        <p class="caption"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/install.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/getting_started_kotlin.html">快速上手 (Kotlin)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/getting_started_java.html">快速上手 (Java)</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tutorials (Kotlin)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/configuration_kotlin.html">配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/discovery_connect_kotlin.html">搜索和连接</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/received_send_kotlin.html">收发数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/toast_kotlin.html">Toast提示设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/tools_kotlin.html">工具</a></li>
+</ul>
+<p class="caption"><span class="caption-text">tutorials (Java)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/configuration_java.html">配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/discovery_connect_java.html">搜索和连接</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/received_send_java.html">收发数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/toast_java.html">Toast提示设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/tools_java.html">工具</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/questions.html">有疑必看</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials/sponsor.html">赞助</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Switch Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../switch_language.html"><a href='https://serialportsample.readthedocs.io/en/latest/'>English</a></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../switch_language.html#a-href-https-serialportsample-readthedocs-io-zh-cn-latest-a"><a href='https://serialportsample.readthedocs.io/zh_CN/latest/'>简体中文</a></a></li>
+</ul>
+
+        
+        
+      </div>
+    </div>
+  </nav>
+
+  <div class="pytorch-container">
+    <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+      <div class="pytorch-breadcrumbs-wrapper">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="../../../../index.html">
+            Docs
+        </a> &gt;
+      </li>
+
+        
+      <li><span class="section-number">5. </span><code class="xref py py-mod docutils literal notranslate"><span class="pre">test_py_module</span></code></li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/src/pytorch-sphinx-theme/docs/demo/api.rst.txt" rel="nofollow"><img src="../../../../_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+      </div>
+
+      <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+        Shortcuts
+      </div>
+    </div>
+
+    <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+      <div class="pytorch-content-left">
+        
+          <div class="rst-content">
+            
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+                
+  <div class="section" id="test-py-module">
+<h1><a class="toc-backref" href="#id1"><span class="section-number">5. </span><code class="xref py py-mod docutils literal notranslate"><span class="pre">test_py_module</span></code></a><a class="headerlink" href="#test-py-module" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#test-py-module" id="id1"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test_py_module</span></code></a></p>
+<ul>
+<li><p><a class="reference internal" href="#generated-index" id="id2">Generated Index</a></p></li>
+<li><p><a class="reference internal" href="#optional-parameter-args" id="id3">Optional parameter args</a></p></li>
+<li><p><a class="reference internal" href="#data" id="id4">Data</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="generated-index">
+<h2><a class="toc-backref" href="#id2"><span class="section-number">5.1. </span>Generated Index</a><a class="headerlink" href="#generated-index" title="Permalink to this headline">¶</a></h2>
+<p>Part of the sphinx build process in generate and index file: <a class="reference internal" href="../../../../genindex.html"><span class="std std-ref">Index</span></a>.</p>
+</div>
+<div class="section" id="optional-parameter-args">
+<h2><a class="toc-backref" href="#id3"><span class="section-number">5.2. </span>Optional parameter args</a><a class="headerlink" href="#optional-parameter-args" title="Permalink to this headline">¶</a></h2>
+<p>At this point optional parameters <a class="reference external" href="https://groups.google.com/forum/#!topic/sphinx-users/_qfsVT5Vxpw">cannot be generated from code</a>.
+However, some projects will manually do it, like so:</p>
+<p>This example comes from <a class="reference external" href="http://django-payments.readthedocs.org/en/latest/modules.html#payments.authorizenet.AuthorizeNetProvide">django-payments module docs</a>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="payments.dotpay.DotpayProvider">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">payments.dotpay.</span></span><span class="sig-name descname"><span class="pre">DotpayProvider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">seller_id</span></em>, <em class="sig-param"><span class="pre">pin</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">channel=0</span></em><span class="optional">[</span>, <em class="sig-param"><span class="pre">lock=False</span></em><span class="optional">]</span>, <em class="sig-param"><span class="pre">lang='pl'</span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#payments.dotpay.DotpayProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>This backend implements payments using a popular Polish gateway, <a class="reference external" href="http://www.dotpay.pl">Dotpay.pl</a>.</p>
+<p>Due to API limitations there is no support for transferring purchased items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seller_id</strong> – Seller ID assigned by Dotpay</p></li>
+<li><p><strong>pin</strong> – PIN assigned by Dotpay</p></li>
+<li><p><strong>channel</strong> – Default payment channel (consult reference guide)</p></li>
+<li><p><strong>lang</strong> – UI language</p></li>
+<li><p><strong>lock</strong> – Whether to disable channels other than the default selected above</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="data">
+<h2><a class="toc-backref" href="#id4"><span class="section-number">5.3. </span>Data</a><a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="Data_item_1">
+<span class="sig-name descname"><span class="pre">Data_item_1</span></span><a class="headerlink" href="#Data_item_1" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="Data_item_2">
+<span class="sig-name descname"><span class="pre">Data_item_2</span></span><a class="headerlink" href="#Data_item_2" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="Data_item_3">
+<span class="sig-name descname"><span class="pre">Data_item_3</span></span><a class="headerlink" href="#Data_item_3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce congue elit eu hendrerit mattis.</p>
+</dd></dl>
+
+<p>Some data link <a class="reference internal" href="#Data_item_1" title="Data_item_1"><code class="xref py py-data docutils literal notranslate"><span class="pre">Data_item_1</span></code></a>.</p>
+</div>
+</div>
+
+
+              </article>
+              
+            </div>
+            <footer>
+  
+
+  <hr>
+
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2021-2022, Shanya.
+
+    </p>
+  </div>
+  
+  <div>
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a
+      href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the
+      Docs</a>.
+  </div>
+   
+
+</footer>
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">5. <code class="xref py py-mod docutils literal notranslate"><span class="pre">test_py_module</span></code></a><ul>
+<li><a class="reference internal" href="#generated-index">5.1. Generated Index</a></li>
+<li><a class="reference internal" href="#optional-parameter-args">5.2. Optional parameter args</a></li>
+<li><a class="reference internal" href="#data">5.3. Data</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+    </section>
+  </div>
+
+  
+
+
+  
+
+  
+  <script type="text/javascript" id="documentation_options" data-url_root="../../../../"
+    src="../../../../_static/documentation_options.js"></script>
+  <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+  <script src="../../../../_static/jquery.js"></script>
+  <script src="../../../../_static/underscore.js"></script>
+  <script src="../../../../_static/doctools.js"></script>
+  <script src="../../../../_static/clipboard.min.js"></script>
+  <script src="../../../../_static/copybutton.js"></script>
+  
+
+  
+
+  <script type="text/javascript" src="../../../../_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="../../../../_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+  </div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="" aria-label="OpenMMLab"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://github.com/Shanyaliux/SerialPortSample" target="_blank">GitHub</a>
+          </li>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="../../../../_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function (e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+
+</html>

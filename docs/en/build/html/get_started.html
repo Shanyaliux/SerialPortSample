@@ -1,0 +1,906 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Prerequisites &mdash; MMDetection  documentation</title>
+  
+
+  <link rel="shortcut icon" href="_static/images/logo192.png" />
+  
+  
+
+  
+
+  
+  
+  
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/readthedocs.css" type="text/css" />
+  <link rel="index" title="Index" href="genindex.html" />
+  <link rel="search" title="Search" href="search.html" />
+  <link rel="next" title="Benchmark and Model Zoo" href="model_zoo.html" />
+  <link rel="prev" title="Welcome to MMDetection’s documentation!" href="index.html" />
+  <!-- Google Analytics -->
+  <script type="text/javascript">
+    var collapsedSections = [];
+  </script>
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+  <script>
+    MathJax = {
+        chtml: {
+            scale: 1,
+            minScale: 1,
+        },
+        svg: {
+            scale: 1,
+            minScale: 1,
+        }
+    }
+</script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+    integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href=""
+        aria-label="OpenMMLab"></a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://github.com/open-mmlab/mmdetection" target="_blank">GitHub</a>
+          </li>
+          <li >
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a
+                class="resource-option with-down-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmcv.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMCV </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://openmim.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MIM </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmaction2.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMAction2 </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmclassification.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMClassification </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmdetection.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMDetection </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmdetection3d.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMDetection3D </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmediting.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMEditing </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmgeneration.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMGeneration </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmocr.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMOCR </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmpose.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMPose </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmsegmentation.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMSegmentation </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmtracking.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMTracking </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmflow.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMFlow </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmfewshot.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMFewShot </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmhuman3d.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMHuman3D </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmselfsup.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMSelfSup </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmrazor.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMRazor </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmdeploy.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMDeploy </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmrotate.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMRotate </span>
+                  <p></p>
+                </a>
+              </div>
+          </li>
+          <li >
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a
+                class="resource-option with-down-arrow">
+                OpenMMLab
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://openmmlab.com/" target="_blank">
+                  <span class="dropdown-title">Homepage </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://platform.openmmlab.com/" target="_blank">
+                  <span class="dropdown-title">Open Platform </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://github.com/open-mmlab/" target="_blank">
+                  <span class="dropdown-title">GitHub </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://twitter.com/OpenMMLab" target="_blank">
+                  <span class="dropdown-title">Twitter </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://zhihu.com/people/openmmlab" target="_blank">
+                  <span class="dropdown-title">Zhihu </span>
+                  <p></p>
+                </a>
+              </div>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+  
+
+  <div class="table-of-contents-link-wrapper">
+    <span>Table of Contents</span>
+    <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+  </div>
+
+  <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+    <div class="pytorch-side-scroll">
+      <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <div class="pytorch-left-menu-search">
+          
+
+          
+          
+          
+          
+
+          
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        
+        
+        
+        
+        
+        <p class="caption"><span class="caption-text">Get Started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#verification">Verification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Benchmark and Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Quick Run</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="1_exist_data_model.html">1: Inference and train with existing models and standard datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_new_data_model.html">2: Train with customized datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_exist_data_new_model.html">3: Train with customized models and standard datasets</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/config.html">Tutorial 1: Learn about Configs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/customize_dataset.html">Tutorial 2: Customize Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/data_pipeline.html">Tutorial 3: Customize Data Pipelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/customize_models.html">Tutorial 4: Customize Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/customize_runtime.html">Tutorial 5: Customize Runtime Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/customize_losses.html">Tutorial 6: Customize Losses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/finetune.html">Tutorial 7: Finetuning Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/pytorch2onnx.html">Tutorial 8: Pytorch to ONNX (Experimental)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/onnx2tensorrt.html">Tutorial 9: ONNX to TensorRT (Experimental)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/init_cfg.html">Tutorial 10: Weight initialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/how_to.html">Tutorial 11: How to xxx</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Useful Tools and Scripts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html">Log Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#result-analysis">Result Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#visualization">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#error-analysis">Error Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#model-serving">Model Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#model-complexity">Model Complexity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#model-conversion">Model conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#dataset-conversion">Dataset Conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#dataset-download">Dataset Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#benchmark">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#miscellaneous">Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#hyper-parameter-optimization">Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#confusion-matrix">Confusion Matrix</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="conventions.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility of MMDetection 2.x</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Projects based on MMDetection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Switch Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="switch_language.html"><a href='https://mmdetection.readthedocs.io/en/latest/'>English</a></a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch_language.html#a-href-https-mmdetection-readthedocs-io-zh-cn-latest-a"><a href='https://mmdetection.readthedocs.io/zh_CN/latest/'>简体中文</a></a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">mmdet.apis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html#mmdet-core">mmdet.core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html#mmdet-datasets">mmdet.datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html#mmdet-models">mmdet.models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html#mmdet-utils">mmdet.utils</a></li>
+</ul>
+
+        
+        
+      </div>
+    </div>
+  </nav>
+
+  <div class="pytorch-container">
+    <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+      <div class="pytorch-breadcrumbs-wrapper">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="index.html">
+            Docs
+        </a> &gt;
+      </li>
+
+        
+      <li>Prerequisites</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="_sources/get_started.md.txt" rel="nofollow"><img src="_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+      </div>
+
+      <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+        Shortcuts
+      </div>
+    </div>
+
+    <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+      <div class="pytorch-content-left">
+        
+          <div class="rst-content">
+            
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+                
+  <div class="section" id="prerequisites">
+<h1>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Linux or macOS (Windows is in experimental support)</p></li>
+<li><p>Python 3.6+</p></li>
+<li><p>PyTorch 1.3+</p></li>
+<li><p>CUDA 9.2+ (If you build PyTorch from source, CUDA 9.0 is also compatible)</p></li>
+<li><p>GCC 5+</p></li>
+<li><p><a class="reference external" href="https://mmcv.readthedocs.io/en/latest/#installation">MMCV</a></p></li>
+</ul>
+<p>Compatible MMDetection and MMCV versions are shown as below. Please install the correct version of MMCV to avoid installation issues.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="center">MMDetection version</th>
+<th align="center">MMCV version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">master</td>
+<td align="center">mmcv-full&gt;=1.3.17, &lt;1.5.0</td>
+</tr>
+<tr>
+<td align="center">2.23.0</td>
+<td align="center">mmcv-full&gt;=1.3.17, &lt;1.5.0</td>
+</tr>
+<tr>
+<td align="center">2.22.0</td>
+<td align="center">mmcv-full&gt;=1.3.17, &lt;1.5.0</td>
+</tr>
+<tr>
+<td align="center">2.21.0</td>
+<td align="center">mmcv-full&gt;=1.3.17, &lt;1.5.0</td>
+</tr>
+<tr>
+<td align="center">2.20.0</td>
+<td align="center">mmcv-full&gt;=1.3.17, &lt;1.5.0</td>
+</tr>
+<tr>
+<td align="center">2.19.1</td>
+<td align="center">mmcv-full&gt;=1.3.17, &lt;1.5.0</td>
+</tr>
+<tr>
+<td align="center">2.19.0</td>
+<td align="center">mmcv-full&gt;=1.3.17, &lt;1.5.0</td>
+</tr>
+<tr>
+<td align="center">2.18.0</td>
+<td align="center">mmcv-full&gt;=1.3.17, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.17.0</td>
+<td align="center">mmcv-full&gt;=1.3.14, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.16.0</td>
+<td align="center">mmcv-full&gt;=1.3.8, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.15.1</td>
+<td align="center">mmcv-full&gt;=1.3.8, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.15.0</td>
+<td align="center">mmcv-full&gt;=1.3.8, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.14.0</td>
+<td align="center">mmcv-full&gt;=1.3.8, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.13.0</td>
+<td align="center">mmcv-full&gt;=1.3.3, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.12.0</td>
+<td align="center">mmcv-full&gt;=1.3.3, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.11.0</td>
+<td align="center">mmcv-full&gt;=1.2.4, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.10.0</td>
+<td align="center">mmcv-full&gt;=1.2.4, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.9.0</td>
+<td align="center">mmcv-full&gt;=1.2.4, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.8.0</td>
+<td align="center">mmcv-full&gt;=1.2.4, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.7.0</td>
+<td align="center">mmcv-full&gt;=1.1.5, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.6.0</td>
+<td align="center">mmcv-full&gt;=1.1.5, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.5.0</td>
+<td align="center">mmcv-full&gt;=1.1.5, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.4.0</td>
+<td align="center">mmcv-full&gt;=1.1.1, &lt;1.4.0</td>
+</tr>
+<tr>
+<td align="center">2.3.0</td>
+<td align="center">mmcv-full==1.0.5</td>
+</tr>
+<tr>
+<td align="center">2.3.0rc0</td>
+<td align="center">mmcv-full&gt;=1.0.2</td>
+</tr>
+<tr>
+<td align="center">2.2.1</td>
+<td align="center">mmcv==0.6.2</td>
+</tr>
+<tr>
+<td align="center">2.2.0</td>
+<td align="center">mmcv==0.6.2</td>
+</tr>
+<tr>
+<td align="center">2.1.0</td>
+<td align="center">mmcv&gt;=0.5.9, &lt;=0.6.1</td>
+</tr>
+<tr>
+<td align="center">2.0.0</td>
+<td align="center">mmcv&gt;=0.5.1, &lt;=0.5.8</td>
+</tr>
+</tbody>
+</table><p><strong>Note:</strong> You need to run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">mmcv</span></code> first if you have mmcv installed.
+If mmcv and mmcv-full are both installed, there will be <code class="docutils literal notranslate"><span class="pre">ModuleNotFoundError</span></code>.</p>
+</div>
+<div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prepare-environment">
+<h2>Prepare environment<a class="headerlink" href="#prepare-environment" title="Permalink to this headline">¶</a></h2>
+<ol>
+<li><p>Create a conda virtual environment and activate it.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda create -n openmmlab <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7 -y
+conda activate openmmlab
+</pre></div>
+</div>
+</li>
+<li><p>Install PyTorch and torchvision following the <a class="reference external" href="https://pytorch.org/">official instructions</a>, e.g.,</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda install pytorch torchvision -c pytorch
+</pre></div>
+</div>
+<p>Note: Make sure that your compilation CUDA version and runtime CUDA version match.
+You can check the supported CUDA version for precompiled packages on the <a class="reference external" href="https://pytorch.org/">PyTorch website</a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">E.g.1</span></code> If you have CUDA 10.1 installed under <code class="docutils literal notranslate"><span class="pre">/usr/local/cuda</span></code> and would like to install
+PyTorch 1.5, you need to install the prebuilt PyTorch with CUDA 10.1.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda install pytorch <span class="nv">cudatoolkit</span><span class="o">=</span><span class="m">10</span>.1 torchvision -c pytorch
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">E.g.</span> <span class="pre">2</span></code> If you have CUDA 9.2 installed under <code class="docutils literal notranslate"><span class="pre">/usr/local/cuda</span></code> and would like to install
+PyTorch 1.3.1., you need to install the prebuilt PyTorch with CUDA 9.2.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda install <span class="nv">pytorch</span><span class="o">=</span><span class="m">1</span>.3.1 <span class="nv">cudatoolkit</span><span class="o">=</span><span class="m">9</span>.2 <span class="nv">torchvision</span><span class="o">=</span><span class="m">0</span>.4.2 -c pytorch
+</pre></div>
+</div>
+<p>If you build PyTorch from source instead of installing the prebuilt package,
+you can use more CUDA versions such as 9.0.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="install-mmdetection">
+<h2>Install MMDetection<a class="headerlink" href="#install-mmdetection" title="Permalink to this headline">¶</a></h2>
+<p>It is recommended to install MMDetection with <a class="reference external" href="https://github.com/open-mmlab/mim">MIM</a>,
+which automatically handle the dependencies of OpenMMLab projects, including mmcv and other python packages.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install openmim
+mim install mmdet
+</pre></div>
+</div>
+<p>Or you can still install MMDetection manually:</p>
+<ol>
+<li><p>Install mmcv-full.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/<span class="o">{</span>cu_version<span class="o">}</span>/<span class="o">{</span>torch_version<span class="o">}</span>/index.html
+</pre></div>
+</div>
+<p>Please replace <code class="docutils literal notranslate"><span class="pre">{cu_version}</span></code> and <code class="docutils literal notranslate"><span class="pre">{torch_version}</span></code> in the url to your desired one. For example, to install the latest <code class="docutils literal notranslate"><span class="pre">mmcv-full</span></code> with <code class="docutils literal notranslate"><span class="pre">CUDA</span> <span class="pre">11.0</span></code> and <code class="docutils literal notranslate"><span class="pre">PyTorch</span> <span class="pre">1.7.0</span></code>, use the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu110/torch1.7.0/index.html
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/open-mmlab/mmcv#installation">here</a> for different versions of MMCV compatible to different PyTorch and CUDA versions.</p>
+<p>Optionally you can compile mmcv from source if you need to develop both mmcv and mmdet. Refer to the <a class="reference external" href="https://github.com/open-mmlab/mmcv#installation">guide</a> for details.</p>
+<p>mmcv-full is only compiled on PyTorch 1.x.0 because the compatibility usually holds between 1.x.0 and 1.x.1. If your PyTorch version is 1.x.1, you can install mmcv-full compiled with PyTorch 1.x.0 and it usually works well.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can ignore the micro version of PyTorch</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">mmcv</span><span class="o">-</span><span class="n">full</span> <span class="o">-</span><span class="n">f</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">openmmlab</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">mmcv</span><span class="o">/</span><span class="n">dist</span><span class="o">/</span><span class="n">cu110</span><span class="o">/</span><span class="n">torch1</span><span class="mf">.7</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+</li>
+<li><p>Install MMDetection.</p>
+<p>You can simply install mmdetection with the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install mmdet
+</pre></div>
+</div>
+<p>or clone the repository and then install it:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/open-mmlab/mmdetection.git
+<span class="nb">cd</span> mmdetection
+pip install -r requirements/build.txt
+pip install -v -e .  <span class="c1"># or &quot;python setup.py develop&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Install extra dependencies for Instaboost, Panoptic Segmentation, LVIS dataset, or Albumentations.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># for instaboost</span>
+pip install instaboostfast
+<span class="c1"># for panoptic segmentation</span>
+pip install git+https://github.com/cocodataset/panopticapi.git
+<span class="c1"># for LVIS dataset</span>
+pip install git+https://github.com/lvis-dataset/lvis-api.git
+<span class="c1"># for albumentations</span>
+pip install -r requirements/albu.txt
+</pre></div>
+</div>
+</li>
+</ol>
+<p><strong>Note:</strong></p>
+<p>a. When specifying <code class="docutils literal notranslate"><span class="pre">-e</span></code> or <code class="docutils literal notranslate"><span class="pre">develop</span></code>, MMDetection is installed on dev mode
+, any local modifications made to the code will take effect without reinstallation.</p>
+<p>b. If you would like to use <code class="docutils literal notranslate"><span class="pre">opencv-python-headless</span></code> instead of <code class="docutils literal notranslate"><span class="pre">opencv-python</span></code>,
+you can install it before installing MMCV.</p>
+<p>c. Some dependencies are optional. Simply running <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-v</span> <span class="pre">-e</span> <span class="pre">.</span></code> will
+only install the minimum runtime requirements. To use optional dependencies like <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> and <code class="docutils literal notranslate"><span class="pre">imagecorruptions</span></code> either install them manually with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements/optional.txt</span></code> or specify desired extras when calling <code class="docutils literal notranslate"><span class="pre">pip</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-v</span> <span class="pre">-e</span> <span class="pre">.[optional]</span></code>). Valid keys for the extras field are: <code class="docutils literal notranslate"><span class="pre">all</span></code>, <code class="docutils literal notranslate"><span class="pre">tests</span></code>, <code class="docutils literal notranslate"><span class="pre">build</span></code>, and <code class="docutils literal notranslate"><span class="pre">optional</span></code>.</p>
+<p>d. If you would like to use <code class="docutils literal notranslate"><span class="pre">albumentations</span></code>, we suggest using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements/albu.txt</span></code> or
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">albumentations</span> <span class="pre">--no-binary</span> <span class="pre">qudida,albumentations</span></code>. If you simply use <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">albumentations&gt;=0.3.2</span></code>,
+it will install <code class="docutils literal notranslate"><span class="pre">opencv-python-headless</span></code> simultaneously (even though you have already
+installed <code class="docutils literal notranslate"><span class="pre">opencv-python</span></code>). We recommended checking the environment after installing <code class="docutils literal notranslate"><span class="pre">albumentation</span></code> to
+ensure that <code class="docutils literal notranslate"><span class="pre">opencv-python</span></code> and <code class="docutils literal notranslate"><span class="pre">opencv-python-headless</span></code> are not installed at the same time, because it might cause unexpected issues if they both are installed. Please refer
+to <a class="reference external" href="https://albumentations.ai/docs/getting_started/installation/#note-on-opencv-dependencies">official documentation</a> for more details.</p>
+</div>
+<div class="section" id="install-without-gpu-support">
+<h2>Install without GPU support<a class="headerlink" href="#install-without-gpu-support" title="Permalink to this headline">¶</a></h2>
+<p>MMDetection can be built for CPU only environment (where CUDA isn’t available).</p>
+<p>In CPU mode you can train (requires MMCV version &gt;= 1.4.4), test or inference a model.
+However some functionality is gone in this mode:</p>
+<ul class="simple">
+<li><p>Deformable Convolution</p></li>
+<li><p>Modulated Deformable Convolution</p></li>
+<li><p>ROI pooling</p></li>
+<li><p>Deformable ROI pooling</p></li>
+<li><p>CARAFE: Content-Aware ReAssembly of FEatures</p></li>
+<li><p>SyncBatchNorm</p></li>
+<li><p>CrissCrossAttention: Criss-Cross Attention</p></li>
+<li><p>MaskedConv2d</p></li>
+<li><p>Temporal Interlace Shift</p></li>
+<li><p>nms_cuda</p></li>
+<li><p>sigmoid_focal_loss_cuda</p></li>
+<li><p>bbox_overlaps</p></li>
+</ul>
+<p>If you try to train/test/inference a model containing above ops, an error will be raised.
+The following table lists affected algorithms.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="center">Operator</th>
+<th align="center">Model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Deformable Convolution/Modulated Deformable Convolution</td>
+<td align="center">DCN、Guided Anchoring、RepPoints、CentripetalNet、VFNet、CascadeRPN、NAS-FCOS、DetectoRS</td>
+</tr>
+<tr>
+<td align="center">MaskedConv2d</td>
+<td align="center">Guided Anchoring</td>
+</tr>
+<tr>
+<td align="center">CARAFE</td>
+<td align="center">CARAFE</td>
+</tr>
+<tr>
+<td align="center">SyncBatchNorm</td>
+<td align="center">ResNeSt</td>
+</tr>
+</tbody>
+</table></div>
+<div class="section" id="another-option-docker-image">
+<h2>Another option: Docker Image<a class="headerlink" href="#another-option-docker-image" title="Permalink to this headline">¶</a></h2>
+<p>We provide a <a class="reference external" href="https://github.com/open-mmlab/mmdetection/blob/master/docker/Dockerfile">Dockerfile</a> to build an image. Ensure that you are using <a class="reference external" href="https://docs.docker.com/engine/install/">docker version</a> &gt;=19.03.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># build an image with PyTorch 1.6, CUDA 10.1</span>
+docker build -t mmdetection docker/
+</pre></div>
+</div>
+<p>Run it with</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run --gpus all --shm-size<span class="o">=</span>8g -it -v <span class="o">{</span>DATA_DIR<span class="o">}</span>:/mmdetection/data mmdetection
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-from-scratch-setup-script">
+<h2>A from-scratch setup script<a class="headerlink" href="#a-from-scratch-setup-script" title="Permalink to this headline">¶</a></h2>
+<p>Assuming that you already have CUDA 10.1 installed, here is a full script for setting up MMDetection with conda.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda create -n openmmlab <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7 -y
+conda activate openmmlab
+
+conda install <span class="nv">pytorch</span><span class="o">==</span><span class="m">1</span>.6.0 <span class="nv">torchvision</span><span class="o">==</span><span class="m">0</span>.7.0 <span class="nv">cudatoolkit</span><span class="o">=</span><span class="m">10</span>.1 -c pytorch -y
+
+<span class="c1"># install the latest mmcv</span>
+pip install mmcv-full -f https://download.openmmlab.com/mmcv/dist/cu101/torch1.6.0/index.html
+
+<span class="c1"># install mmdetection</span>
+git clone https://github.com/open-mmlab/mmdetection.git
+<span class="nb">cd</span> mmdetection
+pip install -r requirements/build.txt
+pip install -v -e .
+</pre></div>
+</div>
+</div>
+<div class="section" id="developing-with-multiple-mmdetection-versions">
+<h2>Developing with multiple MMDetection versions<a class="headerlink" href="#developing-with-multiple-mmdetection-versions" title="Permalink to this headline">¶</a></h2>
+<p>The train and test scripts already modify the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> to ensure the script use the MMDetection in the current directory.</p>
+<p>To use the default MMDetection installed in the environment rather than that you are working with, you can remove the following line in those scripts</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>dirname <span class="nv">$0</span><span class="k">)</span><span class="s2">/..&quot;</span>:<span class="nv">$PYTHONPATH</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="verification">
+<h1>Verification<a class="headerlink" href="#verification" title="Permalink to this headline">¶</a></h1>
+<p>To verify whether MMDetection is installed correctly, we can run the following sample code to initialize a detector and inference a demo image, but first we need to download config and checkpoint files.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>mim download mmdet --config faster_rcnn_r50_fpn_1x_coco --dest .
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mmdet.apis</span> <span class="kn">import</span> <span class="n">init_detector</span><span class="p">,</span> <span class="n">inference_detector</span>
+
+<span class="n">config_file</span> <span class="o">=</span> <span class="s1">&#39;configs/faster_rcnn/faster_rcnn_r50_fpn_1x_coco.py&#39;</span>
+<span class="c1"># download the checkpoint from model zoo and put it in `checkpoints/`</span>
+<span class="c1"># url: https://download.openmmlab.com/mmdetection/v2.0/faster_rcnn/faster_rcnn_r50_fpn_1x_coco/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth</span>
+<span class="n">checkpoint_file</span> <span class="o">=</span> <span class="s1">&#39;checkpoints/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth&#39;</span>
+<span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda:0&#39;</span>
+<span class="c1"># init a detector</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">init_detector</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">checkpoint_file</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="c1"># inference the demo image</span>
+<span class="n">inference_detector</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;demo/demo.jpg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above code is supposed to run successfully upon you finish the installation.</p>
+</div>
+
+
+              </article>
+              
+            </div>
+            <footer>
+  
+  <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+    
+    <a href="model_zoo.html" class="btn btn-neutral float-right" title="Benchmark and Model Zoo" accesskey="n"
+      rel="next">Next <img src="_static/images/chevron-right-blue.svg"
+        class="next-page"></a>
+    
+    
+    <a href="index.html" class="btn btn-neutral" title="Welcome to MMDetection’s documentation!" accesskey="p"
+      rel="prev"><img src="_static/images/chevron-right-blue.svg" class="previous-page"> Previous</a>
+    
+  </div>
+  
+
+  <hr>
+
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2018-2021, OpenMMLab.
+
+    </p>
+  </div>
+  
+  <div>
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a
+      href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the
+      Docs</a>.
+  </div>
+   
+
+</footer>
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Prerequisites</a></li>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#prepare-environment">Prepare environment</a></li>
+<li><a class="reference internal" href="#install-mmdetection">Install MMDetection</a></li>
+<li><a class="reference internal" href="#install-without-gpu-support">Install without GPU support</a></li>
+<li><a class="reference internal" href="#another-option-docker-image">Another option: Docker Image</a></li>
+<li><a class="reference internal" href="#a-from-scratch-setup-script">A from-scratch setup script</a></li>
+<li><a class="reference internal" href="#developing-with-multiple-mmdetection-versions">Developing with multiple MMDetection versions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#verification">Verification</a></li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+    </section>
+  </div>
+
+  
+
+
+  
+
+  
+  <script type="text/javascript" id="documentation_options" data-url_root="./"
+    src="_static/documentation_options.js"></script>
+  <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+  <script src="_static/jquery.js"></script>
+  <script src="_static/underscore.js"></script>
+  <script src="_static/doctools.js"></script>
+  <script src="_static/clipboard.min.js"></script>
+  <script src="_static/copybutton.js"></script>
+  
+
+  
+
+  <script type="text/javascript" src="_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+  </div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="" aria-label="OpenMMLab"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://github.com/open-mmlab/mmdetection" target="_blank">GitHub</a>
+          </li>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function (e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,1010 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Log Analysis &mdash; MMDetection  documentation</title>
+  
+
+  <link rel="shortcut icon" href="_static/images/logo192.png" />
+  
+  
+
+  
+
+  
+  
+  
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/readthedocs.css" type="text/css" />
+  <link rel="index" title="Index" href="genindex.html" />
+  <link rel="search" title="Search" href="search.html" />
+  <link rel="next" title="English" href="switch_language.html" />
+  <link rel="prev" title="Tutorial 11: How to xxx" href="tutorials/how_to.html" />
+  <!-- Google Analytics -->
+  <script type="text/javascript">
+    var collapsedSections = [];
+  </script>
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+  <script>
+    MathJax = {
+        chtml: {
+            scale: 1,
+            minScale: 1,
+        },
+        svg: {
+            scale: 1,
+            minScale: 1,
+        }
+    }
+</script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+    integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href=""
+        aria-label="OpenMMLab"></a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://github.com/open-mmlab/mmdetection" target="_blank">GitHub</a>
+          </li>
+          <li >
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a
+                class="resource-option with-down-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmcv.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMCV </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://openmim.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MIM </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmaction2.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMAction2 </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmclassification.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMClassification </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmdetection.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMDetection </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmdetection3d.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMDetection3D </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmediting.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMEditing </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmgeneration.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMGeneration </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmocr.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMOCR </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmpose.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMPose </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmsegmentation.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMSegmentation </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmtracking.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMTracking </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmflow.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMFlow </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmfewshot.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMFewShot </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmhuman3d.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMHuman3D </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmselfsup.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMSelfSup </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmrazor.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMRazor </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmdeploy.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMDeploy </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmrotate.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMRotate </span>
+                  <p></p>
+                </a>
+              </div>
+          </li>
+          <li >
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a
+                class="resource-option with-down-arrow">
+                OpenMMLab
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://openmmlab.com/" target="_blank">
+                  <span class="dropdown-title">Homepage </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://platform.openmmlab.com/" target="_blank">
+                  <span class="dropdown-title">Open Platform </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://github.com/open-mmlab/" target="_blank">
+                  <span class="dropdown-title">GitHub </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://twitter.com/OpenMMLab" target="_blank">
+                  <span class="dropdown-title">Twitter </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://zhihu.com/people/openmmlab" target="_blank">
+                  <span class="dropdown-title">Zhihu </span>
+                  <p></p>
+                </a>
+              </div>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+  
+
+  <div class="table-of-contents-link-wrapper">
+    <span>Table of Contents</span>
+    <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+  </div>
+
+  <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+    <div class="pytorch-side-scroll">
+      <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <div class="pytorch-left-menu-search">
+          
+
+          
+          
+          
+          
+
+          
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        
+        
+        
+        
+        
+        <p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/config.html">Tutorial 1: Learn about Configs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/customize_dataset.html">Tutorial 2: Customize Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/data_pipeline.html">Tutorial 3: Customize Data Pipelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/customize_models.html">Tutorial 4: Customize Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/customize_runtime.html">Tutorial 5: Customize Runtime Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/customize_losses.html">Tutorial 6: Customize Losses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/finetune.html">Tutorial 7: Finetuning Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/pytorch2onnx.html">Tutorial 8: Pytorch to ONNX (Experimental)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/onnx2tensorrt.html">Tutorial 9: ONNX to TensorRT (Experimental)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/init_cfg.html">Tutorial 10: Weight initialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/how_to.html">Tutorial 11: How to xxx</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Useful Tools and Scripts</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Log Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#result-analysis">Result Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#visualization">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#error-analysis">Error Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#model-serving">Model Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#model-complexity">Model Complexity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#model-conversion">Model conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#dataset-conversion">Dataset Conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#dataset-download">Dataset Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#benchmark">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#miscellaneous">Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#hyper-parameter-optimization">Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#confusion-matrix">Confusion Matrix</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Switch Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="switch_language.html"><a href='https://mmdetection.readthedocs.io/en/latest/'>English</a></a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch_language.html#a-href-https-mmdetection-readthedocs-io-zh-cn-latest-a"><a href='https://mmdetection.readthedocs.io/zh_CN/latest/'>简体中文</a></a></li>
+</ul>
+
+        
+        
+      </div>
+    </div>
+  </nav>
+
+  <div class="pytorch-container">
+    <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+      <div class="pytorch-breadcrumbs-wrapper">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="index.html">
+            Docs
+        </a> &gt;
+      </li>
+
+        
+      <li>Log Analysis</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="_sources/useful_tools.md.txt" rel="nofollow"><img src="_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+      </div>
+
+      <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+        Shortcuts
+      </div>
+    </div>
+
+    <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+      <div class="pytorch-content-left">
+        
+          <div class="rst-content">
+            
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+                
+  <p>Apart from training/testing scripts, We provide lots of useful tools under the
+<code class="docutils literal notranslate"><span class="pre">tools/</span></code> directory.</p>
+<div class="section" id="log-analysis">
+<h1>Log Analysis<a class="headerlink" href="#log-analysis" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">tools/analysis_tools/analyze_logs.py</span></code> plots loss/mAP curves given a training
+log file. Run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">seaborn</span></code> first to install the dependency.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/analyze_logs.py plot_curve <span class="o">[</span>--keys <span class="si">${</span><span class="nv">KEYS</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>--title <span class="si">${</span><span class="nv">TITLE</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>--legend <span class="si">${</span><span class="nv">LEGEND</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>--backend <span class="si">${</span><span class="nv">BACKEND</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>--style <span class="si">${</span><span class="nv">STYLE</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>--out <span class="si">${</span><span class="nv">OUT_FILE</span><span class="si">}</span><span class="o">]</span>
+</pre></div>
+</div>
+<p><img alt="loss curve image" src="../../resources/loss_curve.png" /></p>
+<p>Examples:</p>
+<ul>
+<li><p>Plot the classification loss of some run.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/analyze_logs.py plot_curve log.json --keys loss_cls --legend loss_cls
+</pre></div>
+</div>
+</li>
+<li><p>Plot the classification and regression loss of some run, and save the figure to a pdf.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/analyze_logs.py plot_curve log.json --keys loss_cls loss_bbox --out losses.pdf
+</pre></div>
+</div>
+</li>
+<li><p>Compare the bbox mAP of two runs in the same figure.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/analyze_logs.py plot_curve log1.json log2.json --keys bbox_mAP --legend run1 run2
+</pre></div>
+</div>
+</li>
+<li><p>Compute the average training speed.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/analyze_logs.py cal_train_time log.json <span class="o">[</span>--include-outliers<span class="o">]</span>
+</pre></div>
+</div>
+<p>The output is expected to be like the following.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>-----Analyze train time of work_dirs/some_exp/20190611_192040.log.json-----
+slowest epoch 11, average time is 1.2024
+fastest epoch 1, average time is 1.1909
+time std over epochs is 0.0028
+average iter time: 1.1959 s/iter
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="result-analysis">
+<h1>Result Analysis<a class="headerlink" href="#result-analysis" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">tools/analysis_tools/analyze_results.py</span></code> calculates single image mAP and saves or shows the topk images with the highest and lowest scores based on prediction results.</p>
+<p><strong>Usage</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/analyze_results.py <span class="se">\</span>
+      <span class="si">${</span><span class="nv">CONFIG</span><span class="si">}</span> <span class="se">\</span>
+      <span class="si">${</span><span class="nv">PREDICTION_PATH</span><span class="si">}</span> <span class="se">\</span>
+      <span class="si">${</span><span class="nv">SHOW_DIR</span><span class="si">}</span> <span class="se">\</span>
+      <span class="o">[</span>--show<span class="o">]</span> <span class="se">\</span>
+      <span class="o">[</span>--wait-time <span class="si">${</span><span class="nv">WAIT_TIME</span><span class="si">}</span><span class="o">]</span> <span class="se">\</span>
+      <span class="o">[</span>--topk <span class="si">${</span><span class="nv">TOPK</span><span class="si">}</span><span class="o">]</span> <span class="se">\</span>
+      <span class="o">[</span>--show-score-thr <span class="si">${</span><span class="nv">SHOW_SCORE_THR</span><span class="si">}</span><span class="o">]</span> <span class="se">\</span>
+      <span class="o">[</span>--cfg-options <span class="si">${</span><span class="nv">CFG_OPTIONS</span><span class="si">}</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>Description of all arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config</span></code> : The path of a model config file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prediction_path</span></code>:  Output result file in pickle format from <code class="docutils literal notranslate"><span class="pre">tools/test.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">show_dir</span></code>: Directory where painted GT and detection images will be saved</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--show</span></code>：Determines whether to show painted images, If not specified, it will be set to <code class="docutils literal notranslate"><span class="pre">False</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--wait-time</span></code>: The interval of show (s), 0 is block</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--topk</span></code>: The number of saved images that have the highest and lowest <code class="docutils literal notranslate"><span class="pre">topk</span></code> scores after sorting. If not specified, it will be set to <code class="docutils literal notranslate"><span class="pre">20</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--show-score-thr</span></code>:  Show score threshold. If not specified, it will be set to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--cfg-options</span></code>: If specified, the key-value pair optional cfg will be merged into config file</p></li>
+</ul>
+<p><strong>Examples</strong>:</p>
+<p>Assume that you have got result file in pickle format from <code class="docutils literal notranslate"><span class="pre">tools/test.py</span></code>  in the path ‘./result.pkl’.</p>
+<ol class="simple">
+<li><p>Test Faster R-CNN and visualize the results, save images to the directory <code class="docutils literal notranslate"><span class="pre">results/</span></code></p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/analyze_results.py <span class="se">\</span>
+       configs/faster_rcnn/faster_rcnn_r50_fpn_1x_coco.py <span class="se">\</span>
+       result.pkl <span class="se">\</span>
+       results <span class="se">\</span>
+       --show
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Test Faster R-CNN and specified topk to 50, save images to the directory <code class="docutils literal notranslate"><span class="pre">results/</span></code></p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/analyze_results.py <span class="se">\</span>
+       configs/faster_rcnn/faster_rcnn_r50_fpn_1x_coco.py <span class="se">\</span>
+       result.pkl <span class="se">\</span>
+       results <span class="se">\</span>
+       --topk <span class="m">50</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>If you want to filter the low score prediction results, you can specify the <code class="docutils literal notranslate"><span class="pre">show-score-thr</span></code> parameter</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/analyze_results.py <span class="se">\</span>
+       configs/faster_rcnn/faster_rcnn_r50_fpn_1x_coco.py <span class="se">\</span>
+       result.pkl <span class="se">\</span>
+       results <span class="se">\</span>
+       --show-score-thr <span class="m">0</span>.3
+</pre></div>
+</div>
+</div>
+<div class="section" id="visualization">
+<h1>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="visualize-datasets">
+<h2>Visualize Datasets<a class="headerlink" href="#visualize-datasets" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tools/misc/browse_dataset.py</span></code> helps the user to browse a detection dataset (both
+images and bounding box annotations) visually, or save the image to a
+designated directory.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/misc/browse_dataset.py <span class="si">${</span><span class="nv">CONFIG</span><span class="si">}</span> <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>--skip-type <span class="si">${</span><span class="nv">SKIP_TYPE</span><span class="p">[SKIP_TYPE...]</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>--output-dir <span class="si">${</span><span class="nv">OUTPUT_DIR</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>--not-show<span class="o">]</span> <span class="o">[</span>--show-interval <span class="si">${</span><span class="nv">SHOW_INTERVAL</span><span class="si">}</span><span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="visualize-models">
+<h2>Visualize Models<a class="headerlink" href="#visualize-models" title="Permalink to this headline">¶</a></h2>
+<p>First, convert the model to ONNX as described
+<a class="reference external" href="#convert-mmdetection-model-to-onnx-experimental">here</a>.
+Note that currently only RetinaNet is supported, support for other models
+will be coming in later versions.
+The converted model could be visualized by tools like <a class="reference external" href="https://github.com/lutzroeder/netron">Netron</a>.</p>
+</div>
+<div class="section" id="visualize-predictions">
+<h2>Visualize Predictions<a class="headerlink" href="#visualize-predictions" title="Permalink to this headline">¶</a></h2>
+<p>If you need a lightweight GUI for visualizing the detection results, you can refer <a class="reference external" href="https://github.com/Chien-Hung/DetVisGUI/tree/mmdetection">DetVisGUI project</a>.</p>
+</div>
+</div>
+<div class="section" id="error-analysis">
+<h1>Error Analysis<a class="headerlink" href="#error-analysis" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">tools/analysis_tools/coco_error_analysis.py</span></code> analyzes COCO results per category and by
+different criterion. It can also make a plot to provide useful information.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/coco_error_analysis.py <span class="si">${</span><span class="nv">RESULT</span><span class="si">}</span> <span class="si">${</span><span class="nv">OUT_DIR</span><span class="si">}</span> <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>--ann <span class="si">${</span><span class="nv">ANN</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>--types <span class="si">${</span><span class="nv">TYPES</span><span class="p">[TYPES...]</span><span class="si">}</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<p>Assume that you have got <a class="reference external" href="https://download.openmmlab.com/mmdetection/v2.0/mask_rcnn/mask_rcnn_r50_fpn_1x_coco/mask_rcnn_r50_fpn_1x_coco_20200205-d4b0c5d6.pth">Mask R-CNN checkpoint file</a> in the path ‘checkpoint’. For other checkpoints, please refer to our <a class="reference external" href="./model_zoo">model zoo</a>. You can use the following command to get the results bbox and segmentation json file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># out: results.bbox.json and results.segm.json</span>
+python tools/test.py <span class="se">\</span>
+       configs/mask_rcnn/mask_rcnn_r50_fpn_1x_coco.py <span class="se">\</span>
+       checkpoint/mask_rcnn_r50_fpn_1x_coco_20200205-d4b0c5d6.pth <span class="se">\</span>
+       --format-only <span class="se">\</span>
+       --options <span class="s2">&quot;jsonfile_prefix=./results&quot;</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Get COCO bbox error results per category , save analyze result images to the directory <code class="docutils literal notranslate"><span class="pre">results/</span></code></p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/coco_error_analysis.py <span class="se">\</span>
+       results.bbox.json <span class="se">\</span>
+       results <span class="se">\</span>
+       --ann<span class="o">=</span>data/coco/annotations/instances_val2017.json <span class="se">\</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Get COCO segmentation error results per category , save analyze result images to the directory <code class="docutils literal notranslate"><span class="pre">results/</span></code></p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/coco_error_analysis.py <span class="se">\</span>
+       results.segm.json <span class="se">\</span>
+       results <span class="se">\</span>
+       --ann<span class="o">=</span>data/coco/annotations/instances_val2017.json <span class="se">\</span>
+       --types<span class="o">=</span><span class="s1">&#39;segm&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="model-serving">
+<h1>Model Serving<a class="headerlink" href="#model-serving" title="Permalink to this headline">¶</a></h1>
+<p>In order to serve an <code class="docutils literal notranslate"><span class="pre">MMDetection</span></code> model with <a class="reference external" href="https://pytorch.org/serve/"><code class="docutils literal notranslate"><span class="pre">TorchServe</span></code></a>, you can follow the steps:</p>
+<div class="section" id="convert-model-from-mmdetection-to-torchserve">
+<h2>1. Convert model from MMDetection to TorchServe<a class="headerlink" href="#convert-model-from-mmdetection-to-torchserve" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/deployment/mmdet2torchserve.py <span class="si">${</span><span class="nv">CONFIG_FILE</span><span class="si">}</span> <span class="si">${</span><span class="nv">CHECKPOINT_FILE</span><span class="si">}</span> <span class="se">\</span>
+--output-folder <span class="si">${</span><span class="nv">MODEL_STORE</span><span class="si">}</span> <span class="se">\</span>
+--model-name <span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>
+</pre></div>
+</div>
+<p><strong>Note</strong>: ${MODEL_STORE} needs to be an absolute path to a folder.</p>
+</div>
+<div class="section" id="build-mmdet-serve-docker-image">
+<h2>2. Build <code class="docutils literal notranslate"><span class="pre">mmdet-serve</span></code> docker image<a class="headerlink" href="#build-mmdet-serve-docker-image" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker build -t mmdet-serve:latest docker/serve/
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-mmdet-serve">
+<h2>3. Run <code class="docutils literal notranslate"><span class="pre">mmdet-serve</span></code><a class="headerlink" href="#run-mmdet-serve" title="Permalink to this headline">¶</a></h2>
+<p>Check the official docs for <a class="reference external" href="https://github.com/pytorch/serve/blob/master/docker/README.md#running-torchserve-in-a-production-docker-environment">running TorchServe with docker</a>.</p>
+<p>In order to run in GPU, you need to install <a class="reference external" href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html">nvidia-docker</a>. You can omit the <code class="docutils literal notranslate"><span class="pre">--gpus</span></code> argument in order to run in CPU.</p>
+<p>Example:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run --rm <span class="se">\</span>
+--cpus <span class="m">8</span> <span class="se">\</span>
+--gpus <span class="nv">device</span><span class="o">=</span><span class="m">0</span> <span class="se">\</span>
+-p8080:8080 -p8081:8081 -p8082:8082 <span class="se">\</span>
+--mount <span class="nv">type</span><span class="o">=</span>bind,source<span class="o">=</span><span class="nv">$MODEL_STORE</span>,target<span class="o">=</span>/home/model-server/model-store <span class="se">\</span>
+mmdet-serve:latest
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/pytorch/serve/blob/072f5d088cce9bb64b2a18af065886c9b01b317b/docs/rest_api.md/">Read the docs</a> about the Inference (8080), Management (8081) and Metrics (8082) APis</p>
+</div>
+<div class="section" id="test-deployment">
+<h2>4. Test deployment<a class="headerlink" href="#test-deployment" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl -O curl -O https://raw.githubusercontent.com/pytorch/serve/master/docs/images/3dogs.jpg
+curl http://127.0.0.1:8080/predictions/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span> -T 3dogs.jpg
+</pre></div>
+</div>
+<p>You should obtain a response similar to:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;class_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dog&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;bbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="mf">294.63409423828125</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="mf">203.99111938476562</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="mf">417.048583984375</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="mf">281.62744140625</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9987992644309998</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;class_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dog&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;bbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="mf">404.26019287109375</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="mf">126.0080795288086</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="mf">574.5091552734375</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="mf">293.6662292480469</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9979367256164551</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;class_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dog&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;bbox&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="mf">197.2144775390625</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="mf">93.3067855834961</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="mf">307.8505554199219</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="mf">276.7560119628906</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.993338406085968</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">]</span><span class="w"></span>
+</pre></div>
+</div>
+<p>And you can use <code class="docutils literal notranslate"><span class="pre">test_torchserver.py</span></code> to compare result of torchserver and pytorch, and visualize them.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/deployment/test_torchserver.py <span class="si">${</span><span class="nv">IMAGE_FILE</span><span class="si">}</span> <span class="si">${</span><span class="nv">CONFIG_FILE</span><span class="si">}</span> <span class="si">${</span><span class="nv">CHECKPOINT_FILE</span><span class="si">}</span> <span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>
+<span class="o">[</span>--inference-addr <span class="si">${</span><span class="nv">INFERENCE_ADDR</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>--device <span class="si">${</span><span class="nv">DEVICE</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>--score-thr <span class="si">${</span><span class="nv">SCORE_THR</span><span class="si">}</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/deployment/test_torchserver.py <span class="se">\</span>
+demo/demo.jpg <span class="se">\</span>
+configs/yolo/yolov3_d53_320_273e_coco.py <span class="se">\</span>
+checkpoint/yolov3_d53_320_273e_coco-421362b6.pth <span class="se">\</span>
+yolov3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="model-complexity">
+<h1>Model Complexity<a class="headerlink" href="#model-complexity" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">tools/analysis_tools/get_flops.py</span></code> is a script adapted from <a class="reference external" href="https://github.com/sovrasov/flops-counter.pytorch">flops-counter.pytorch</a> to compute the FLOPs and params of a given model.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/get_flops.py <span class="si">${</span><span class="nv">CONFIG_FILE</span><span class="si">}</span> <span class="o">[</span>--shape <span class="si">${</span><span class="nv">INPUT_SHAPE</span><span class="si">}</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>You will get the results like this.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>==============================
+Input shape: (3, 1280, 800)
+Flops: 239.32 GFLOPs
+Params: 37.74 M
+==============================
+</pre></div>
+</div>
+<p><strong>Note</strong>: This tool is still experimental and we do not guarantee that the
+number is absolutely correct. You may well use the result for simple
+comparisons, but double check it before you adopt it in technical reports or papers.</p>
+<ol class="simple">
+<li><p>FLOPs are related to the input shape while parameters are not. The default
+input shape is (1, 3, 1280, 800).</p></li>
+<li><p>Some operators are not counted into FLOPs like GN and custom operators. Refer to <a class="reference external" href="https://github.com/open-mmlab/mmcv/blob/master/mmcv/cnn/utils/flops_counter.py"><code class="docutils literal notranslate"><span class="pre">mmcv.cnn.get_model_complexity_info()</span></code></a> for details.</p></li>
+<li><p>The FLOPs of two-stage detectors is dependent on the number of proposals.</p></li>
+</ol>
+</div>
+<div class="section" id="model-conversion">
+<h1>Model conversion<a class="headerlink" href="#model-conversion" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mmdetection-model-to-onnx-experimental">
+<h2>MMDetection model to ONNX (experimental)<a class="headerlink" href="#mmdetection-model-to-onnx-experimental" title="Permalink to this headline">¶</a></h2>
+<p>We provide a script to convert model to <a class="reference external" href="https://github.com/onnx/onnx">ONNX</a> format. We also support comparing the output results between Pytorch and ONNX model for verification.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/deployment/pytorch2onnx.py <span class="si">${</span><span class="nv">CONFIG_FILE</span><span class="si">}</span> <span class="si">${</span><span class="nv">CHECKPOINT_FILE</span><span class="si">}</span> --output-file <span class="si">${</span><span class="nv">ONNX_FILE</span><span class="si">}</span> <span class="o">[</span>--shape <span class="si">${</span><span class="nv">INPUT_SHAPE</span><span class="si">}</span> --verify<span class="o">]</span>
+</pre></div>
+</div>
+<p><strong>Note</strong>: This tool is still experimental. Some customized operators are not supported for now. For a detailed description of the usage and the list of supported models, please refer to <a class="reference internal" href="tutorials/pytorch2onnx.html"><span class="doc">pytorch2onnx</span></a>.</p>
+</div>
+<div class="section" id="mmdetection-1-x-model-to-mmdetection-2-x">
+<h2>MMDetection 1.x model to MMDetection 2.x<a class="headerlink" href="#mmdetection-1-x-model-to-mmdetection-2-x" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tools/model_converters/upgrade_model_version.py</span></code> upgrades a previous MMDetection checkpoint
+to the new version. Note that this script is not guaranteed to work as some
+breaking changes are introduced in the new version. It is recommended to
+directly use the new checkpoints.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/model_converters/upgrade_model_version.py <span class="si">${</span><span class="nv">IN_FILE</span><span class="si">}</span> <span class="si">${</span><span class="nv">OUT_FILE</span><span class="si">}</span> <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>--num-classes NUM_CLASSES<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="regnet-model-to-mmdetection">
+<h2>RegNet model to MMDetection<a class="headerlink" href="#regnet-model-to-mmdetection" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tools/model_converters/regnet2mmdet.py</span></code> convert keys in pycls pretrained RegNet models to
+MMDetection style.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/model_converters/regnet2mmdet.py <span class="si">${</span><span class="nv">SRC</span><span class="si">}</span> <span class="si">${</span><span class="nv">DST</span><span class="si">}</span> <span class="o">[</span>-h<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="detectron-resnet-to-pytorch">
+<h2>Detectron ResNet to Pytorch<a class="headerlink" href="#detectron-resnet-to-pytorch" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tools/model_converters/detectron2pytorch.py</span></code> converts keys in the original detectron pretrained
+ResNet models to PyTorch style.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/model_converters/detectron2pytorch.py <span class="si">${</span><span class="nv">SRC</span><span class="si">}</span> <span class="si">${</span><span class="nv">DST</span><span class="si">}</span> <span class="si">${</span><span class="nv">DEPTH</span><span class="si">}</span> <span class="o">[</span>-h<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="prepare-a-model-for-publishing">
+<h2>Prepare a model for publishing<a class="headerlink" href="#prepare-a-model-for-publishing" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tools/model_converters/publish_model.py</span></code> helps users to prepare their model for publishing.</p>
+<p>Before you upload a model to AWS, you may want to</p>
+<ol class="simple">
+<li><p>convert model weights to CPU tensors</p></li>
+<li><p>delete the optimizer states and</p></li>
+<li><p>compute the hash of the checkpoint file and append the hash id to the
+filename.</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/model_converters/publish_model.py <span class="si">${</span><span class="nv">INPUT_FILENAME</span><span class="si">}</span> <span class="si">${</span><span class="nv">OUTPUT_FILENAME</span><span class="si">}</span>
+</pre></div>
+</div>
+<p>E.g.,</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/model_converters/publish_model.py work_dirs/faster_rcnn/latest.pth faster_rcnn_r50_fpn_1x_20190801.pth
+</pre></div>
+</div>
+<p>The final output filename will be <code class="docutils literal notranslate"><span class="pre">faster_rcnn_r50_fpn_1x_20190801-{hash</span> <span class="pre">id}.pth</span></code>.</p>
+</div>
+</div>
+<div class="section" id="dataset-conversion">
+<h1>Dataset Conversion<a class="headerlink" href="#dataset-conversion" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">tools/data_converters/</span></code> contains tools to convert the Cityscapes dataset
+and Pascal VOC dataset to the COCO format.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/dataset_converters/cityscapes.py <span class="si">${</span><span class="nv">CITYSCAPES_PATH</span><span class="si">}</span> <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>--img-dir <span class="si">${</span><span class="nv">IMG_DIR</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>--gt-dir <span class="si">${</span><span class="nv">GT_DIR</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>-o <span class="si">${</span><span class="nv">OUT_DIR</span><span class="si">}</span><span class="o">]</span> <span class="o">[</span>--nproc <span class="si">${</span><span class="nv">NPROC</span><span class="si">}</span><span class="o">]</span>
+python tools/dataset_converters/pascal_voc.py <span class="si">${</span><span class="nv">DEVKIT_PATH</span><span class="si">}</span> <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-o <span class="si">${</span><span class="nv">OUT_DIR</span><span class="si">}</span><span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dataset-download">
+<h1>Dataset Download<a class="headerlink" href="#dataset-download" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">tools/misc/download_dataset.py</span></code> supports downloading datasets such as COCO, VOC, and LVIS.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/misc/download_dataset.py --dataset-name coco2017
+python tools/misc/download_dataset.py --dataset-name voc2007
+python tools/misc/download_dataset.py --dataset-name lvis
+</pre></div>
+</div>
+</div>
+<div class="section" id="benchmark">
+<h1>Benchmark<a class="headerlink" href="#benchmark" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="robust-detection-benchmark">
+<h2>Robust Detection Benchmark<a class="headerlink" href="#robust-detection-benchmark" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tools/analysis_tools/test_robustness.py</span></code> and<code class="docutils literal notranslate"><span class="pre">tools/analysis_tools/robustness_eval.py</span></code>  helps users to evaluate model robustness. The core idea comes from <a class="reference external" href="https://arxiv.org/abs/1907.07484">Benchmarking Robustness in Object Detection: Autonomous Driving when Winter is Coming</a>. For more information how to evaluate models on corrupted images and results for a set of standard models please refer to <a class="reference external" href="robustness_benchmarking">robustness_benchmarking.md</a>.</p>
+</div>
+<div class="section" id="fps-benchmark">
+<h2>FPS Benchmark<a class="headerlink" href="#fps-benchmark" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tools/analysis_tools/benchmark.py</span></code> helps users to calculate FPS. The FPS value includes model forward and post-processing. In order to get a more accurate value, currently only supports single GPU distributed startup mode.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python -m torch.distributed.launch --nproc_per_node<span class="o">=</span><span class="m">1</span> --master_port<span class="o">=</span><span class="si">${</span><span class="nv">PORT</span><span class="si">}</span> tools/analysis_tools/benchmark.py <span class="se">\</span>
+    <span class="si">${</span><span class="nv">CONFIG</span><span class="si">}</span> <span class="se">\</span>
+    <span class="si">${</span><span class="nv">CHECKPOINT</span><span class="si">}</span> <span class="se">\</span>
+    <span class="o">[</span>--repeat-num <span class="si">${</span><span class="nv">REPEAT_NUM</span><span class="si">}</span><span class="o">]</span> <span class="se">\</span>
+    <span class="o">[</span>--max-iter <span class="si">${</span><span class="nv">MAX_ITER</span><span class="si">}</span><span class="o">]</span> <span class="se">\</span>
+    <span class="o">[</span>--log-interval <span class="si">${</span><span class="nv">LOG_INTERVAL</span><span class="si">}</span><span class="o">]</span> <span class="se">\</span>
+    --launcher pytorch
+</pre></div>
+</div>
+<p>Examples: Assuming that you have already downloaded the <code class="docutils literal notranslate"><span class="pre">Faster</span> <span class="pre">R-CNN</span></code> model checkpoint to the directory <code class="docutils literal notranslate"><span class="pre">checkpoints/</span></code>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python -m torch.distributed.launch --nproc_per_node<span class="o">=</span><span class="m">1</span> --master_port<span class="o">=</span><span class="m">29500</span> tools/analysis_tools/benchmark.py <span class="se">\</span>
+       configs/faster_rcnn/faster_rcnn_r50_fpn_1x_coco.py <span class="se">\</span>
+       checkpoints/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth <span class="se">\</span>
+       --launcher pytorch
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="miscellaneous">
+<h1>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="evaluating-a-metric">
+<h2>Evaluating a metric<a class="headerlink" href="#evaluating-a-metric" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tools/analysis_tools/eval_metric.py</span></code> evaluates certain metrics of a pkl result file
+according to a config file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/eval_metric.py <span class="si">${</span><span class="nv">CONFIG</span><span class="si">}</span> <span class="si">${</span><span class="nv">PKL_RESULTS</span><span class="si">}</span> <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>--format-only<span class="o">]</span> <span class="o">[</span>--eval <span class="si">${</span><span class="nv">EVAL</span><span class="p">[EVAL ...]</span><span class="si">}</span><span class="o">]</span>
+                      <span class="o">[</span>--cfg-options <span class="si">${</span><span class="nv">CFG_OPTIONS</span><span class="p"> [CFG_OPTIONS ...]</span><span class="si">}</span><span class="o">]</span>
+                      <span class="o">[</span>--eval-options <span class="si">${</span><span class="nv">EVAL_OPTIONS</span><span class="p"> [EVAL_OPTIONS ...]</span><span class="si">}</span><span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="print-the-entire-config">
+<h2>Print the entire config<a class="headerlink" href="#print-the-entire-config" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tools/misc/print_config.py</span></code> prints the whole config verbatim, expanding all its
+imports.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/misc/print_config.py <span class="si">${</span><span class="nv">CONFIG</span><span class="si">}</span> <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>--options <span class="si">${</span><span class="nv">OPTIONS</span><span class="p"> [OPTIONS...]</span><span class="si">}</span><span class="o">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="hyper-parameter-optimization">
+<h1>Hyper-parameter Optimization<a class="headerlink" href="#hyper-parameter-optimization" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="yolo-anchor-optimization">
+<h2>YOLO Anchor Optimization<a class="headerlink" href="#yolo-anchor-optimization" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tools/analysis_tools/optimize_anchors.py</span></code> provides two method to optimize YOLO anchors.</p>
+<p>One is k-means anchor cluster which refers from <a class="reference external" href="https://github.com/AlexeyAB/darknet/blob/master/src/detector.c#L1421">darknet</a>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/optimize_anchors.py <span class="si">${</span><span class="nv">CONFIG</span><span class="si">}</span> --algorithm k-means --input-shape <span class="si">${</span><span class="nv">INPUT_SHAPE</span><span class="p"> [WIDTH HEIGHT]</span><span class="si">}</span> --output-dir <span class="si">${</span><span class="nv">OUTPUT_DIR</span><span class="si">}</span>
+</pre></div>
+</div>
+<p>Another is using differential evolution to optimize anchors.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/optimize_anchors.py <span class="si">${</span><span class="nv">CONFIG</span><span class="si">}</span> --algorithm differential_evolution --input-shape <span class="si">${</span><span class="nv">INPUT_SHAPE</span><span class="p"> [WIDTH HEIGHT]</span><span class="si">}</span> --output-dir <span class="si">${</span><span class="nv">OUTPUT_DIR</span><span class="si">}</span>
+</pre></div>
+</div>
+<p>E.g.,</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/optimize_anchors.py configs/yolo/yolov3_d53_320_273e_coco.py --algorithm differential_evolution --input-shape <span class="m">608</span> <span class="m">608</span> --device cuda --output-dir work_dirs
+</pre></div>
+</div>
+<p>You will get:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>loading annotations into memory...
+Done (t=9.70s)
+creating index...
+index created!
+2021-07-19 19:37:20,951 - mmdet - INFO - Collecting bboxes from annotation...
+[&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;] 117266/117266, 15874.5 task/s, elapsed: 7s, ETA:     0s
+
+2021-07-19 19:37:28,753 - mmdet - INFO - Collected 849902 bboxes.
+differential_evolution step 1: f(x)= 0.506055
+differential_evolution step 2: f(x)= 0.506055
+......
+
+differential_evolution step 489: f(x)= 0.386625
+2021-07-19 19:46:40,775 - mmdet - INFO Anchor evolution finish. Average IOU: 0.6133754253387451
+2021-07-19 19:46:40,776 - mmdet - INFO Anchor differential evolution result:[[10, 12], [15, 30], [32, 22], [29, 59], [61, 46], [57, 116], [112, 89], [154, 198], [349, 336]]
+2021-07-19 19:46:40,798 - mmdet - INFO Result saved in work_dirs/anchor_optimize_result.json
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="confusion-matrix">
+<h1>Confusion Matrix<a class="headerlink" href="#confusion-matrix" title="Permalink to this headline">¶</a></h1>
+<p>A confusion matrix is a summary of prediction results.</p>
+<p><code class="docutils literal notranslate"><span class="pre">tools/analysis_tools/confusion_matrix.py</span></code> can analyze the prediction results and plot a confusion matrix table.</p>
+<p>First, run <code class="docutils literal notranslate"><span class="pre">tools/test.py</span></code> to save the <code class="docutils literal notranslate"><span class="pre">.pkl</span></code> detection results.</p>
+<p>Then, run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>python tools/analysis_tools/confusion_matrix.py ${CONFIG}  ${DETECTION_RESULTS}  ${SAVE_DIR} --show
+</pre></div>
+</div>
+<p>And you will get a confusion matrix like this:</p>
+<p><img alt="confusion_matrix_example" src="https://user-images.githubusercontent.com/12907710/140513068-994cdbf4-3a4a-48f0-8fd8-2830d93fd963.png" /></p>
+</div>
+
+
+              </article>
+              
+            </div>
+            <footer>
+  
+  <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+    
+    <a href="switch_language.html" class="btn btn-neutral float-right" title="English" accesskey="n"
+      rel="next">Next <img src="_static/images/chevron-right-blue.svg"
+        class="next-page"></a>
+    
+    
+    <a href="tutorials/how_to.html" class="btn btn-neutral" title="Tutorial 11: How to xxx" accesskey="p"
+      rel="prev"><img src="_static/images/chevron-right-blue.svg" class="previous-page"> Previous</a>
+    
+  </div>
+  
+
+  <hr>
+
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2018-2021, OpenMMLab.
+
+    </p>
+  </div>
+  
+  <div>
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a
+      href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the
+      Docs</a>.
+  </div>
+   
+
+</footer>
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">Log Analysis</a></li>
+<li><a class="reference internal" href="#result-analysis">Result Analysis</a></li>
+<li><a class="reference internal" href="#visualization">Visualization</a><ul>
+<li><a class="reference internal" href="#visualize-datasets">Visualize Datasets</a></li>
+<li><a class="reference internal" href="#visualize-models">Visualize Models</a></li>
+<li><a class="reference internal" href="#visualize-predictions">Visualize Predictions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#error-analysis">Error Analysis</a></li>
+<li><a class="reference internal" href="#model-serving">Model Serving</a><ul>
+<li><a class="reference internal" href="#convert-model-from-mmdetection-to-torchserve">1. Convert model from MMDetection to TorchServe</a></li>
+<li><a class="reference internal" href="#build-mmdet-serve-docker-image">2. Build <code class="docutils literal notranslate"><span class="pre">mmdet-serve</span></code> docker image</a></li>
+<li><a class="reference internal" href="#run-mmdet-serve">3. Run <code class="docutils literal notranslate"><span class="pre">mmdet-serve</span></code></a></li>
+<li><a class="reference internal" href="#test-deployment">4. Test deployment</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#model-complexity">Model Complexity</a></li>
+<li><a class="reference internal" href="#model-conversion">Model conversion</a><ul>
+<li><a class="reference internal" href="#mmdetection-model-to-onnx-experimental">MMDetection model to ONNX (experimental)</a></li>
+<li><a class="reference internal" href="#mmdetection-1-x-model-to-mmdetection-2-x">MMDetection 1.x model to MMDetection 2.x</a></li>
+<li><a class="reference internal" href="#regnet-model-to-mmdetection">RegNet model to MMDetection</a></li>
+<li><a class="reference internal" href="#detectron-resnet-to-pytorch">Detectron ResNet to Pytorch</a></li>
+<li><a class="reference internal" href="#prepare-a-model-for-publishing">Prepare a model for publishing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dataset-conversion">Dataset Conversion</a></li>
+<li><a class="reference internal" href="#dataset-download">Dataset Download</a></li>
+<li><a class="reference internal" href="#benchmark">Benchmark</a><ul>
+<li><a class="reference internal" href="#robust-detection-benchmark">Robust Detection Benchmark</a></li>
+<li><a class="reference internal" href="#fps-benchmark">FPS Benchmark</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>
+<li><a class="reference internal" href="#evaluating-a-metric">Evaluating a metric</a></li>
+<li><a class="reference internal" href="#print-the-entire-config">Print the entire config</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hyper-parameter-optimization">Hyper-parameter Optimization</a><ul>
+<li><a class="reference internal" href="#yolo-anchor-optimization">YOLO Anchor Optimization</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#confusion-matrix">Confusion Matrix</a></li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+    </section>
+  </div>
+
+  
+
+
+  
+
+  
+  <script type="text/javascript" id="documentation_options" data-url_root="./"
+    src="_static/documentation_options.js"></script>
+  <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+  <script src="_static/jquery.js"></script>
+  <script src="_static/underscore.js"></script>
+  <script src="_static/doctools.js"></script>
+  <script src="_static/clipboard.min.js"></script>
+  <script src="_static/copybutton.js"></script>
+  
+
+  
+
+  <script type="text/javascript" src="_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+  </div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="" aria-label="OpenMMLab"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://github.com/open-mmlab/mmdetection" target="_blank">GitHub</a>
+          </li>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function (e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+
+</html>

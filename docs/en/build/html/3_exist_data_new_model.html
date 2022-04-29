@@ -1,0 +1,827 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3: Train with customized models and standard datasets &mdash; MMDetection  documentation</title>
+  
+
+  <link rel="shortcut icon" href="_static/images/logo192.png" />
+  
+  
+
+  
+
+  
+  
+  
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="_static/pygments.css" type="text/css" /> -->
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/readthedocs.css" type="text/css" />
+  <link rel="index" title="Index" href="genindex.html" />
+  <link rel="search" title="Search" href="search.html" />
+  <link rel="next" title="&lt;no title&gt;" href="tutorials/index.html" />
+  <link rel="prev" title="2: Train with customized datasets" href="2_new_data_model.html" />
+  <!-- Google Analytics -->
+  <script type="text/javascript">
+    var collapsedSections = [];
+  </script>
+  
+  <!-- End Google Analytics -->
+  
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+  <script>
+    MathJax = {
+        chtml: {
+            scale: 1,
+            minScale: 1,
+        },
+        svg: {
+            scale: 1,
+            minScale: 1,
+        }
+    }
+</script>
+
+  <!-- Preload the theme fonts -->
+
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-book.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/FreightSans/freight-sans-medium-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="_static/fonts/IBMPlexMono/IBMPlexMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+<!-- Preload the katex fonts -->
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Main-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size1-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size4-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size2-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Size3-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/fonts/KaTeX_Caligraphic-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+    integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+</head>
+
+<div class="container-fluid header-holder tutorials-header" id="header-holder">
+  <div class="container">
+    <div class="header-container">
+      <a class="header-logo" href=""
+        aria-label="OpenMMLab"></a>
+
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://github.com/open-mmlab/mmdetection" target="_blank">GitHub</a>
+          </li>
+          <li >
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a
+                class="resource-option with-down-arrow">
+                Docs
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmcv.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMCV </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://openmim.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MIM </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmaction2.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMAction2 </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmclassification.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMClassification </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmdetection.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMDetection </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmdetection3d.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMDetection3D </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmediting.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMEditing </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmgeneration.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMGeneration </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmocr.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMOCR </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmpose.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMPose </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmsegmentation.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMSegmentation </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmtracking.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMTracking </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmflow.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMFlow </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmfewshot.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMFewShot </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmhuman3d.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMHuman3D </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmselfsup.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMSelfSup </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmrazor.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMRazor </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmdeploy.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMDeploy </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://mmrotate.readthedocs.io/en/latest/" target="_blank">
+                  <span class="dropdown-title">MMRotate </span>
+                  <p></p>
+                </a>
+              </div>
+          </li>
+          <li >
+            <div id="resourcesDropdownButton" data-toggle="resources-dropdown" class="resources-dropdown">
+              <a
+                class="resource-option with-down-arrow">
+                OpenMMLab
+              </a>
+              <div class="resources-dropdown-menu">
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://openmmlab.com/" target="_blank">
+                  <span class="dropdown-title">Homepage </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://platform.openmmlab.com/" target="_blank">
+                  <span class="dropdown-title">Open Platform </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://github.com/open-mmlab/" target="_blank">
+                  <span class="dropdown-title">GitHub </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://twitter.com/OpenMMLab" target="_blank">
+                  <span class="dropdown-title">Twitter </span>
+                  <p></p>
+                </a>
+                <a class="doc-dropdown-option nav-dropdown-item"
+                  href="https://zhihu.com/people/openmmlab" target="_blank">
+                  <span class="dropdown-title">Zhihu </span>
+                  <p></p>
+                </a>
+              </div>
+          </li>
+        </ul>
+      </div>
+
+      <a class="main-menu-open-button" href="#" data-behavior="open-mobile-menu"></a>
+    </div>
+  </div>
+</div>
+
+<body class="pytorch-body">
+
+   
+
+  
+
+  <div class="table-of-contents-link-wrapper">
+    <span>Table of Contents</span>
+    <a href="#" class="toggle-table-of-contents" data-behavior="toggle-table-of-contents"></a>
+  </div>
+
+  <nav data-toggle="wy-nav-shift" class="pytorch-left-menu" id="pytorch-left-menu">
+    <div class="pytorch-side-scroll">
+      <div class="pytorch-menu pytorch-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <div class="pytorch-left-menu-search">
+          
+
+          
+          
+          
+          
+
+          
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search Docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        
+        
+        
+        
+        
+        <p class="caption"><span class="caption-text">Get Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html#verification">Verification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_zoo.html">Benchmark and Model Zoo</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Quick Run</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="1_exist_data_model.html">1: Inference and train with existing models and standard datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_new_data_model.html">2: Train with customized datasets</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3: Train with customized models and standard datasets</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/config.html">Tutorial 1: Learn about Configs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/customize_dataset.html">Tutorial 2: Customize Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/data_pipeline.html">Tutorial 3: Customize Data Pipelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/customize_models.html">Tutorial 4: Customize Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/customize_runtime.html">Tutorial 5: Customize Runtime Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/customize_losses.html">Tutorial 6: Customize Losses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/finetune.html">Tutorial 7: Finetuning Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/pytorch2onnx.html">Tutorial 8: Pytorch to ONNX (Experimental)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/onnx2tensorrt.html">Tutorial 9: ONNX to TensorRT (Experimental)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/init_cfg.html">Tutorial 10: Weight initialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/how_to.html">Tutorial 11: How to xxx</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Useful Tools and Scripts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html">Log Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#result-analysis">Result Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#visualization">Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#error-analysis">Error Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#model-serving">Model Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#model-complexity">Model Complexity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#model-conversion">Model conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#dataset-conversion">Dataset Conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#dataset-download">Dataset Download</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#benchmark">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#miscellaneous">Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#hyper-parameter-optimization">Hyper-parameter Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="useful_tools.html#confusion-matrix">Confusion Matrix</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="conventions.html">Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compatibility.html">Compatibility of MMDetection 2.x</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.html">Projects based on MMDetection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Switch Language</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="switch_language.html"><a href='https://mmdetection.readthedocs.io/en/latest/'>English</a></a></li>
+<li class="toctree-l1"><a class="reference internal" href="switch_language.html#a-href-https-mmdetection-readthedocs-io-zh-cn-latest-a"><a href='https://mmdetection.readthedocs.io/zh_CN/latest/'>简体中文</a></a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">mmdet.apis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html#mmdet-core">mmdet.core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html#mmdet-datasets">mmdet.datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html#mmdet-models">mmdet.models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html#mmdet-utils">mmdet.utils</a></li>
+</ul>
+
+        
+        
+      </div>
+    </div>
+  </nav>
+
+  <div class="pytorch-container">
+    <div class="pytorch-page-level-bar" id="pytorch-page-level-bar">
+      <div class="pytorch-breadcrumbs-wrapper">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="pytorch-breadcrumbs">
+    
+      <li>
+        <a href="index.html">
+            Docs
+        </a> &gt;
+      </li>
+
+        
+      <li>3: Train with customized models and standard datasets</li>
+    
+    
+      <li class="pytorch-breadcrumbs-aside">
+        
+            
+            <a href="_sources/3_exist_data_new_model.md.txt" rel="nofollow"><img src="_static/images/view-page-source-icon.svg"></a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+</div>
+      </div>
+
+      <div class="pytorch-shortcuts-wrapper" id="pytorch-shortcuts-wrapper">
+        Shortcuts
+      </div>
+    </div>
+
+    <section data-toggle="wy-nav-shift" id="pytorch-content-wrap" class="pytorch-content-wrap">
+      <div class="pytorch-content-left">
+        
+          <div class="rst-content">
+            
+            <div role="main" class="main-content" itemscope="itemscope" itemtype="http://schema.org/Article">
+              <article itemprop="articleBody" id="pytorch-article" class="pytorch-article">
+                
+  <div class="section" id="train-with-customized-models-and-standard-datasets">
+<h1>3: Train with customized models and standard datasets<a class="headerlink" href="#train-with-customized-models-and-standard-datasets" title="Permalink to this headline">¶</a></h1>
+<p>In this note, you will know how to train, test and inference your own customized models under standard datasets. We use the cityscapes dataset to train a customized Cascade Mask R-CNN R50 model as an example to demonstrate the whole process, which using <a class="reference external" href="https://github.com/Gus-Guo/AugFPN"><code class="docutils literal notranslate"><span class="pre">AugFPN</span></code></a> to replace the default <code class="docutils literal notranslate"><span class="pre">FPN</span></code> as neck, and add <code class="docutils literal notranslate"><span class="pre">Rotate</span></code> or <code class="docutils literal notranslate"><span class="pre">Translate</span></code> as training-time auto augmentation.</p>
+<p>The basic steps are as below:</p>
+<ol class="simple">
+<li><p>Prepare the standard dataset</p></li>
+<li><p>Prepare your own customized model</p></li>
+<li><p>Prepare a config</p></li>
+<li><p>Train, test, and inference models on the standard dataset.</p></li>
+</ol>
+<div class="section" id="prepare-the-standard-dataset">
+<h2>Prepare the standard dataset<a class="headerlink" href="#prepare-the-standard-dataset" title="Permalink to this headline">¶</a></h2>
+<p>In this note, as we use the standard cityscapes dataset as an example.</p>
+<p>It is recommended to symlink the dataset root to <code class="docutils literal notranslate"><span class="pre">$MMDETECTION/data</span></code>.
+If your folder structure is different, you may need to change the corresponding paths in config files.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mmdetection
+├── mmdet
+├── tools
+├── configs
+├── data
+│   ├── coco
+│   │   ├── annotations
+│   │   ├── train2017
+│   │   ├── val2017
+│   │   ├── test2017
+│   ├── cityscapes
+│   │   ├── annotations
+│   │   ├── leftImg8bit
+│   │   │   ├── train
+│   │   │   ├── val
+│   │   ├── gtFine
+│   │   │   ├── train
+│   │   │   ├── val
+│   ├── VOCdevkit
+│   │   ├── VOC2007
+│   │   ├── VOC2012
+</pre></div>
+</div>
+<p>Or you can set your dataset root through</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">MMDET_DATASETS</span><span class="o">=</span><span class="nv">$data_root</span>
+</pre></div>
+</div>
+<p>We will replace dataset root with <code class="docutils literal notranslate"><span class="pre">$MMDET_DATASETS</span></code>, so you don’t have to modify the corresponding path in config files.</p>
+<p>The cityscapes annotations have to be converted into the coco format using <code class="docutils literal notranslate"><span class="pre">tools/dataset_converters/cityscapes.py</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install cityscapesscripts
+python tools/dataset_converters/cityscapes.py ./data/cityscapes --nproc <span class="m">8</span> --out-dir ./data/cityscapes/annotations
+</pre></div>
+</div>
+<p>Currently the config files in <code class="docutils literal notranslate"><span class="pre">cityscapes</span></code> use COCO pre-trained weights to initialize.
+You could download the pre-trained models in advance if network is unavailable or slow, otherwise it would cause errors at the beginning of training.</p>
+</div>
+<div class="section" id="prepare-your-own-customized-model">
+<h2>Prepare your own customized model<a class="headerlink" href="#prepare-your-own-customized-model" title="Permalink to this headline">¶</a></h2>
+<p>The second step is to use your own module or training setting. Assume that we want to implement a new neck called <code class="docutils literal notranslate"><span class="pre">AugFPN</span></code> to replace with the default <code class="docutils literal notranslate"><span class="pre">FPN</span></code> under the existing detector Cascade Mask R-CNN R50. The following implements<code class="docutils literal notranslate"><span class="pre">AugFPN</span></code> under MMDetection.</p>
+<div class="section" id="define-a-new-neck-e-g-augfpn">
+<h3>1. Define a new neck (e.g. AugFPN)<a class="headerlink" href="#define-a-new-neck-e-g-augfpn" title="Permalink to this headline">¶</a></h3>
+<p>Firstly create a new file <code class="docutils literal notranslate"><span class="pre">mmdet/models/necks/augfpn.py</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">..builder</span> <span class="kn">import</span> <span class="n">NECKS</span>
+
+<span class="nd">@NECKS</span><span class="o">.</span><span class="n">register_module</span><span class="p">()</span>
+<span class="k">class</span> <span class="nc">AugFPN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                <span class="n">in_channels</span><span class="p">,</span>
+                <span class="n">out_channels</span><span class="p">,</span>
+                <span class="n">num_outs</span><span class="p">,</span>
+                <span class="n">start_level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">end_level</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">add_extra_convs</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+        <span class="c1"># implementation is ignored</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="import-the-module">
+<h3>2. Import the module<a class="headerlink" href="#import-the-module" title="Permalink to this headline">¶</a></h3>
+<p>You can either add the following line to <code class="docutils literal notranslate"><span class="pre">mmdet/models/necks/__init__.py</span></code>,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.augfpn</span> <span class="kn">import</span> <span class="n">AugFPN</span>
+</pre></div>
+</div>
+<p>or alternatively add</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">custom_imports</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">imports</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mmdet.models.necks.augfpn.py&#39;</span><span class="p">],</span>
+    <span class="n">allow_failed_imports</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>to the config file and avoid modifying the original code.</p>
+</div>
+<div class="section" id="modify-the-config-file">
+<h3>3. Modify the config file<a class="headerlink" href="#modify-the-config-file" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">neck</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;AugFPN&#39;</span><span class="p">,</span>
+    <span class="n">in_channels</span><span class="o">=</span><span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2048</span><span class="p">],</span>
+    <span class="n">out_channels</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+    <span class="n">num_outs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more detailed usages about customize your own models (e.g. implement a new backbone, head, loss, etc) and runtime training settings (e.g. define a new optimizer, use gradient clip, customize training schedules and hooks, etc), please refer to the guideline <a class="reference internal" href="tutorials/customize_models.html"><span class="doc">Customize Models</span></a> and <a class="reference internal" href="tutorials/customize_runtime.html"><span class="doc">Customize Runtime Settings</span></a> respectively.</p>
+</div>
+</div>
+<div class="section" id="prepare-a-config">
+<h2>Prepare a config<a class="headerlink" href="#prepare-a-config" title="Permalink to this headline">¶</a></h2>
+<p>The third step is to prepare a config for your own training setting. Assume that we want to add <code class="docutils literal notranslate"><span class="pre">AugFPN</span></code> and <code class="docutils literal notranslate"><span class="pre">Rotate</span></code> or <code class="docutils literal notranslate"><span class="pre">Translate</span></code> augmentation to existing Cascade Mask R-CNN R50 to train the cityscapes dataset, and assume the config is under directory <code class="docutils literal notranslate"><span class="pre">configs/cityscapes/</span></code> and named as <code class="docutils literal notranslate"><span class="pre">cascade_mask_rcnn_r50_augfpn_autoaug_10e_cityscapes.py</span></code>, the config is as below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># The new config inherits the base configs to highlight the necessary modification</span>
+<span class="n">_base_</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;../_base_/models/cascade_mask_rcnn_r50_fpn.py&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;../_base_/datasets/cityscapes_instance.py&#39;</span><span class="p">,</span> <span class="s1">&#39;../_base_/default_runtime.py&#39;</span>
+<span class="p">]</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="c1"># set None to avoid loading ImageNet pretrained backbone,</span>
+    <span class="c1"># instead here we set `load_from` to load from COCO pretrained detectors.</span>
+    <span class="n">backbone</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">init_cfg</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="c1"># replace neck from defaultly `FPN` to our new implemented module `AugFPN`</span>
+    <span class="n">neck</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+        <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;AugFPN&#39;</span><span class="p">,</span>
+        <span class="n">in_channels</span><span class="o">=</span><span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="mi">2048</span><span class="p">],</span>
+        <span class="n">out_channels</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+        <span class="n">num_outs</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+    <span class="c1"># We also need to change the num_classes in head from 80 to 8, to match the</span>
+    <span class="c1"># cityscapes dataset&#39;s annotation. This modification involves `bbox_head` and `mask_head`.</span>
+    <span class="n">roi_head</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+        <span class="n">bbox_head</span><span class="o">=</span><span class="p">[</span>
+            <span class="nb">dict</span><span class="p">(</span>
+                <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Shared2FCBBoxHead&#39;</span><span class="p">,</span>
+                <span class="n">in_channels</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+                <span class="n">fc_out_channels</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+                <span class="n">roi_feat_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                <span class="c1"># change the number of classes from defaultly COCO to cityscapes</span>
+                <span class="n">num_classes</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                <span class="n">bbox_coder</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;DeltaXYWHBBoxCoder&#39;</span><span class="p">,</span>
+                    <span class="n">target_means</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+                    <span class="n">target_stds</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]),</span>
+                <span class="n">reg_class_agnostic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">loss_cls</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;CrossEntropyLoss&#39;</span><span class="p">,</span>
+                    <span class="n">use_sigmoid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">loss_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+                <span class="n">loss_bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;SmoothL1Loss&#39;</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                               <span class="n">loss_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)),</span>
+            <span class="nb">dict</span><span class="p">(</span>
+                <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Shared2FCBBoxHead&#39;</span><span class="p">,</span>
+                <span class="n">in_channels</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+                <span class="n">fc_out_channels</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+                <span class="n">roi_feat_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                <span class="c1"># change the number of classes from defaultly COCO to cityscapes</span>
+                <span class="n">num_classes</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                <span class="n">bbox_coder</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;DeltaXYWHBBoxCoder&#39;</span><span class="p">,</span>
+                    <span class="n">target_means</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+                    <span class="n">target_stds</span><span class="o">=</span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]),</span>
+                <span class="n">reg_class_agnostic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">loss_cls</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;CrossEntropyLoss&#39;</span><span class="p">,</span>
+                    <span class="n">use_sigmoid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">loss_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+                <span class="n">loss_bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;SmoothL1Loss&#39;</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                               <span class="n">loss_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)),</span>
+            <span class="nb">dict</span><span class="p">(</span>
+                <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Shared2FCBBoxHead&#39;</span><span class="p">,</span>
+                <span class="n">in_channels</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+                <span class="n">fc_out_channels</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+                <span class="n">roi_feat_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                <span class="c1"># change the number of classes from defaultly COCO to cityscapes</span>
+                <span class="n">num_classes</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                <span class="n">bbox_coder</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;DeltaXYWHBBoxCoder&#39;</span><span class="p">,</span>
+                    <span class="n">target_means</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+                    <span class="n">target_stds</span><span class="o">=</span><span class="p">[</span><span class="mf">0.033</span><span class="p">,</span> <span class="mf">0.033</span><span class="p">,</span> <span class="mf">0.067</span><span class="p">,</span> <span class="mf">0.067</span><span class="p">]),</span>
+                <span class="n">reg_class_agnostic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">loss_cls</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;CrossEntropyLoss&#39;</span><span class="p">,</span>
+                    <span class="n">use_sigmoid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">loss_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+                <span class="n">loss_bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;SmoothL1Loss&#39;</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">loss_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))</span>
+        <span class="p">],</span>
+        <span class="n">mask_head</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;FCNMaskHead&#39;</span><span class="p">,</span>
+            <span class="n">num_convs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">in_channels</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+            <span class="n">conv_out_channels</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+            <span class="c1"># change the number of classes from defaultly COCO to cityscapes</span>
+            <span class="n">num_classes</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+            <span class="n">loss_mask</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;CrossEntropyLoss&#39;</span><span class="p">,</span> <span class="n">use_mask</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">loss_weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))))</span>
+
+<span class="c1"># over-write `train_pipeline` for new added `AutoAugment` training setting</span>
+<span class="n">img_norm_cfg</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">123.675</span><span class="p">,</span> <span class="mf">116.28</span><span class="p">,</span> <span class="mf">103.53</span><span class="p">],</span> <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">58.395</span><span class="p">,</span> <span class="mf">57.12</span><span class="p">,</span> <span class="mf">57.375</span><span class="p">],</span> <span class="n">to_rgb</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">train_pipeline</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;LoadImageFromFile&#39;</span><span class="p">),</span>
+    <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;LoadAnnotations&#39;</span><span class="p">,</span> <span class="n">with_bbox</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">with_mask</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="nb">dict</span><span class="p">(</span>
+        <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;AutoAugment&#39;</span><span class="p">,</span>
+        <span class="n">policies</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">[</span><span class="nb">dict</span><span class="p">(</span>
+                 <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Rotate&#39;</span><span class="p">,</span>
+                 <span class="n">level</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                 <span class="n">img_fill_val</span><span class="o">=</span><span class="p">(</span><span class="mi">124</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">104</span><span class="p">),</span>
+                 <span class="n">prob</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">],</span>
+            <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Rotate&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">img_fill_val</span><span class="o">=</span><span class="p">(</span><span class="mi">124</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">104</span><span class="p">)),</span>
+             <span class="nb">dict</span><span class="p">(</span>
+                 <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Translate&#39;</span><span class="p">,</span>
+                 <span class="n">level</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                 <span class="n">prob</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">img_fill_val</span><span class="o">=</span><span class="p">(</span><span class="mi">124</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">104</span><span class="p">))</span>
+            <span class="p">],</span>
+        <span class="p">]),</span>
+    <span class="nb">dict</span><span class="p">(</span>
+        <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Resize&#39;</span><span class="p">,</span> <span class="n">img_scale</span><span class="o">=</span><span class="p">[(</span><span class="mi">2048</span><span class="p">,</span> <span class="mi">800</span><span class="p">),</span> <span class="p">(</span><span class="mi">2048</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)],</span> <span class="n">keep_ratio</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;RandomFlip&#39;</span><span class="p">,</span> <span class="n">flip_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+    <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Normalize&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">img_norm_cfg</span><span class="p">),</span>
+    <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Pad&#39;</span><span class="p">,</span> <span class="n">size_divisor</span><span class="o">=</span><span class="mi">32</span><span class="p">),</span>
+    <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;DefaultFormatBundle&#39;</span><span class="p">),</span>
+    <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;Collect&#39;</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;img&#39;</span><span class="p">,</span> <span class="s1">&#39;gt_bboxes&#39;</span><span class="p">,</span> <span class="s1">&#39;gt_labels&#39;</span><span class="p">,</span> <span class="s1">&#39;gt_masks&#39;</span><span class="p">]),</span>
+<span class="p">]</span>
+
+<span class="c1"># set batch_size per gpu, and set new training pipeline</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">samples_per_gpu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">workers_per_gpu</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="c1"># over-write `pipeline` with new training pipeline setting</span>
+    <span class="n">train</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">pipeline</span><span class="o">=</span><span class="n">train_pipeline</span><span class="p">)))</span>
+
+<span class="c1"># Set optimizer</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;SGD&#39;</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">)</span>
+<span class="n">optimizer_config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">grad_clip</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="c1"># Set customized learning policy</span>
+<span class="n">lr_config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">policy</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span>
+    <span class="n">warmup</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span>
+    <span class="n">warmup_iters</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">warmup_ratio</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+    <span class="n">step</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">])</span>
+<span class="n">runner</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;EpochBasedRunner&#39;</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># We can use the COCO pretrained Cascade Mask R-CNN R50 model for more stable performance initialization</span>
+<span class="n">load_from</span> <span class="o">=</span> <span class="s1">&#39;https://download.openmmlab.com/mmdetection/v2.0/cascade_rcnn/cascade_mask_rcnn_r50_fpn_1x_coco/cascade_mask_rcnn_r50_fpn_1x_coco_20200203-9d4dcb24.pth&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="train-a-new-model">
+<h2>Train a new model<a class="headerlink" href="#train-a-new-model" title="Permalink to this headline">¶</a></h2>
+<p>To train a model with the new config, you can simply run</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/train.py configs/cityscapes/cascade_mask_rcnn_r50_augfpn_autoaug_10e_cityscapes.py
+</pre></div>
+</div>
+<p>For more detailed usages, please refer to the <a class="reference internal" href="1_exist_data_model.html"><span class="doc">Case 1</span></a>.</p>
+</div>
+<div class="section" id="test-and-inference">
+<h2>Test and inference<a class="headerlink" href="#test-and-inference" title="Permalink to this headline">¶</a></h2>
+<p>To test the trained model, you can simply run</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python tools/test.py configs/cityscapes/cascade_mask_rcnn_r50_augfpn_autoaug_10e_cityscapes.py work_dirs/cascade_mask_rcnn_r50_augfpn_autoaug_10e_cityscapes.py/latest.pth --eval bbox segm
+</pre></div>
+</div>
+<p>For more detailed usages, please refer to the <a class="reference internal" href="1_exist_data_model.html"><span class="doc">Case 1</span></a>.</p>
+</div>
+</div>
+
+
+              </article>
+              
+            </div>
+            <footer>
+  
+  <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+    
+    <a href="tutorials/index.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n"
+      rel="next">Next <img src="_static/images/chevron-right-blue.svg"
+        class="next-page"></a>
+    
+    
+    <a href="2_new_data_model.html" class="btn btn-neutral" title="2: Train with customized datasets" accesskey="p"
+      rel="prev"><img src="_static/images/chevron-right-blue.svg" class="previous-page"> Previous</a>
+    
+  </div>
+  
+
+  <hr>
+
+  <div role="contentinfo">
+    <p>
+      &copy; Copyright 2018-2021, OpenMMLab.
+
+    </p>
+  </div>
+  
+  <div>
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a
+      href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the
+      Docs</a>.
+  </div>
+   
+
+</footer>
+          </div>
+        </div>
+
+        <div class="pytorch-content-right" id="pytorch-content-right">
+          <div class="pytorch-right-menu" id="pytorch-right-menu">
+            <div class="pytorch-side-scroll" id="pytorch-side-scroll-right">
+              <ul>
+<li><a class="reference internal" href="#">3: Train with customized models and standard datasets</a><ul>
+<li><a class="reference internal" href="#prepare-the-standard-dataset">Prepare the standard dataset</a></li>
+<li><a class="reference internal" href="#prepare-your-own-customized-model">Prepare your own customized model</a><ul>
+<li><a class="reference internal" href="#define-a-new-neck-e-g-augfpn">1. Define a new neck (e.g. AugFPN)</a></li>
+<li><a class="reference internal" href="#import-the-module">2. Import the module</a></li>
+<li><a class="reference internal" href="#modify-the-config-file">3. Modify the config file</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#prepare-a-config">Prepare a config</a></li>
+<li><a class="reference internal" href="#train-a-new-model">Train a new model</a></li>
+<li><a class="reference internal" href="#test-and-inference">Test and inference</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+          </div>
+        </div>
+    </section>
+  </div>
+
+  
+
+
+  
+
+  
+  <script type="text/javascript" id="documentation_options" data-url_root="./"
+    src="_static/documentation_options.js"></script>
+  <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+  <script src="_static/jquery.js"></script>
+  <script src="_static/underscore.js"></script>
+  <script src="_static/doctools.js"></script>
+  <script src="_static/clipboard.min.js"></script>
+  <script src="_static/copybutton.js"></script>
+  
+
+  
+
+  <script type="text/javascript" src="_static/js/vendor/popper.min.js"></script>
+  <script type="text/javascript" src="_static/js/vendor/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+    jQuery(function () {
+      SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+  <!-- Begin Footer -->
+
+  <div class="container-fluid docs-tutorials-resources" id="docs-tutorials-resources">
+  </div>
+
+  <!-- End Footer -->
+
+  <!-- Begin Mobile Menu -->
+
+  <div class="mobile-main-menu">
+    <div class="container-fluid">
+      <div class="container">
+        <div class="mobile-main-menu-header-container">
+          <a class="header-logo" href="" aria-label="OpenMMLab"></a>
+          <a class="main-menu-close-button" href="#" data-behavior="close-mobile-menu"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-main-menu-links-container">
+      <div class="main-menu">
+        <ul>
+          <li>
+            <a href="https://github.com/open-mmlab/mmdetection" target="_blank">GitHub</a>
+          </li>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Mobile Menu -->
+
+  <script type="text/javascript" src="_static/js/vendor/anchor.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      mobileMenu.bind();
+      mobileTOC.bind();
+      pytorchAnchors.bind();
+      sideMenus.bind();
+      scrollToAnchor.bind();
+      highlightNavigation.bind();
+      mainMenuDropdown.bind();
+      filterTags.bind();
+
+      // Add class to links that have code blocks, since we cannot create links in code blocks
+      $("article.pytorch-article a span.pre").each(function (e) {
+        $(this).closest("a").addClass("has-code");
+      });
+    })
+  </script>
+</body>
+
+</html>
