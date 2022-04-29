@@ -1,75 +1,75 @@
 # Discovery and connect
 
-## 内置的界面
+## Built-in interface
 
-为了更加方便快速的帮助开发串口通信应用程序，我们内部集成了一个必备的搜索和连接页面，使用方法 `openDiscoveryActivity()` 打开一个内置的界面：
+In order to help develop serial communication applications more conveniently and quickly, we have integrated a necessary search and connection page internally. Use the method `openDiscoveryActivity()` to open a built-in interface:
 
 ```java
 serialPort.openDiscoveryActivity();
 ```
 
-## 使用自定义的界面
+## Use a custom interface
 
-当然了，在更多的情况我们的搜索和连接页面需要更加的美观和定制化。那么，可以使用方法 `serialPort.openDiscoveryActivity(intent)` 打开一个你自定义的页面：
+Of course, in more cases our search and connection pages need to be more beautiful and customizable. Then, you can use the method `serialPort.openDiscoveryActivity(intent)` to open a custom page:
 
 ```java
-//这里修改为你自定义的Activity即可
+//Here you can modify it to your custom Activity
 Intent intent = new Intent(this, DiscoveryActivity.class);
 serialPort.openDiscoveryActivity(intent);
 ```
 
-## 搜索设备
+## Search device
 
-### 开始搜索
+### Start search
 
-使用方法 `doDiscovery(context)` 即可开始搜索设备：
+Use the method `doDiscovery(context)` to start searching for devices:
 
 ```java
 serialPort.doDiscovery(this);
 ```
 
-### 停止搜索
+### Stop searching
 
-使用方法 `cancelDiscovery(context)` 即可开始搜索设备：
+Use the method `cancelDiscovery(context)` to start searching for devices:
 
 ```java
 serialPort.cancelDiscovery(this);
 ```
 
-### 搜索状态的监听
+### Monitor search status
 
-使用方法 `setDiscoveryStatusWithTypeCallback(discoveryStatusWithTypeCallback)` 或者 `setDiscoveryStatusCallback(discoveryStatusCallback)`  设置一个搜索状态监听器：
+Use the method `setDiscoveryStatusWithTypeCallback(discoveryStatusWithTypeCallback)` or `setDiscoveryStatusCallback(discoveryStatusCallback)` to set a search status listener:
 
 ```java
-//status 为搜索状态
+//status is search status
 serialPort.setDiscoveryStatusCallback((status) ->{  
    
    return null;
 });
-//搜索状态带类型的监听
-//deviceType = SerialPort.DISCOVERY_BLE 搜索BLE设备
-//deviceType = SerialPort.DISCOVERY_LEGACY 搜索传统类型
-//status 为搜索状态
+//Search for listeners with status band type
+//deviceType = SerialPort.DISCOVERY_BLE Search for BLE devices
+//deviceType = SerialPort.DISCOVERY_LEGACY Search traditional types
+//status is search status
 serialPort.setDiscoveryStatusWithTypeCallback((deviceType, status) -> {
 
 return null;
 });
 ```
 
-除此之外，你还可以在构建实例时配置监听器：
+In addition to this, you can also configure the listener when building the instance:
 
 ```java
-//status 为搜索状态
+//status is search status
 SerialPort serialPort = SerialPortBuilder.INSTANCE
                 .setDiscoveryStatusCallback( (status) -> {
 
                     return null;
                 })
                 .build(this);
-//搜索状态带类型的监听
-//deviceType = SerialPort.DISCOVERY_BLE 搜索BLE设备
-//deviceType = SerialPort.DISCOVERY_LEGACY 搜索传统类型
-//status 为搜索状态
+//Search for listeners with status band type
+//deviceType = SerialPort.DISCOVERY_BLE Search for BLE devices
+//deviceType = SerialPort.DISCOVERY_LEGACY Search traditional types
+//status is search status
 SerialPort serialPort = SerialPortBuilder.INSTANCE
                 .setDiscoveryStatusWithTypeCallback( (deviceType, status) -> {
                     
@@ -78,46 +78,46 @@ SerialPort serialPort = SerialPortBuilder.INSTANCE
                 .build(this);
 ```
 
-### 获取搜索结果
+### Get search results
 
-使用方法 `getPairedDevicesListBD()` 和 `getUnPairedDevicesListBD()` 获取搜索结果：
+Use the methods `getPairedDevicesListBD()` and `getUnPairedDevicesListBD()` to get search results:
 
 ```java
-serialPort.getPairedDevicesListBD();	//获取已配对设备列表
-serialPort.getUnPairedDevicesListBD();	//获取未配对设备列表
+serialPort.getPairedDevicesListBD();	//Get a list of paired devices
+serialPort.getUnPairedDevicesListBD();	//Get a list of unpaired devices
 ```
 
-如果搜索未结束，则可能获取的未配对设备列表为空或者不全。
+If the search does not end, the acquired list of unpaired devices may be empty or incomplete.
 
-## 连接设备
+## Connect the device
 
-想要成功的连接设备，并且完成通信，设置正确的UUID是必不可少的一步。
+Setting the correct UUID is an essential step in order to successfully connect the device and complete the communication.
 
-### 传统设备
+### Traditional equipment
 
-#### 设置UUID
+#### Set UUID
 
-使用 `SerialPort` 的静态方法 `setLegacyUUID(uuid)` 设置传统设备的UUID：
+Use the static method `setLegacyUUID(uuid)` of `SerialPort` to set the UUID of the legacy device:
 
 ```java
 SerialPort.Companion.setLegacyUUID("00001101-0000-1000-8000-00805F9B34FB");
 ```
 
-传统设备**一般**情况下，可以不用设置UUID，使用默认的即可。
+For traditional devices **generally**, you can use the default UUID without setting UUID.
 
-#### 建立连接
+#### Establish connection
 
-使用方法 `connectLegacyDevice(address)` 与传统设备建立连接：
+Use the method `connectLegacyDevice(address)` to establish a connection with a legacy device:
 
 ```java
 serialPort.connectLegacyDevice("98:D3:32:21:67:D0");
 ```
 
-### BLE设备
+### BLE device
 
-#### 设置UUID
+#### Set UUID
 
-使用 `SerialPort` 的静态方法 `setBleUUID(uuid)` 设置BLE设备的UUID， 或者使用`setBleSendUUID` 和 `setBleReadUUID` 分别独立设置发送和接收的UUID：
+Use the static method `setBleUUID(uuid)` of `SerialPort` to set the UUID of the BLE device, or use `setBleSendUUID` and `setBleReadUUID` to set the send and receive UUID independently:
 
 ```java
 SerialPort.Companion.setBleUUID("0000ffe1-0000-1000-8000-00805f9b34fb");
@@ -125,31 +125,31 @@ SerialPort.Companion.setBleReadUUID("0000ffe1-0000-1000-8000-00805f9b34fb");
 SerialPort.Companion.setBleSendUUID("0000ffe1-0000-1000-8000-00805f9b34fb");
 ```
 
-如果独立设置了UUID，则以独立设置的为准。  
+If the UUID is set independently, the one set independently shall prevail.
 
-BLE设备大多数情况下都需要设置UUID，具体的UUID可以查询手册或咨询卖家。
+In most cases, BLE devices need to set UUID. For specific UUID, you can check the manual or consult the seller.
 
-除此之外，也可以使用方法 `printPossibleBleUUID()` 打印出可行的UUID，详情见：[打印uuid及其属性](./tools_java.html#uuid)
+In addition, you can also use the method `printPossibleBleUUID()` to print out the feasible UUID, see for details: [print uuid and its attributes](./tools_java.html#uuid)
 
-#### 建立连接
+#### Establish connection
 
-使用方法 `connectBle(address)` 与传统设备建立连接：
+Use the method `connectBle(address)` to establish a connection to a legacy device:
 
 ```java
 serialPort.connectBle("98:D3:32:21:67:D0");
 ```
 
-### 断开连接
+### Disconnect
 
-使用方法 `disconnect()` 与传统设备建立连接：
+Use the method `disconnect()` to establish a connection to a legacy device:
 
 ```java
 serialPort.disconnect();
 ```
 
-### 连接状态的监听
+### Monitor connection status
 
-使用方法 `setConnectionStatusCallback(connectionStatusCallback)` 设置一个连接状态的监听器：
+Use the method `setConnectionStatusCallback(connectionStatusCallback)` to set a connection status listener:
 
 ```java
 serialPort.setConnectionStatusCallback((status,bluetoothDevice)->{
@@ -158,7 +158,7 @@ serialPort.setConnectionStatusCallback((status,bluetoothDevice)->{
 });
 ```
 
-除此之外，你还可以在构建实例时配置监听器：
+In addition to this, you can also configure the listener when building the instance:
 
 ```java
 SerialPort serialPort = SerialPortBuilder.INSTANCE
@@ -169,12 +169,12 @@ SerialPort serialPort = SerialPortBuilder.INSTANCE
                 .build(this);
 ```
 
-这里的 `bluetoothDevice` 使用的时官方的类，其包含了蓝牙的设备的各种信息。详见[官方文档](https://developer.android.google.cn/reference/kotlin/android/bluetooth/BluetoothDevice)
+The `bluetoothDevice` used here is the official class, which contains various information about the Bluetooth device. see details [official documentation](https://developer.android.google.cn/reference/kotlin/android/bluetooth/BluetoothDevice)
 
-在之前版本使用的是自定义的 `Device` 类（不建议使用），其包含了：设备名、设备地址、设备类型。其实现如下：
+In previous versions, a custom `Device` class was used (deprecated), which contains: device name, device address, and device type. It is implemented as follows:
 
 ```kotlin
-@Deprecated("该类在4.0.0版本被弃用,将直接使用官方的BluetoothDevice类代替")
+@Deprecated("This class is deprecated in version 4.0.0 and will directly use the official BluetoothDevice class instead")
 data class Device(
     val name:String,
     val address:String,
@@ -182,9 +182,9 @@ data class Device(
 )
 ```
 
-### 连接结果的监听
+### Monitor connection result
 
-使用方法 `setConnectionResultCallback(connectionResultCallback)` 设置一个连接结果的监听器：
+Use the method `setConnectionResultCallback(connectionResultCallback)` to set a listener for the connection result:
 
 ```java
 serialPort.setConnectionResultCallback((result,bluetoothDevice)->{
@@ -193,7 +193,7 @@ serialPort.setConnectionResultCallback((result,bluetoothDevice)->{
 });
 ```
 
-除此之外，你还可以在构建实例时配置监听器：
+In addition to this, you can also configure the listener when building the instance:
 
 ```java
 SerialPort serialPort = SerialPortBuilder.INSTANCE
@@ -204,7 +204,7 @@ SerialPort serialPort = SerialPortBuilder.INSTANCE
                 .build(this);
 ```
 
-若连接成功则 `result` 为 `true` ，`bluetoothDevice`为连接成功的设备
+If the connection is successful, `result` is `true`, and `bluetoothDevice` is the successfully connected device
 
-若连接失败则 `result` 为 `false` ，`bluetoothDevice`为 `null`
+`result` is `false` if the connection fails, `bluetoothDevice` is `null`
 

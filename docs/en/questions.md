@@ -1,40 +1,39 @@
 # FREQUENTLY ASKED QUESTIONS
 
-## 功能支持
+## Feature support
 
-### 支持BLE设备吗？
+### Does it support BLE devices?
 
-支持，`SerialPort` 从 `4.0.0` 版本开始全面支持BLE设备。
+Certainly，`SerialPort` fully supports BLE devices since version `4.0.0`.
 
-### 有自动重连机制吗？
+### Is there an automatic reconnection mechanism?
 
-有，可以设置在启动时重连，也可以间隔时间自动重连。详见[自动重连](./tutorials/configuration_kotlin.html#id3)
+Yes, it can be set to reconnect at startup, or it can be automatically reconnected at intervals.See [auto reconnect](./tutorials/configuration_kotlin.html#id3)
 
-## 常见问题
+## Common problem
 
-### 为什么自定义页面的可用设备列表为空？
+### Why is the list of available devices for a custom page empty?
 
-在Android6.0之后一定要给上定位权限才可以搜索到可用设备。
+After Android 6.0, you must give the positioning permission to search for available devices.
 
-### 为什么BLE设备连接成功了，不能收发消息，有时还是发出异常？
+### Why does the BLE device connect successfully, but cannot send and receive messages, and sometimes an exception occurs?
 
-BLE设备连接成功后，还需要设置正确的UUID才可以正常通信。具体设置方法见[设置BLE设备UUID](./tutorials/discovery_connect_kotlin.html#ble)
+After the BLE device is successfully connected, it is necessary to set the correct UUID for normal communication.For the specific setting method, see [Set BLE device UUID](./tutorials/discovery_connect_kotlin.html#ble)
 
-## 还有其他问题怎么解决？
+## How to solve other problems?
 
-### 开启调试模式
+### Enable debug mode
 
-打开调试模式查看打印的日志信息。详见[调试模式](./tutorials/configuration_kotlin.html#id2)
+Turn on debug mode to view the printed log information. See [debug mode](./tutorials/configuration_kotlin.html#id2)
 
-### 利用强大的搜索引擎
+### Take advantage of a powerful search engine
 
 ![](./_static/image/google.png)
 
 ![](./_static/image/baidu.png)
 
-### 加群
+### Issues
 
-若通过以上方法仍未解决问题，请加入QQ技术交流群。
+If the above methods still do not solve the problem, Please open [issues](https://github.com/Shanyaliux/SerialPortSample/issues).
 
-![](./_static/image/qq.png)
 

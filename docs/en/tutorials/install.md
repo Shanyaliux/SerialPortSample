@@ -1,6 +1,6 @@
 # Install
 
-编辑`Build.gradle`文件并添加以下依赖项。
+Edit the `Build.gradle` file and add the following dependencies.
 
 ```groovy
 repositories {
@@ -13,9 +13,9 @@ dependencies {
 }
 ```
 
-如果你需要使用`4.1.6`及其以下版本，则按如下操作：  
-1. 添加 `JitPack` 仓库
-   将 `JitPack` 存储库添加到您的构建文件中
+If you need to use `4.1.6` and below, do as follows:  
+1. Add `JitPack` repository
+   Add the `JitPack` repository to your build file
    ```groovy
     allprojects {
         repositories {
@@ -24,10 +24,10 @@ dependencies {
         }
     }
    ```
-2. 添加依赖
+2. add dependencies
     ```groovy
     dependencies {
-        implementation 'com.gitee.Shanya:SerialPortSample:4.1.6'        //国内仓库
-        implementation 'com.github.Shanyaliux:SerialPortSample:4.1.6'   //国外仓库
+        implementation 'com.gitee.Shanya:SerialPortSample:4.1.6'        //Chinese warehouse
+        implementation 'com.github.Shanyaliux:SerialPortSample:4.1.6'   //Foreign warehouse
     }
     ```
