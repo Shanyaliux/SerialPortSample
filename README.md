@@ -13,20 +13,14 @@
   </p>
   <p>
 
- [![Website](https://img.shields.io/badge/Website-available-brightgreen?logo=e)](https://shanyaliux.cn/serialport/)
-  </p>
-  <p>
-    <sub>
-      Made with ❤︎ by
-      <a href="https://github.com/shanyaliux">
-        Shanya
-      </a>
-    </sub>
-  </p>
+[![docs](https://img.shields.io/badge/docs-latest-blue)](https://mmdetection.readthedocs.io/en/latest/)
+[![license](https://img.shields.io/github/license/open-mmlab/mmdetection.svg)](https://github.com/Shanyaliux/SerialPortSample/blob/master/LICENSE)
+[![open issues](https://isitmaintained.com/badge/open/open-mmlab/mmdetection.svg)](https://github.com/Shanyaliux/SerialPortSample/issues)
   <br />
 </div>
 
-## SerialPort
+## Introduction
+English | [简体中文](README_zh-CN.md)
 
 SerialPort is an open source android bluetooth lightweight package library that easily solves the complexity of building your own bluetooth application, allowing people to focus on their own designs without considering the underlying configuration of android bluetooth.
 
@@ -37,24 +31,24 @@ SerialPort is an open source android bluetooth lightweight package library that 
 - Automatic reconnection mechanism
 - Toast prompt content modification
 
-## Usage
-Edit the `Build.gradle` file and add the following dependencies.
-```groovy
-repositories {
-  google()
-  mavenCentral()
-}
+## License
+This project is released under the [Apache 2.0 license](LICENSE).
 
-dependencies {
-    implementation 'cn.shanyaliux.serialport:serialport:4.1.8'
-}
-```
+## Changelog
+**4.1.8** was released in 14/4/2022:
+- fix autoOpenDiscoveryActivity is always true
+- DiscoveryActivity add English
+- add setDiscoveryTime
 
-## Documentation
+## Installation
+Please refer to [install.md](docs/en/tutorials/install.md) for installation.
 
-[https://shanyaliux.cn/serialport/](https://shanyaliux.cn/serialport/)
+## Getting Started
+Please see [configuration_kotlin.md](docs/en/tutorials/configuration_kotlin.md) or [configuration_java.md](docs/en/tutorials/configuration_java.md) for the basic usage of SerialPort.
+
+We provide complete documentation. [documentation](https://serialportsample.readthedocs.io/en/latest/)
 
 ## Demo sample source code
-
+The following is the simplest Demo source code of Java and Kotlin based on SerialPort to implement Bluetooth App  
 [Java](https://gitee.com/Shanya/SerialPortDemoByJava)  
 [Kotlin](https://gitee.com/Shanya/SerialPortDemoByKotlin)
