@@ -44,7 +44,7 @@ This project is released under the [Apache 2.0 license](LICENSE).
 Please refer to [install.md](docs/en/tutorials/install.md) for installation.
 
 ## Getting Started
-Please see [configuration_kotlin.md](docs/en/tutorials/configuration_kotlin.md) or [configuration_java.md](docs/en/tutorials/configuration_java.md) for the basic usage of SerialPort.
+Please see [Basic usage Kotlin.md](docs/en/tutorials/getting_started_kotlin.md) or [Basic usage Java.md](docs/en/tutorials/getting_started_java.md) for the basic usage of SerialPort.
 
 We provide complete documentation. [documentation](https://serialportsample.readthedocs.io/en/latest/)
 
