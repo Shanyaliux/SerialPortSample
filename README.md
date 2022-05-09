@@ -35,10 +35,11 @@ SerialPort is an open source android bluetooth lightweight package library that 
 This project is released under the [Apache 2.0 license](LICENSE).
 
 ## Changelog
-**4.1.8** was released in 14/4/2022:
-- fix autoOpenDiscoveryActivity is always true
-- DiscoveryActivity add English
-- add setDiscoveryTime
+**4.1.9** was released in 9/5/2022:
+- When the sendUUID is incorrect, it crashes
+
+
+For more changelogs see: [Changelog](docs/en/changelog.md)
 
 ## Installation
 Please refer to [install.md](docs/en/tutorials/install.md) for installation.

@@ -35,6 +35,7 @@ Welcome to SerialPort's documentation!
    :caption: 说明
 
    questions
+   changelog
    sponsor
 
 .. toctree::

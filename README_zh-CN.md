@@ -35,10 +35,10 @@ SerialPort 是一个开源的对 Android 蓝牙串口通信的轻量封装库，
 该项目采用 [Apache 2.0 开源许可证](LICENSE)。
 
 ## 更新日志
-最新的 **4.1.8** 版本已经在 14/4/2022 发布:
-- 修复 autoOpenDiscoveryActivity 始终为 true
-- DiscoveryActivity 添加英文
-- 添加 setDiscoveryTime
+最新的 **4.1.9** 版本已经在 9/5/2022 发布:  
+- 修复当发送UUID设置错误时应用闪退  
+
+更多更新日志见: [更新日志](docs/zh_CN/changelog.md)
 
 ## 安装
 请参考 [安装文档](docs/zh_CN/tutorials/install.md) 进行安装。
