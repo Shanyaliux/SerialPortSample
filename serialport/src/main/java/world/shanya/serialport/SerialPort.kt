@@ -642,7 +642,7 @@ class SerialPort private constructor() {
                 LogUtil.log("   Properties", gattCharacteristic.value.toString(2))
             }
         }
-        LogUtil.log("Properties 具体含义请查询官网, https://shanyaliux.cn/serialport")
+        LogUtil.log("Properties 具体含义请查询官网, https://serialportsample.readthedocs.io/zh_CN/latest/tutorials/tools_java.html#uuid")
     }
 
     /**
