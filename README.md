@@ -36,7 +36,7 @@ This project is released under the [Apache 2.0 license](LICENSE).
 
 ## Changelog
 **4.1.9** was released in 9/5/2022:
-- When the sendUUID is incorrect, it crashes
+- fix: when the sendUUID is incorrect, it crashes
 
 
 For more changelogs see: [Changelog](docs/en/changelog.md)
