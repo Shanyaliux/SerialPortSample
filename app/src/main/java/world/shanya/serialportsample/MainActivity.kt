@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
 
         serialPort = SerialPortBuilder
             .setConfig(config)
-            .setDiscoveryTime(2000)
             .isDebug(true)
             .setReceivedDataCallback {
                 myViewModel.receivedStringBuilder.append(it)
@@ -83,7 +82,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             .build(this)
-        serialPort?.requestMtu(512)
     }
 
     override fun onResume() {
