@@ -43,7 +43,6 @@ class SerialPortServerService : IntentService("SerialPortServerService") {
             if (flag) {
                 receivedData =
                     SerialPortTools.bytes2string(buffer, "GBK")
-
                 LogUtil.log("服务端收到数据", receivedData)
                 MainScope().launch {
                     SerialPortServer.serverReceivedDataCallback?.invoke(receivedData)

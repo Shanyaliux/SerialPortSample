@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.15572916666666667" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/activity_about.xml" value="0.25" />
+        <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/activity_debug.xml" value="0.26875" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/activity_main_activity.xml" value="0.13958333333333334" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/layout/activity_main_b.xml" value="0.13958333333333334" />

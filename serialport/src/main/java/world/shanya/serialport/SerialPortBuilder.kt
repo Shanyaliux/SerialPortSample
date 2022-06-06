@@ -240,10 +240,10 @@ object SerialPortBuilder {
      * @Date 2021-9-14
      * @Version 4.1.1
      */
-    fun setConnectionResultCallback(connectionResultCallback: ConnectionResultCallback): SerialPortBuilder {
-        SerialPort._setConnectionResultCallback(connectionResultCallback)
-        return this
-    }
+//    fun setConnectionResultCallback(connectionResultCallback: ConnectionResultCallback): SerialPortBuilder {
+//        SerialPort._setConnectionResultCallback(connectionResultCallback)
+//        return this
+//    }
 
     fun setBleCanWorkCallback(bleCanWorkCallback: BleCanWorkCallback): SerialPortBuilder {
         SerialPort._setBleCanWorkCallback(bleCanWorkCallback)
@@ -310,7 +310,6 @@ object SerialPortBuilder {
      */
     fun setConfig(config: SerialPortConfig):SerialPortBuilder {
         isDebug(config.debug)
-        isDebug(true)
         setLegacyUUID(config.UUID_LEGACY)
         setBleUUID(config.UUID_BLE)
         setBleReadUUID(config.UUID_BLE_READ)

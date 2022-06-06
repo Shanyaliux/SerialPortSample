@@ -32,7 +32,7 @@ typealias ConnectStatusCallback = (status: Boolean, device: Device) -> Unit
 //连接接口
 typealias ConnectCallback = () -> Unit
 //连接结果接口
-typealias ConnectionResultCallback = (result: Boolean, bluetoothDevice: BluetoothDevice?) -> Unit
+//typealias ConnectionResultCallback = (result: Boolean, bluetoothDevice: BluetoothDevice?) -> Unit
 //Ble device can work callback
 typealias BleCanWorkCallback = () -> Unit
 
@@ -170,7 +170,6 @@ internal object SerialPortConnect {
                             for (descriptors in it) {
                                 descriptors.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
                                 bluetoothGatt?.writeDescriptor(descriptors)
-                                LogUtil.log("Open Read")
                             }
                         }
                     }
@@ -359,7 +358,7 @@ internal object SerialPortConnect {
             SerialPort.connectCallback?.invoke()
             SerialPort.connectStatusCallback?.invoke(true, device)
             SerialPort.connectionStatusCallback?.invoke(true, bluetoothDevice)
-            SerialPort.connectionResultCallback?.invoke(true, bluetoothDevice)
+//            SerialPort.connectionResultCallback?.invoke(true, bluetoothDevice)
             if (bluetoothDevice?.type == 2) {
                 connectedBleDevice = bluetoothDevice
                 LogUtil.log("连接BLE设备成功","设备地址: ${bluetoothDevice.address}")
@@ -374,7 +373,8 @@ internal object SerialPortConnect {
             }
         } else {
             SerialPort.connectCallback?.invoke()
-            SerialPort.connectionResultCallback?.invoke(false, null)
+//            SerialPort.connectionResultCallback?.invoke(false, null)
+            SerialPort.connectionStatusCallback?.invoke(false, null)
             LogUtil.log("连接失败")
             context?.let {
                 ToastUtil.toast(it, SerialPortToast.connectFailed)
