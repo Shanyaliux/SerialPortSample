@@ -33,6 +33,9 @@ typealias ConnectStatusCallback = (status: Boolean, device: Device) -> Unit
 typealias ConnectCallback = () -> Unit
 //连接结果接口
 typealias ConnectionResultCallback = (result: Boolean, bluetoothDevice: BluetoothDevice?) -> Unit
+//Ble device can work callback
+typealias BleCanWorkCallback = () -> Unit
+
 
 
 /**
@@ -93,6 +96,15 @@ internal object SerialPortConnect {
         override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) {
             super.onMtuChanged(gatt, mtu, status)
             LogUtil.log("MTU", mtu.toString())
+        }
+
+        override fun onDescriptorWrite(
+            gatt: BluetoothGatt?,
+            descriptor: BluetoothGattDescriptor?,
+            status: Int
+        ) {
+            super.onDescriptorWrite(gatt, descriptor, status)
+            SerialPort.bleCanWorkCallback?.invoke()
         }
 
         override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
@@ -158,6 +170,7 @@ internal object SerialPortConnect {
                             for (descriptors in it) {
                                 descriptors.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
                                 bluetoothGatt?.writeDescriptor(descriptors)
+                                LogUtil.log("Open Read")
                             }
                         }
                     }

@@ -2,14 +2,10 @@ package world.shanya.serialport
 
 import android.annotation.SuppressLint
 import android.content.Context
-import world.shanya.serialport.connect.ConnectStatusCallback
-import world.shanya.serialport.connect.ConnectionResultCallback
-import world.shanya.serialport.connect.ConnectionStatusCallback
+import world.shanya.serialport.connect.*
 import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.DiscoveryStatusCallback
 import world.shanya.serialport.discovery.DiscoveryStatusWithTypeCallback
-import world.shanya.serialport.discovery.SerialPortDiscovery
-import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.SPUtil
 
 
@@ -249,6 +245,11 @@ object SerialPortBuilder {
         return this
     }
 
+    fun setBleCanWorkCallback(bleCanWorkCallback: BleCanWorkCallback): SerialPortBuilder {
+        SerialPort._setBleCanWorkCallback(bleCanWorkCallback)
+        return this
+    }
+
     /**
      * 发送数据函数
      * @param data 待发送数据
@@ -283,48 +284,6 @@ object SerialPortBuilder {
         return this
     }
 
-//    /**
-//     * 获取已配对设备列表
-//     * @return 已配对设备列表
-//     * @Author Shanya
-//     * @Date 2021-8-13
-//     * @Version 4.0.3
-//     */
-//    @Deprecated(message = "建议使用 getPairedDevicesListBD",
-//        replaceWith = ReplaceWith(
-//            expression = "getPairedDevicesListBD()"))
-//    fun getPairedDevicesList() = SerialPortDiscovery.pairedDevicesList
-//
-//    /**
-//     * 获取未配对设备列表
-//     * @return 未配对设备列表
-//     * @Author Shanya
-//     * @Date 2021-8-13
-//     * @Version 4.0.3
-//     */
-//    @Deprecated(message = "建议使用 getUnPairedDevicesListBD",
-//        replaceWith = ReplaceWith(
-//            expression = "getUnPairedDevicesListBD()"))
-//    fun getUnPairedDevicesList() = SerialPortDiscovery.unPairedDevicesList
-//
-//    /**
-//     * 获取已配对设备列表
-//     * @return 已配对设备列表
-//     * @Author Shanya
-//     * @Date 2021-8-13
-//     * @Version 4.0.3
-//     */
-//    fun getPairedDevicesListBD() = SerialPortDiscovery.pairedDevicesListBD
-//
-//    /**
-//     * 获取未配对设备列表
-//     * @return 未配对设备列表
-//     * @Author Shanya
-//     * @Date 2021-8-13
-//     * @Version 4.0.3
-//     */
-//    fun getUnPairedDevicesListBD() = SerialPortDiscovery.unPairedDevicesListBD
-
 
     /**
      * 默认连接页面连接方式选择对话框标志位
@@ -347,7 +306,7 @@ object SerialPortBuilder {
      */
     fun setConfig(config: SerialPortConfig):SerialPortBuilder {
         isDebug(config.debug)
-//        isDebug(true)
+        isDebug(true)
         setLegacyUUID(config.UUID_LEGACY)
         setBleUUID(config.UUID_BLE)
         setBleReadUUID(config.UUID_BLE_READ)

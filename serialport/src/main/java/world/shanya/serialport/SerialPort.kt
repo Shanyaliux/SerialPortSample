@@ -205,6 +205,13 @@ class SerialPort private constructor() {
             SerialPortDiscovery.discoveryStatusCallback = discoveryStatusCallback
         }
 
+        internal var bleCanWorkCallback: BleCanWorkCallback? = null
+
+        internal fun _setBleCanWorkCallback(bleCanWorkCallback: BleCanWorkCallback) {
+            this.bleCanWorkCallback = bleCanWorkCallback
+        }
+
+
         //内部连接回调，不包含连接信息（成功与否和连接设备）
         internal var connectCallback: ConnectCallback ?= null
         /**
@@ -611,6 +618,10 @@ class SerialPort private constructor() {
      */
     fun setConnectionStatusCallback(connectionStatusCallback: ConnectionStatusCallback) {
         _setConnectionStatusCallback(connectionStatusCallback)
+    }
+
+    fun setBleCanWorkCallback(bleCanWorkCallback: BleCanWorkCallback /* = (status: kotlin.Boolean) -> kotlin.Unit */) {
+        _setBleCanWorkCallback(bleCanWorkCallback)
     }
 
     /**
