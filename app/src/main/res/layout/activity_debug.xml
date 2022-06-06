@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:text="断开"
         app:layout_constraintBottom_toBottomOf="@+id/buttonConnect"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonOpenServer"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonConnect"
         app:layout_constraintTop_toTopOf="@+id/buttonConnect" />
@@ -100,4 +100,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonConnect"
         tools:text="connectInfo" />
+
+    <Button
+        android:id="@+id/buttonOpenServer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="打开服务"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonDisconnect"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCloseServer"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonDisconnect"
+        app:layout_constraintTop_toTopOf="@+id/buttonDisconnect" />
+
+    <Button
+        android:id="@+id/buttonCloseServer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="关闭服务"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonOpenServer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonOpenServer"
+        app:layout_constraintTop_toTopOf="@+id/buttonOpenServer" />
 </androidx.constraintlayout.widget.ConstraintLayout>

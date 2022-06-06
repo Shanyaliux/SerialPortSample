@@ -1,11 +1,13 @@
 package world.shanya.serialport.tools;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -148,4 +150,35 @@ public class SerialPortTools {
         }
         return bytes;
     }
+
+    public static void setDiscoverableTimeout() {
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        try {
+            Method setDiscoverableTimeout = BluetoothAdapter.class.getMethod("setDiscoverableTimeout", int.class);
+            setDiscoverableTimeout.setAccessible(true);
+            Method setScanMode = BluetoothAdapter.class.getMethod("setScanMode", int.class, int.class);
+            setScanMode.setAccessible(true);
+            setDiscoverableTimeout.invoke(adapter, 0);
+            setScanMode.invoke(adapter, BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("Bluetooth", "setDiscoverableTimeout failure:" + e.getMessage());
+        }
+    }
+
+    public static void closeDiscoverableTimeout() {
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        try {
+            Method setDiscoverableTimeout = BluetoothAdapter.class.getMethod("setDiscoverableTimeout", int.class);
+            setDiscoverableTimeout.setAccessible(true);
+            Method setScanMode = BluetoothAdapter.class.getMethod("setScanMode", int.class, int.class);
+            setScanMode.setAccessible(true);
+            setDiscoverableTimeout.invoke(adapter, 1);
+            setScanMode.invoke(adapter, BluetoothAdapter.SCAN_MODE_CONNECTABLE, 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

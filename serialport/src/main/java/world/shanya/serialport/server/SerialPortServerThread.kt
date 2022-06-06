@@ -11,12 +11,11 @@ package world.shanya.serialport.server
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothServerSocket
-import android.bluetooth.BluetoothSocket
-import android.content.Context
-import world.shanya.serialport.SerialPortServer
+import android.util.Log
 import world.shanya.serialport.tools.LogUtil
 import java.io.IOException
 import java.util.*
+
 @SuppressLint("MissingPermission")
 class SerialPortServerThread : Thread() {
     private val mmServerSocket: BluetoothServerSocket? by lazy(LazyThreadSafetyMode.NONE) {
@@ -37,9 +36,9 @@ class SerialPortServerThread : Thread() {
                 shouldLoop = false
                 null
             }
+
             SerialPortServer.serialPortBluetoothServerSocket?.also {
-//                manageMyConnectedSocket(it)
-                SerialPortServer.connected()
+                SerialPortServer.connected(it.remoteDevice)
                 mmServerSocket?.close()
                 shouldLoop = false
             }

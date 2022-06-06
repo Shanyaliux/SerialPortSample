@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import world.shanya.serialport.SerialPort
+import world.shanya.serialport.server.SerialPortServer
 import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.strings.SerialPortToastBean
 import world.shanya.serialport.tools.LogUtil
@@ -27,6 +28,9 @@ class BluetoothStatusBroadcastReceiver:BroadcastReceiver() {
             BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
                 SerialPortConnect.connectedLegacyDevice?.let {
                     SerialPort._legacyDisconnect()
+                }
+                SerialPortServer.connectedDevice?.let {
+                    SerialPortServer.__disconnect()
                 }
             }
 
