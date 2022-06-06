@@ -32,7 +32,7 @@ typealias ReceivedBytesCallback = (bytes: ByteArray) -> Unit
  * @Date 2021-7-21
  * @Version 4.0.0
  */
-@SuppressLint("StaticFieldLeak")
+@SuppressLint("StaticFieldLeak", "MissingPermission")
 class SerialPort private constructor() {
     companion object {
 

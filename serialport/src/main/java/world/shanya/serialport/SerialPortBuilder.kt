@@ -19,6 +19,7 @@ import world.shanya.serialport.tools.SPUtil
  * @Date 2021-7-21
  * @Version 4.0.0
  */
+@SuppressLint("MissingPermission")
 object SerialPortBuilder {
     //获取SerialPort实例
     @SuppressLint("StaticFieldLeak")

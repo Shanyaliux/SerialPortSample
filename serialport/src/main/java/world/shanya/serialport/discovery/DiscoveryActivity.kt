@@ -37,6 +37,7 @@ import kotlin.collections.ArrayList
  * @Date 2021-5-28
  * @Version 3.1.0
  */
+@SuppressLint("MissingPermission")
 class DiscoveryActivity : AppCompatActivity() {
 
     //连接进度对话框
@@ -68,7 +69,7 @@ class DiscoveryActivity : AppCompatActivity() {
 
 
         //搜索状态监听
-        SerialPortDiscovery.discoveryStatusLiveData.observe(this, {
+        SerialPortDiscovery.discoveryStatusLiveData.observe(this) {
             if (it) {
                 swipeRedreshLayout.isRefreshing = true
                 title = getString(R.string.discovery_discovering)
@@ -76,7 +77,7 @@ class DiscoveryActivity : AppCompatActivity() {
                 swipeRedreshLayout.isRefreshing = false
                 title = getString(R.string.discovery_select_device_connect)
             }
-        })
+        }
 
         //连接监听
         SerialPort.setConnectListener {

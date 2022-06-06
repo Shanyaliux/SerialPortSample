@@ -1,5 +1,6 @@
 package world.shanya.serialport.tools;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.util.Log;
@@ -17,6 +18,7 @@ import world.shanya.serialport.SerialPort;
  * @Date 2021-7-21
  * @version 4.0.0
  */
+@SuppressLint("MissingPermission")
 public class SerialPortTools {
 
     /**

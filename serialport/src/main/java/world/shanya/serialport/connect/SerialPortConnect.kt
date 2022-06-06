@@ -1,5 +1,6 @@
 package world.shanya.serialport.connect
 
+import android.annotation.SuppressLint
 import android.bluetooth.*
 import android.content.Context
 import android.content.Intent
@@ -43,6 +44,7 @@ typealias ConnectionResultCallback = (result: Boolean, bluetoothDevice: Bluetoot
  * @Date 2021-7-21
  * @Version 4.0.0
  */
+@SuppressLint("MissingPermission")
 internal object SerialPortConnect {
 
     //传统设备UUID

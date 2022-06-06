@@ -1,5 +1,6 @@
 package world.shanya.serialport.discovery
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
@@ -14,6 +15,7 @@ import world.shanya.serialport.tools.LogUtil
  * @Date 2021-8-13
  * @Version 4.0.3
  */
+@SuppressLint("MissingPermission")
 class DiscoveryBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         when (intent?.action) {

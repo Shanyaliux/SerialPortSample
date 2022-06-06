@@ -1,5 +1,6 @@
 package world.shanya.serialport.connect
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
@@ -19,6 +20,7 @@ import world.shanya.serialport.tools.ToastUtil
  * @Date 2021-7-21
  * @Version 4.0.0
  */
+@SuppressLint("MissingPermission")
 class BluetoothStatusBroadcastReceiver:BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         when (intent?.action) {
