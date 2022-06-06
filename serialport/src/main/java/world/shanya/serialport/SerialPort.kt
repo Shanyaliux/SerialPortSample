@@ -631,9 +631,10 @@ class SerialPort private constructor() {
      * @Date 2021-9-14
      * @Version 4.1.1
      */
-//    fun setConnectionResultCallback(connectionResultCallback: ConnectionResultCallback) {
-//        _setConnectionResultCallback(connectionResultCallback)
-//    }
+    @Deprecated(message = "该方法在4.2.0版本开始被弃用",replaceWith = ReplaceWith("setConnectionStatusCallback"))
+    fun setConnectionResultCallback(connectionResultCallback: ConnectionResultCallback) {
+        _setConnectionResultCallback(connectionResultCallback)
+    }
 
     /**
      * 打印可能的BLE设备UUID
