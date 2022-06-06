@@ -99,8 +99,6 @@ class SerialPort private constructor() {
         internal var discoveryTimeOut = false
         internal var discoveryTime:Long = 12000
 
-        fun getSendDataType() = sendDataType
-
         /**
          * setLegacyUUID 设置传统设备UUID
          * @Author Shanya
@@ -258,7 +256,8 @@ class SerialPort private constructor() {
         }
 
         //连接结果回调
-//        internal var connectionResultCallback: ConnectionResultCallback ?= null
+        @Deprecated(message = "该方法在4.2.0版本开始被弃用",replaceWith = ReplaceWith("connectionStatusCallback"))
+        internal var connectionResultCallback: ConnectionResultCallback ?= null
 
         /**
          * 内连接结果回调接口函数
@@ -267,9 +266,10 @@ class SerialPort private constructor() {
          * @Date 2021-9-14
          * @Version 4.1.1
          */
-//        internal fun _setConnectionResultCallback(connectionResultCallback: ConnectionResultCallback) {
-//            this.connectionResultCallback =connectionResultCallback
-//        }
+        @Deprecated(message = "该方法在4.2.0版本开始被弃用",replaceWith = ReplaceWith("_setConnectionStatusCallback"))
+        internal fun _setConnectionResultCallback(connectionResultCallback: ConnectionResultCallback) {
+            this.connectionResultCallback =connectionResultCallback
+        }
 
         /**
          * 十六进制字符串转换成字符串
