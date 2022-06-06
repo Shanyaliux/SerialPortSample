@@ -261,6 +261,10 @@ object SerialPortBuilder {
         serialPort.sendData(data)
     }
 
+    fun sendData(bytes: ByteArray) {
+        serialPort.sendData(bytes)
+    }
+
     /**
      * 搜索设备函数
      * @param context 上下文

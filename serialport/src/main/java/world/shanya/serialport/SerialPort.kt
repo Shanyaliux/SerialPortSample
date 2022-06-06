@@ -680,6 +680,28 @@ class SerialPort private constructor() {
         SerialPortTools.bleSendData(SerialPortConnect.bluetoothGatt,SerialPortConnect.sendGattCharacteristic,data)
     }
 
+    private fun sendBleData(bytes: ByteArray) {
+        SerialPortTools.bleSendData(
+            SerialPortConnect.bluetoothGatt,
+            SerialPortConnect.sendGattCharacteristic, bytes)
+    }
+
+    fun sendData(bytes: ByteArray) {
+        if (SerialPortConnect.connectStatus) {
+            SerialPortConnect.connectedBleDevice?.let {
+                sendBleData(bytes)
+            }
+        } else {
+            LogUtil.log("请先连接设备，再发送数据")
+            newContext?.let {context ->
+                ToastUtil.toast(context,SerialPortToast.connectFirst)
+            }
+            if (autoOpenDiscoveryActivityFlag) {
+                openDiscoveryActivity()
+            }
+        }
+    }
+
     /**
      * 发送数据
      * @param data 待发送数据
