@@ -176,13 +176,13 @@ data class Device(
 )
 ```
 
-### 连接结果的监听
+### BLE 可以工作回调
 
-使用方法 `setConnectionResultCallback(connectionResultCallback)` 设置一个连接结果的监听器：
+该回调在BLE设备连接成功，并且可以工作之后触发，可用于配置连接成功后自动发送消息。使用方法如下：
 
 ```kotlin
-serialPort.setConnectionResultCallback { result, bluetoothDevice ->
-   
+serialPort.setBleCanWorkCallback {
+
 }
 ```
 
@@ -190,13 +190,9 @@ serialPort.setConnectionResultCallback { result, bluetoothDevice ->
 
 ```kotlin
 val serialPort = SerialPortBuilder
-            .setConnectionResultCallback { result, bluetoothDevice ->
+            .setBleCanWorkCallback {
    
 			}
             .build(this)
 ```
-
-若连接成功则 `result` 为 `true` ，`bluetoothDevice`为连接成功的设备
-
-若连接失败则 `result` 为 `false` ，`bluetoothDevice`为 `null`
 

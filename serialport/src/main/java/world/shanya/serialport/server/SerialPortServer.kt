@@ -18,6 +18,8 @@ import world.shanya.serialport.tools.ToastUtil
 typealias ServerReceivedDataCallback = (data: String) -> Unit
 typealias ServerConnectStatusCallback = (status: Boolean, bluetoothDevice: BluetoothDevice?) -> Unit
 
+
+@SuppressLint("MissingPermission")
 class SerialPortServer internal constructor(config: Config, context: Context) {
 
     class Config {
@@ -86,6 +88,20 @@ class SerialPortServer internal constructor(config: Config, context: Context) {
     }
 
     init {
+        if (!bluetoothAdapter.isEnabled) {
+            val res = bluetoothAdapter.enable()
+            if (res) {
+                LogUtil.log("蓝牙打开成功")
+                serverContext?.let {
+                    ToastUtil.toast(it, SerialPortToast.openBluetoothSucceeded)
+                }
+            } else {
+                LogUtil.log("蓝牙打开失败")
+                serverContext?.let {
+                    ToastUtil.toast(it, SerialPortToast.openBluetoothFailed)
+                }
+            }
+        }
         serverContext = context
         serverName = config.serverName
         serverUUID = config.serverUUID
