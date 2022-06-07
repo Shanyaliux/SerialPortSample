@@ -55,8 +55,8 @@ SerialPort 是一个开源的对 Android 蓝牙串口通信的轻量封装库，
 
 ## 最简Demo源码
 以下是基于SerialPort实现蓝牙App的Java和Kotlin最简Demo源码  
-[Java](https://gitee.com/Shanya/SerialPortDemoByJava)  
-[Kotlin](https://gitee.com/Shanya/SerialPortDemoByKotlin)
+[Java](javademo)  
+[Kotlin](kotlindemo)
 
 ## 欢迎加入 SerialPort 交流群
 <div align="center">

@@ -55,5 +55,5 @@ We provide complete documentation. [documentation](https://serialport.readthedoc
 
 ## Demo sample source code
 The following is the simplest Demo source code of Java and Kotlin based on SerialPort to implement Bluetooth App  
-[Java](https://gitee.com/Shanya/SerialPortDemoByJava)  
-[Kotlin](https://gitee.com/Shanya/SerialPortDemoByKotlin)
+[Java](javademo)  
+[Kotlin](kotlindemo)
