@@ -1,5 +1,6 @@
 package world.shanya.serialport.discovery
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.le.ScanCallback
@@ -22,6 +23,7 @@ typealias DiscoveryStatusWithTypeCallback = (deviceType: Int, status: Boolean) -
  * @Date 2021-7-21
  * @Version 4.0.0
  */
+@SuppressLint("MissingPermission")
 internal object SerialPortDiscovery {
 
     //搜索状态LiveData

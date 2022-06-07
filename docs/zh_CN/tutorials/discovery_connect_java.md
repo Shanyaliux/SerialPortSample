@@ -182,29 +182,25 @@ data class Device(
 )
 ```
 
-### 连接结果的监听
+### BLE 可以工作回调
 
-使用方法 `setConnectionResultCallback(connectionResultCallback)` 设置一个连接结果的监听器：
+该回调在BLE设备连接成功，并且可以工作之后触发，可用于配置连接成功后自动发送消息。使用方法如下：
 
 ```java
-serialPort.setConnectionResultCallback((result,bluetoothDevice)->{
-            
-	return null;
-});
+serialPort.setBleCanWorkCallback( () -> {
+
+        return null;
+        });
 ```
 
 除此之外，你还可以在构建实例时配置监听器：
 
 ```java
 SerialPort serialPort = SerialPortBuilder.INSTANCE
-                .setConnectionResultCallback( (result, bluetoothDevice) -> {
+        .setBleCanWorkCallback( () -> {
 
-                    return null;
-                })
-                .build(this);
+        return null;
+    })
+    .build(this);
 ```
-
-若连接成功则 `result` 为 `true` ，`bluetoothDevice`为连接成功的设备
-
-若连接失败则 `result` 为 `false` ，`bluetoothDevice`为 `null`
 

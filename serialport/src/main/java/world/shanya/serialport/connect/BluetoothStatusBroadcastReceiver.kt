@@ -1,11 +1,13 @@
 package world.shanya.serialport.connect
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import world.shanya.serialport.SerialPort
+import world.shanya.serialport.server.SerialPortServer
 import world.shanya.serialport.strings.SerialPortToast
 import world.shanya.serialport.strings.SerialPortToastBean
 import world.shanya.serialport.tools.LogUtil
@@ -19,12 +21,16 @@ import world.shanya.serialport.tools.ToastUtil
  * @Date 2021-7-21
  * @Version 4.0.0
  */
+@SuppressLint("MissingPermission")
 class BluetoothStatusBroadcastReceiver:BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         when (intent?.action) {
             BluetoothDevice.ACTION_ACL_DISCONNECTED -> {
                 SerialPortConnect.connectedLegacyDevice?.let {
                     SerialPort._legacyDisconnect()
+                }
+                SerialPortServer.connectedDevice?.let {
+                    SerialPortServer.__disconnect()
                 }
             }
 

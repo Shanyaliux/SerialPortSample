@@ -1,5 +1,6 @@
 package world.shanya.serialport.tools
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.bluetooth.BluetoothDevice
 import android.content.Context
@@ -26,6 +27,7 @@ import kotlin.collections.AbstractList
  * @Date 2021-7-21
  * @Version 4.0.0
  */
+@SuppressLint("MissingPermission")
 internal object SPUtil {
 
     private const val SPName = "SerialPortSP"

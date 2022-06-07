@@ -4,8 +4,6 @@ import android.app.IntentService
 import android.content.Intent
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import world.shanya.serialport.SerialPortServer
-import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.SerialPortTools
 
@@ -43,7 +41,6 @@ class SerialPortServerService : IntentService("SerialPortServerService") {
             if (flag) {
                 receivedData =
                     SerialPortTools.bytes2string(buffer, "GBK")
-
                 LogUtil.log("服务端收到数据", receivedData)
                 MainScope().launch {
                     SerialPortServer.serverReceivedDataCallback?.invoke(receivedData)
@@ -56,6 +53,6 @@ class SerialPortServerService : IntentService("SerialPortServerService") {
     override fun onDestroy() {
         super.onDestroy()
         LogUtil.log("蓝牙服务端收消息服务关闭")
-        SerialPortConnect.disconnectResult(this)
+        SerialPortServer._disconnect()
     }
 }

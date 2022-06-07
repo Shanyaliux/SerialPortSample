@@ -32,7 +32,7 @@ typealias ReceivedBytesCallback = (bytes: ByteArray) -> Unit
  * @Date 2021-7-21
  * @Version 4.0.0
  */
-@SuppressLint("StaticFieldLeak")
+@SuppressLint("StaticFieldLeak", "MissingPermission")
 class SerialPort private constructor() {
     companion object {
 
@@ -98,8 +98,6 @@ class SerialPort private constructor() {
 
         internal var discoveryTimeOut = false
         internal var discoveryTime:Long = 12000
-
-        fun getSendDataType() = sendDataType
 
         /**
          * setLegacyUUID 设置传统设备UUID
@@ -205,6 +203,13 @@ class SerialPort private constructor() {
             SerialPortDiscovery.discoveryStatusCallback = discoveryStatusCallback
         }
 
+        internal var bleCanWorkCallback: BleCanWorkCallback? = null
+
+        internal fun _setBleCanWorkCallback(bleCanWorkCallback: BleCanWorkCallback) {
+            this.bleCanWorkCallback = bleCanWorkCallback
+        }
+
+
         //内部连接回调，不包含连接信息（成功与否和连接设备）
         internal var connectCallback: ConnectCallback ?= null
         /**
@@ -251,6 +256,7 @@ class SerialPort private constructor() {
         }
 
         //连接结果回调
+        @Deprecated(message = "该方法在4.2.0版本开始被弃用",replaceWith = ReplaceWith("connectionStatusCallback"))
         internal var connectionResultCallback: ConnectionResultCallback ?= null
 
         /**
@@ -260,6 +266,7 @@ class SerialPort private constructor() {
          * @Date 2021-9-14
          * @Version 4.1.1
          */
+        @Deprecated(message = "该方法在4.2.0版本开始被弃用",replaceWith = ReplaceWith("_setConnectionStatusCallback"))
         internal fun _setConnectionResultCallback(connectionResultCallback: ConnectionResultCallback) {
             this.connectionResultCallback =connectionResultCallback
         }
@@ -613,6 +620,10 @@ class SerialPort private constructor() {
         _setConnectionStatusCallback(connectionStatusCallback)
     }
 
+    fun setBleCanWorkCallback(bleCanWorkCallback: BleCanWorkCallback /* = (status: kotlin.Boolean) -> kotlin.Unit */) {
+        _setBleCanWorkCallback(bleCanWorkCallback)
+    }
+
     /**
      * 连接结果回调接口函数
      * @param connectionResultCallback 连接结果回调接口
@@ -620,6 +631,7 @@ class SerialPort private constructor() {
      * @Date 2021-9-14
      * @Version 4.1.1
      */
+    @Deprecated(message = "该方法在4.2.0版本开始被弃用",replaceWith = ReplaceWith("setConnectionStatusCallback"))
     fun setConnectionResultCallback(connectionResultCallback: ConnectionResultCallback) {
         _setConnectionResultCallback(connectionResultCallback)
     }
@@ -667,6 +679,28 @@ class SerialPort private constructor() {
      */
     private fun sendBleData(data: String) {
         SerialPortTools.bleSendData(SerialPortConnect.bluetoothGatt,SerialPortConnect.sendGattCharacteristic,data)
+    }
+
+    private fun sendBleData(bytes: ByteArray) {
+        SerialPortTools.bleSendData(
+            SerialPortConnect.bluetoothGatt,
+            SerialPortConnect.sendGattCharacteristic, bytes)
+    }
+
+    fun sendData(bytes: ByteArray) {
+        if (SerialPortConnect.connectStatus) {
+            SerialPortConnect.connectedBleDevice?.let {
+                sendBleData(bytes)
+            }
+        } else {
+            LogUtil.log("请先连接设备，再发送数据")
+            newContext?.let {context ->
+                ToastUtil.toast(context,SerialPortToast.connectFirst)
+            }
+            if (autoOpenDiscoveryActivityFlag) {
+                openDiscoveryActivity()
+            }
+        }
     }
 
     /**

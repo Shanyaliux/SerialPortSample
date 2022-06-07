@@ -3,13 +3,8 @@
 Edit the `Build.gradle` file and add the following dependencies.
 
 ```groovy
-repositories {
-  google()
-  mavenCentral()
-}
-
 dependencies {
-    implementation 'cn.shanyaliux.serialport:serialport:4.1.8'
+    implementation 'cn.shanyaliux.serialport:serialport:4.2.0'
 }
 ```
 

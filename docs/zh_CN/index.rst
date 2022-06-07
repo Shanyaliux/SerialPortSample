@@ -8,6 +8,7 @@ Welcome to SerialPort's documentation!
    tutorials/install
    tutorials/getting_started_kotlin
    tutorials/getting_started_java
+   tutorials/server
 
 .. toctree::
    :maxdepth: 2

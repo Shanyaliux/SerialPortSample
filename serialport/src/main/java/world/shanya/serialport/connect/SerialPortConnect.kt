@@ -1,5 +1,6 @@
 package world.shanya.serialport.connect
 
+import android.annotation.SuppressLint
 import android.bluetooth.*
 import android.content.Context
 import android.content.Intent
@@ -31,7 +32,11 @@ typealias ConnectStatusCallback = (status: Boolean, device: Device) -> Unit
 //连接接口
 typealias ConnectCallback = () -> Unit
 //连接结果接口
+@Deprecated(message = "该方法在4.2.0版本开始被弃用",replaceWith = ReplaceWith("ConnectionStatusCallback"))
 typealias ConnectionResultCallback = (result: Boolean, bluetoothDevice: BluetoothDevice?) -> Unit
+//Ble device can work callback
+typealias BleCanWorkCallback = () -> Unit
+
 
 
 /**
@@ -43,6 +48,7 @@ typealias ConnectionResultCallback = (result: Boolean, bluetoothDevice: Bluetoot
  * @Date 2021-7-21
  * @Version 4.0.0
  */
+@SuppressLint("MissingPermission")
 internal object SerialPortConnect {
 
     //传统设备UUID
@@ -91,6 +97,15 @@ internal object SerialPortConnect {
         override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) {
             super.onMtuChanged(gatt, mtu, status)
             LogUtil.log("MTU", mtu.toString())
+        }
+
+        override fun onDescriptorWrite(
+            gatt: BluetoothGatt?,
+            descriptor: BluetoothGattDescriptor?,
+            status: Int
+        ) {
+            super.onDescriptorWrite(gatt, descriptor, status)
+            SerialPort.bleCanWorkCallback?.invoke()
         }
 
         override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
@@ -359,7 +374,9 @@ internal object SerialPortConnect {
             }
         } else {
             SerialPort.connectCallback?.invoke()
+            SerialPort.connectStatusCallback?.invoke(false, Device("", "", 1))
             SerialPort.connectionResultCallback?.invoke(false, null)
+            SerialPort.connectionStatusCallback?.invoke(false, null)
             LogUtil.log("连接失败")
             context?.let {
                 ToastUtil.toast(it, SerialPortToast.connectFailed)

@@ -21,4 +21,6 @@
     <string name="discovery_dual">dual type</string>
     <string name="discovery_paired_device">Paired device</string>
     <string name="discovery_available_device">Available device</string>
+    <string name="openServer">Open server</string>
+    <string name="closeServer">Close Server</string>
 </resources>

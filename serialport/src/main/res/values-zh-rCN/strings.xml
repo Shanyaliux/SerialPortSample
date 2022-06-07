@@ -29,4 +29,6 @@
     <string name="discovery_dual">双重类型</string>
     <string name="discovery_paired_device">已配对设备</string>
     <string name="discovery_available_device">可用设备</string>
+    <string name="closeServer">关闭服务</string>
+    <string name="openServer">打开服务</string>
 </resources>

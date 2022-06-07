@@ -111,3 +111,11 @@ serialPort.sendData("0C FF");
 ```
 
 All hexadecimals should be **two digits**, with 0 in front of the less than two digits, case-insensitive.
+
+### BLE device send bytes
+
+Now, BLE device support send bytes
+
+```java
+serialPort.sendData(bytes);
+```

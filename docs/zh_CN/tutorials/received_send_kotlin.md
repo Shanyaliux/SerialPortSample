@@ -107,3 +107,10 @@ serialPort.sendData("0C FF")
 ```
 
 所有的十六进制应为**两位**，不足两位的前方补0，不区分大小写。
+
+### BLE设备发送字节数组
+目前BLE设备支持直接发送字节数组
+
+```kotlin
+serialPort.sendData(bytes)
+```

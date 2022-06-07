@@ -3,6 +3,7 @@ package world.shanya.serialportsample
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -18,6 +19,7 @@ import world.shanya.serialportsample.pagers.KeyFragment
 import world.shanya.serialportsample.pagers.MessageFragment
 import world.shanya.serialportsample.utils.CheckUpdate
 import world.shanya.serialportsample.utils.SettingSPTools
+import java.security.SecureRandom
 
 
 class MainActivity : AppCompatActivity() {
@@ -81,6 +83,16 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+//            .setBleCanWorkCallback {
+//                val ByteArray = ByteArray(21)
+//                SecureRandom().nextBytes(ByteArray)
+//
+//                for (i in ByteArray) {
+//                    Log.d("SerialPort", "onCreate: " + i)
+//
+//                }
+//                SerialPortBuilder.sendData(ByteArray)
+//            }
             .build(this)
     }
 

@@ -1,11 +1,15 @@
 package world.shanya.serialport.tools;
 
+import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +21,7 @@ import world.shanya.serialport.SerialPort;
  * @Date 2021-7-21
  * @version 4.0.0
  */
+@SuppressLint("MissingPermission")
 public class SerialPortTools {
 
     /**
@@ -76,6 +81,38 @@ public class SerialPortTools {
         }).start();
     }
 
+    public static void bleSendData(BluetoothGatt gatt, BluetoothGattCharacteristic gattCharacteristic, byte[] bytes) {
+        new Thread(() -> {
+            try {
+                if (gattCharacteristic != null) {
+                    LogUtil.INSTANCE.log("BLE设备发送byte数据", "");
+                    int len = bytes.length;
+                    int[] lens = dataSeparate(len);
+                    for (int i = 0; i < lens[0]; i++) {
+                        byte[] bytesTemp = Arrays.copyOfRange(bytes, 20 * i, 20 * (i + 1));
+                        gattCharacteristic.setValue(bytesTemp);
+                        gatt.writeCharacteristic(gattCharacteristic);
+                        try {
+                            Thread.sleep(SerialPort.Companion.getBleSendSleep());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (lens[1] != 0) {
+                        byte[] bytesTemp = Arrays.copyOfRange(bytes, 20 * lens[0], 20 * lens[0] + lens[1]);
+                        gattCharacteristic.setValue(bytesTemp);
+                        gatt.writeCharacteristic(gattCharacteristic);
+                    }
+                } else {
+                    Log.e("SerialPort", "BLE接收UUID不正确，请检查！");
+                    throw new NullPointerException("BLE接收UUID不正确，请检查！");
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
     /**
      * 字节数组按要求的编码格式转换成字符串
      * @param bytes 带转换的字节数组
@@ -113,4 +150,35 @@ public class SerialPortTools {
         }
         return bytes;
     }
+
+    public static void setDiscoverableTimeout() {
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        try {
+            Method setDiscoverableTimeout = BluetoothAdapter.class.getMethod("setDiscoverableTimeout", int.class);
+            setDiscoverableTimeout.setAccessible(true);
+            Method setScanMode = BluetoothAdapter.class.getMethod("setScanMode", int.class, int.class);
+            setScanMode.setAccessible(true);
+            setDiscoverableTimeout.invoke(adapter, 0);
+            setScanMode.invoke(adapter, BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("Bluetooth", "setDiscoverableTimeout failure:" + e.getMessage());
+        }
+    }
+
+    public static void closeDiscoverableTimeout() {
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        try {
+            Method setDiscoverableTimeout = BluetoothAdapter.class.getMethod("setDiscoverableTimeout", int.class);
+            setDiscoverableTimeout.setAccessible(true);
+            Method setScanMode = BluetoothAdapter.class.getMethod("setScanMode", int.class, int.class);
+            setScanMode.setAccessible(true);
+            setDiscoverableTimeout.invoke(adapter, 1);
+            setScanMode.invoke(adapter, BluetoothAdapter.SCAN_MODE_CONNECTABLE, 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

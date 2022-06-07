@@ -2,14 +2,10 @@ package world.shanya.serialport
 
 import android.annotation.SuppressLint
 import android.content.Context
-import world.shanya.serialport.connect.ConnectStatusCallback
-import world.shanya.serialport.connect.ConnectionResultCallback
-import world.shanya.serialport.connect.ConnectionStatusCallback
+import world.shanya.serialport.connect.*
 import world.shanya.serialport.connect.SerialPortConnect
 import world.shanya.serialport.discovery.DiscoveryStatusCallback
 import world.shanya.serialport.discovery.DiscoveryStatusWithTypeCallback
-import world.shanya.serialport.discovery.SerialPortDiscovery
-import world.shanya.serialport.tools.LogUtil
 import world.shanya.serialport.tools.SPUtil
 
 
@@ -19,6 +15,7 @@ import world.shanya.serialport.tools.SPUtil
  * @Date 2021-7-21
  * @Version 4.0.0
  */
+@SuppressLint("MissingPermission")
 object SerialPortBuilder {
     //获取SerialPort实例
     @SuppressLint("StaticFieldLeak")
@@ -243,8 +240,14 @@ object SerialPortBuilder {
      * @Date 2021-9-14
      * @Version 4.1.1
      */
+    @Deprecated(message = "该方法在4.2.0版本开始被弃用",replaceWith = ReplaceWith("setConnectionStatusCallback"))
     fun setConnectionResultCallback(connectionResultCallback: ConnectionResultCallback): SerialPortBuilder {
         SerialPort._setConnectionResultCallback(connectionResultCallback)
+        return this
+    }
+
+    fun setBleCanWorkCallback(bleCanWorkCallback: BleCanWorkCallback): SerialPortBuilder {
+        SerialPort._setBleCanWorkCallback(bleCanWorkCallback)
         return this
     }
 
@@ -257,6 +260,10 @@ object SerialPortBuilder {
      */
     fun sendData(data: String) {
         serialPort.sendData(data)
+    }
+
+    fun sendData(bytes: ByteArray) {
+        serialPort.sendData(bytes)
     }
 
     /**
@@ -282,48 +289,6 @@ object SerialPortBuilder {
         return this
     }
 
-//    /**
-//     * 获取已配对设备列表
-//     * @return 已配对设备列表
-//     * @Author Shanya
-//     * @Date 2021-8-13
-//     * @Version 4.0.3
-//     */
-//    @Deprecated(message = "建议使用 getPairedDevicesListBD",
-//        replaceWith = ReplaceWith(
-//            expression = "getPairedDevicesListBD()"))
-//    fun getPairedDevicesList() = SerialPortDiscovery.pairedDevicesList
-//
-//    /**
-//     * 获取未配对设备列表
-//     * @return 未配对设备列表
-//     * @Author Shanya
-//     * @Date 2021-8-13
-//     * @Version 4.0.3
-//     */
-//    @Deprecated(message = "建议使用 getUnPairedDevicesListBD",
-//        replaceWith = ReplaceWith(
-//            expression = "getUnPairedDevicesListBD()"))
-//    fun getUnPairedDevicesList() = SerialPortDiscovery.unPairedDevicesList
-//
-//    /**
-//     * 获取已配对设备列表
-//     * @return 已配对设备列表
-//     * @Author Shanya
-//     * @Date 2021-8-13
-//     * @Version 4.0.3
-//     */
-//    fun getPairedDevicesListBD() = SerialPortDiscovery.pairedDevicesListBD
-//
-//    /**
-//     * 获取未配对设备列表
-//     * @return 未配对设备列表
-//     * @Author Shanya
-//     * @Date 2021-8-13
-//     * @Version 4.0.3
-//     */
-//    fun getUnPairedDevicesListBD() = SerialPortDiscovery.unPairedDevicesListBD
-
 
     /**
      * 默认连接页面连接方式选择对话框标志位
@@ -346,7 +311,6 @@ object SerialPortBuilder {
      */
     fun setConfig(config: SerialPortConfig):SerialPortBuilder {
         isDebug(config.debug)
-//        isDebug(true)
         setLegacyUUID(config.UUID_LEGACY)
         setBleUUID(config.UUID_BLE)
         setBleReadUUID(config.UUID_BLE_READ)

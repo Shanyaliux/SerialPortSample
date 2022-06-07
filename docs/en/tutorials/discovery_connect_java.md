@@ -182,29 +182,25 @@ data class Device(
 )
 ```
 
-### Monitor connection result
+### BLE can work callback
 
-Use the method `setConnectionResultCallback(connectionResultCallback)` to set a listener for the connection result:
+This callback is triggered after the BLE device is successfully connected and can work, and can be used to configure the automatic sending of messages after the connection is successful. The method of use is as follows:
 
 ```java
-serialPort.setConnectionResultCallback((result,bluetoothDevice)->{
-            
-	return null;
-});
+serialPort.setBleCanWorkCallback( () -> {
+
+        return null;
+        });
 ```
 
 In addition to this, you can also configure the listener when building the instance:
 
 ```java
 SerialPort serialPort = SerialPortBuilder.INSTANCE
-                .setConnectionResultCallback( (result, bluetoothDevice) -> {
+        .setBleCanWorkCallback( () -> {
 
-                    return null;
-                })
-                .build(this);
+        return null;
+    })
+    .build(this);
 ```
-
-If the connection is successful, `result` is `true`, and `bluetoothDevice` is the successfully connected device
-
-`result` is `false` if the connection fails, `bluetoothDevice` is `null`
 

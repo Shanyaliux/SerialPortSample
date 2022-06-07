@@ -15,4 +15,8 @@ object SerialPortToast {
     var hexTip = SerialPortToastBean(true,R.string.hexTipToast,Toast.LENGTH_SHORT)
     var openBluetoothSucceeded = SerialPortToastBean(true,R.string.openBluetoothSucceededToast,Toast.LENGTH_SHORT)
     var openBluetoothFailed = SerialPortToastBean(true,R.string.openBluetoothFailedToast,Toast.LENGTH_SHORT)
+
+    var openServer = SerialPortToastBean(true, R.string.openServer, Toast.LENGTH_SHORT)
+    var closeServer = SerialPortToastBean(true, R.string.closeServer, Toast.LENGTH_SHORT)
+
 }
