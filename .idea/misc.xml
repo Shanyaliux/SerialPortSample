@@ -18,6 +18,8 @@
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.15572916666666667" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/mipmap-anydpi-v26/ic_launcher_logo.xml" value="0.15572916666666667" />
         <entry key="..\:/Code/Android/SerialPortSample/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.15572916666666667" />
+        <entry key="..\:/Code/Android/SerialPortSample/javademo/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Code/Android/SerialPortSample/kotlindemo/src/main/res/layout/activity_main.xml" value="0.13802083333333334" />
         <entry key="..\:/Code/Android/SerialPortSample/serialport/src/main/res/layout/activity_discovery.xml" value="0.26875" />
         <entry key="..\:/Code/Android/SerialPortSample/serialport/src/main/res/layout/device_cell.xml" value="0.26875" />
       </map>

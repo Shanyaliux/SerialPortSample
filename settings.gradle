@@ -1,3 +1,5 @@
 include ':serialport'
 include ':app'
 rootProject.name = "SerialPortSample"
+include ':javademo'
+include ':kotlindemo'
