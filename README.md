@@ -35,9 +35,13 @@ SerialPort is an open source android bluetooth lightweight package library that 
 This project is released under the [Apache 2.0 license](LICENSE).
 
 ## Changelog
-**4.1.9** was released in 9/5/2022:
-- [Fix] When the sendUUID is incorrect, it crashes
-
+**4.2.0** was released in 9/5/2022:
+- [Fix] Some compilation warnings about bluetooth permissions
+- [Modify] Upgrade `Kotlin` and `Gradle` versions
+- [Modify] Mark `ConnectionResultCallback` obsolete
+- [Feature] Added Ble device to send byte array
+- [Feature] Added Ble device can work callback
+- [Feature] Added Server
 
 For more changelogs see: [Changelog](docs/en/changelog.md)
 
@@ -47,7 +51,7 @@ Please refer to [install.md](docs/en/tutorials/install.md) for installation.
 ## Getting Started
 Please see [Basic usage Kotlin.md](docs/en/tutorials/getting_started_kotlin.md) or [Basic usage Java.md](docs/en/tutorials/getting_started_java.md) for the basic usage of SerialPort.
 
-We provide complete documentation. [documentation](https://serialportsample.readthedocs.io/en/latest/)
+We provide complete documentation. [documentation](https://serialport.readthedocs.io/en/latest/)
 
 ## Demo sample source code
 The following is the simplest Demo source code of Java and Kotlin based on SerialPort to implement Bluetooth App  

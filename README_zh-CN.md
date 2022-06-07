@@ -35,8 +35,13 @@ SerialPort 是一个开源的对 Android 蓝牙串口通信的轻量封装库，
 该项目采用 [Apache 2.0 开源许可证](LICENSE)。
 
 ## 更新日志
-最新的 **4.1.9** 版本已经在 9/5/2022 发布:  
-- 修复当发送UUID设置错误时应用闪退  
+最新的 **4.2.0** 版本已经在 7/6/2022 发布:  
+- 修复一些关于蓝牙权限的编译告警
+- 升级`Kotlin`和`Gradle`版本
+- 标记`ConnectionResultCallback`过时
+- 新增Ble设备发送字节数组
+- 新增Ble设备可以工作回调
+- 新增服务端配置
 
 更多更新日志见: [更新日志](docs/zh_CN/changelog.md)
 
@@ -46,7 +51,7 @@ SerialPort 是一个开源的对 Android 蓝牙串口通信的轻量封装库，
 ## 快速入门
 请参考 [快速入门文档_Kotlin版本](docs/zh_CN/tutorials/getting_started_kotlin.md) 或 [快速入门文档_Java版本](docs/zh_CN/tutorials/getting_started_java.md) 学习 SerialPort 的基本使用。
 
-我们提供完整的文档。 [文档地址](https://serialportsample.readthedocs.io/zh_CN/latest/)
+我们提供完整的文档。 [文档地址](https://serialport.readthedocs.io/zh_CN/latest/)
 
 ## 最简Demo源码
 以下是基于SerialPort实现蓝牙App的Java和Kotlin最简Demo源码  
