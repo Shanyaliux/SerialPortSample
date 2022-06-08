@@ -1,6 +1,6 @@
 # Changelog
 
-### **4.2.0** was released in 9/5/2022:
+### **4.2.0** was released in 7/6/2022:
 - [Fix] Some compilation warnings about bluetooth permissions
 - [Modify] Upgrade `Kotlin` and `Gradle` versions
 - [Modify] Mark `ConnectionResultCallback` obsolete
